@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { images } from "../assets/images";
+import ProductList from "../components/ProductList.astro";
+import ContactCTA from "../sections/ContactCTA.astro";
+import { products, productFamilies } from "../data/products";
+
+const sliding = products.filter((p) => p.family === "sliding");
+---
+
+<BaseLayout
+  title="Sliding Systems — Graf Series"
+  description={productFamilies.sliding.description}
+  path="/sliding/"
+  ogImage="/media/villa.jpeg"
+>
+  <PageHero eyebrow="Sliding Systems" image={images.villa} imageAlt="A minimalist tropical villa with a fully retracted glass sliding wall opening onto an infinity pool.">
+    The Graf Series
+    <Fragment slot="description">{productFamilies.sliding.description}</Fragment>
+  </PageHero>
+
+  <section class="bg-off-white py-24 md:py-36">
+    <div class="container-frame">
+      <ProductList products={sliding} />
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>

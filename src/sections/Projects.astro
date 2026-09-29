@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import Eyebrow from "../components/Eyebrow.astro";
+import Frame from "../components/Frame.astro";
+import ArrowLink from "../components/ArrowLink.astro";
+import { projects } from "../data/projects";
+
+const featured = projects.slice(0, 4);
+---
+
+<section class="bg-off-white py-24 md:py-36" data-reveal-group>
+  <div class="container-frame">
+    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <div>
+        <Eyebrow index="07" class="text-ink/65" data-reveal="fade">Applications</Eyebrow>
+        <h2 class="mt-6 max-w-xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-ink text-balance" data-reveal="up">
+          Prominance systems, in architectural context.
+        </h2>
+      </div>
+      <div data-reveal="up">
+        <ArrowLink href="/projects/">View All Applications</ArrowLink>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-frame mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">
+    {
+      featured.map((project, i) => (
+        <a
+          href={`/projects/${project.slug}/`}
+          class:list={["uf-frame-host group relative block overflow-hidden", i === 0 && "sm:col-span-2"]}
+          data-reveal="up"
+          data-cursor-hover
+        >
+          <div class:list={["relative w-full overflow-hidden", i === 0 ? "aspect-[16/9]" : "aspect-[4/3]"]}>
+            <Image
+              src={project.image}
+              alt={`${project.title} — featuring the ${project.systemName} system.`}
+              class="h-full w-full object-cover transition-precise duration-[1200ms] group-hover:scale-[1.02]"
+              loading="lazy"
+              widths={[400, 800, 1200]}
+              sizes="(min-width: 640px) 50vw, 100vw"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-0 transition-precise group-hover:opacity-100"></div>
+            <Frame tone="off-white" hover />
+
+            <div class="absolute inset-x-6 bottom-6 flex translate-y-2 items-end justify-between opacity-0 transition-precise group-hover:translate-y-0 group-hover:opacity-100">
+              <div>
+                <p class="label-eyebrow text-off-white/70">{project.systemName}</p>
+                <p class="mt-2 font-display text-xl text-off-white md:text-2xl">{project.title}</p>
+              </div>
+              <svg width="20" height="12" viewBox="0 0 18 10" fill="none" class="text-off-white">
+                <path d="M0 5H17M17 5L13 1M17 5L13 9" stroke="currentColor" stroke-width="1"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>

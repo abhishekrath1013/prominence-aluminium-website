@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Brand palette (UNIFRAME architectural luxury) ---- */
+  --color-ink: #0b0b0a;
+  --color-ink-soft: #171613;
+  --color-off-white: #f4f1ea;
+  --color-stone: #c8c4ba;
+  --color-aluminium: #a7a9a6;
+  --color-white: #ffffff;
+  --color-brass: #b08d57;
+  --color-brass-soft: #d9c6a0;
+
+  /* ---- Type families (chained onto Astro's font component vars,     */
+  /* which are deliberately named *-raw to avoid a :root redeclaration */
+  /* collision with these Tailwind theme tokens of the same name)      */
+  --font-display: var(--font-display-raw), "Times New Roman", serif;
+  --font-sans: var(--font-sans-raw), "Segoe UI", sans-serif;
+
+  /* ---- Motion timing (from spec: micro/normal/cinematic) ---- */
+  --ease-precise: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-micro: 320ms;
+  --duration-normal: 650ms;
+  --duration-cinematic: 1200ms;
+
+  /* ---- Layout ---- */
+  --container-max: 1600px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+
+  --breakpoint-xs: 23rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: var(--color-off-white);
+    scroll-behavior: auto;
+  }
+
+  body {
+    background: var(--color-off-white);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* A faint, fixed film-grain wash — the tactile quality of a printed catalogue,
+     never sharp enough to read as a texture, only as depth. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-off-white);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Editorial heading rhythm */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  /* Visible, unobtrusive focus ring — never remove focus outlines */
+  :focus-visible {
+    outline: 1px solid var(--color-ink);
+    outline-offset: 4px;
+  }
+
+  ::-moz-selection {
+    background: var(--color-ink);
+    color: var(--color-off-white);
+  }
+}
+
+@layer utilities {
+  .container-frame {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Small uppercase editorial label, used everywhere as an eyebrow.
+     No `color` here on purpose: it inherits by default anyway, and setting it
+     explicitly fights same-specificity `text-*` utilities on the same
+     element depending on cascade-layer source order. */
+  .label-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Thin architectural rule — the signature frame line */
+  .rule-thin {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.16;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .transition-precise {
+    transition-timing-function: var(--ease-precise);
+  }
+
+  /* Oversized, near-invisible serif numeral set behind a section's heading —
+     the editorial-catalogue numbering device used across the site. */
+  .uf-numeral {
+    position: absolute;
+    top: -0.35em;
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1;
+    font-size: clamp(6rem, 16vw, 13rem);
+    letter-spacing: -0.03em;
+    opacity: 0.05;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .text-brass {
+    color: var(--color-brass);
+  }
+}
+
+/* Progressive-enhancement reveal state: only hidden pre-animation when JS is present */
+html.js [data-reveal] {
+  opacity: 0;
+}
+
+html.js [data-reveal]:not([data-reveal="fade"]) {
+  transform: translateY(28px);
+}
+
+html.js [data-line-draw] {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* Custom cursor — desktop only, added by animations/site.ts */
+.uf-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  border-radius: 999px;
+  border: 1px solid var(--color-ink);
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0;
+  mix-blend-mode: difference;
+  transition: opacity var(--duration-micro) ease, width var(--duration-micro) var(--ease-precise), height var(--duration-micro) var(--ease-precise), margin var(--duration-micro) var(--ease-precise);
+}
+
+.uf-cursor.is-visible {
+  opacity: 0.7;
+}
+
+.uf-cursor.is-hovering {
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  margin-top: -24px;
+  background: var(--color-off-white);
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .uf-cursor {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Lenis smooth-scroll support */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}

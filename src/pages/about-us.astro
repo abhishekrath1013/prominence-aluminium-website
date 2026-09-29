@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { images } from "../assets/images";
+import Eyebrow from "../components/Eyebrow.astro";
+import Frame from "../components/Frame.astro";
+import { engineeringStats, company, sisterBrands } from "../data/company";
+import ContactCTA from "../sections/ContactCTA.astro";
+---
+
+<BaseLayout
+  title="About Prominance"
+  description="PROMINANCE is a precision-engineered aluminium window and door systems brand, manufactured by PWDS Extrusions Private Limited in Coimbatore, India."
+  path="/about-us/"
+  ogImage="/media/villa.jpeg"
+>
+  <PageHero eyebrow="About Prominance" image={images.villa} imageAlt="A minimalist villa terrace at dusk, framed by slim aluminium glazing over a tropical landscape.">
+    Precision, by design.
+    <Fragment slot="description">
+      PROMINANCE engineers aluminium window, door and facade systems that combine durability, strength and a
+      slim, minimal sightline — built to maximise the connection between architecture and the outside world.
+    </Fragment>
+  </PageHero>
+
+  <section class="bg-off-white py-24 md:py-36" data-reveal-group>
+    <div class="container-frame grid grid-cols-1 gap-12 md:grid-cols-12">
+      <div class="md:col-span-4">
+        <Eyebrow index="01" class="text-ink/65" data-reveal="fade">Mission</Eyebrow>
+      </div>
+      <div class="md:col-span-8">
+        <p class="max-w-2xl font-display text-2xl leading-snug text-ink md:text-3xl" data-reveal="up">
+          To craft precision-engineered aluminium window systems, customisable and vault-like in quality, backed
+          by service that makes Prominance a trusted partner in framing every space.
+        </p>
+      </div>
+    </div>
+
+    <div class="container-frame mt-20 grid grid-cols-1 gap-12 md:grid-cols-12">
+      <div class="md:col-span-4">
+        <Eyebrow index="02" class="text-ink/65" data-reveal="fade">Vision</Eyebrow>
+      </div>
+      <div class="md:col-span-8">
+        <p class="max-w-2xl text-base leading-relaxed text-ink/70" data-reveal="up">
+          To become the global standard for premium aluminium window systems — recognised for quality,
+          aesthetics and sustainable innovation, and trusted by architects and homeowners to beautifully frame
+          every space.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink py-24 text-off-white md:py-36" data-reveal-group>
+    <div class="container-frame">
+      <Eyebrow index="03" class="text-aluminium" data-reveal="fade">What We Stand For</Eyebrow>
+      <div class="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
+        {[
+          { title: "Sustainability", body: "Naturally corrosion-resistant, 100% recyclable virgin aluminium." },
+          { title: "Quality & Reliability", body: "Rigorously tested hardware, gaskets and finishes, backed by warranty." },
+          { title: "Performance & Security", body: "Vault-like durability engineered into every locking system." },
+          { title: "Customisation", body: "The freedom to specify a finish, configuration and scale for every space." },
+        ].map((v) => (
+          <div data-reveal="up" class="border-t border-off-white/15 pt-6">
+            <p class="font-display text-xl">{v.title}</p>
+            <p class="mt-3 text-sm leading-relaxed text-stone">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-off-white py-24 md:py-36" data-reveal-group>
+    <div class="container-frame grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        engineeringStats.map((stat) => (
+          <div data-reveal="up" class="border-t border-ink/10 pt-6">
+            <p class="font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-ink">
+              {stat.value}
+              {stat.unit && <span class="ml-1 text-base text-ink/60">{stat.unit}</span>}
+            </p>
+            <p class="mt-4 text-sm text-ink/60">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-off-white pb-24 md:pb-36" data-reveal-group>
+    <div class="container-frame grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-16">
+      <div class="uf-frame-host relative md:col-span-6" data-reveal="up">
+        <div class="relative aspect-[4/3] w-full overflow-hidden">
+          <Image
+            src={images.fullView}
+            alt="A two-storey modern villa with a pool, manufactured facility context."
+            class="h-full w-full object-cover"
+            loading="lazy"
+            widths={[400, 800, 1200]}
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+        </div>
+        <Frame hover />
+      </div>
+      <div class="md:col-span-6">
+        <Eyebrow index="04" class="text-ink/65" data-reveal="fade">Manufacturing</Eyebrow>
+        <h2 class="mt-6 font-display text-[clamp(1.75rem,3.5vw,2.5rem)] leading-[1.1] text-ink text-balance" data-reveal="up">
+          Manufactured by {company.legalName}.
+        </h2>
+        <p class="mt-6 max-w-md text-sm leading-relaxed text-ink/60" data-reveal="up">
+          Every Prominance system is manufactured at our facility in Coimbatore, Tamil Nadu — {company.addressLine1}
+          {" "}{company.addressLine2}.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink py-20 text-off-white md:py-28" data-reveal-group>
+    <div class="container-frame">
+      <Eyebrow index="05" class="text-aluminium" data-reveal="fade">Our Creative Brands</Eyebrow>
+      <div class="mt-10 flex flex-wrap gap-x-14 gap-y-6" data-reveal="up">
+        {sisterBrands.map((b) => (
+          <a href={b.href} target="_blank" rel="noopener noreferrer" class="group">
+            <p class="font-display text-2xl transition-precise group-hover:opacity-60">{b.name}</p>
+            <p class="mt-1 text-sm text-stone">{b.line}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>

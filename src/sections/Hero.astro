@@ -1,0 +1,379 @@
+---
+import { Image } from "astro:assets";
+import Frame from "../components/Frame.astro";
+import { getProduct } from "../data/products";
+
+// A full-bleed, auto-advancing product carousel: one system shown large at a
+// time, the next four staged as a staggered card strip that "opens" into the
+// full frame when it becomes active.
+const slugs = ["graf-45", "graf-73", "livio", "robus-40", "graf-32"] as const;
+const slides = slugs.map((s) => getProduct(s)!);
+const cardHeights = ["min-h-[16rem]", "min-h-[19rem]", "min-h-[21rem]", "min-h-[18rem]"];
+
+const slideMeta = Object.fromEntries(
+  slides.map((s) => [s.slug, { slug: s.slug, category: s.category, name: s.name, headline: s.headline }])
+);
+---
+
+<section class="uf-carousel relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink" data-reveal-group>
+  <div class="uf-carousel-stage absolute inset-0">
+    {
+      slides.map((slide, i) => (
+        <div class="uf-carousel-bg absolute inset-0" data-bg-slug={slide.slug} data-active={i === 0 ? "true" : "false"}>
+          <Image
+            src={slide.heroImage}
+            alt={`${slide.fullTitle} — ${slide.headline}`}
+            class="h-full w-full object-cover"
+            fetchpriority={i === 0 ? "high" : "low"}
+            loading={i === 0 ? "eager" : "lazy"}
+            widths={[640, 1200, 1920, 2560]}
+            sizes="100vw"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-ink/35" />
+        </div>
+      ))
+    }
+    <div class="uf-carousel-flyer" data-flyer aria-hidden="true">
+      <img data-flyer-img alt="" />
+    </div>
+  </div>
+
+  <div class="pointer-events-none absolute inset-3 z-10 md:inset-6"><Frame tone="off-white" /></div>
+
+  <div class="uf-carousel-content-wrap container-frame absolute inset-0 z-10 flex flex-col justify-end pb-44 pt-32 md:pb-52">
+    <div class="uf-carousel-content max-w-md lg:max-w-lg">
+      <p class="label-eyebrow text-off-white/70" data-current-eyebrow>{slides[0].category}</p>
+
+      <h1 class="mt-5 font-display text-[clamp(2.75rem,6vw,4.75rem)] uppercase leading-[0.94] text-off-white text-balance" data-current-title>
+        {slides[0].name}
+      </h1>
+
+      <p class="mt-6 max-w-sm text-base leading-relaxed text-off-white/70" data-current-desc>{slides[0].headline}</p>
+
+      <div class="mt-9 flex items-center gap-5">
+        <a
+          href={`/${slides[0].slug}/`}
+          class="flex h-14 w-14 flex-none items-center justify-center rounded-full border border-brass text-brass transition-precise hover:bg-brass hover:text-ink"
+          data-current-icon-href
+          aria-label="View product"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L9 3M14 8L9 13" stroke="currentColor" stroke-width="1.3" /></svg>
+        </a>
+        <a
+          href={`/${slides[0].slug}/`}
+          class="uf-frame-host group relative inline-flex items-center gap-3 rounded-full border border-off-white/40 px-7 py-4 text-off-white transition-precise hover:border-off-white"
+          data-current-cta-href
+        >
+          <span class="label-eyebrow">Explore Product</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="uf-carousel-cards absolute inset-x-0 bottom-24 z-10 hidden justify-end gap-3 px-6 2xl:flex 2xl:px-12 2xl:gap-4" aria-label="Other systems">
+    {
+      [0, 1, 2, 3].map((slot) => (
+        <button type="button" class:list={["uf-carousel-card group relative w-[12vw] max-w-[170px] min-w-[120px] flex-none overflow-hidden rounded-t-xl", cardHeights[slot]]} data-slot={slot}>
+          <img data-card-img class="h-full w-full object-cover transition-precise duration-[1200ms] group-hover:scale-105" alt="" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
+          <span class="absolute left-4 top-4 h-1.5 w-1.5 rounded-full bg-brass" />
+          <span class="absolute inset-x-4 bottom-4 text-left">
+            <span class="block text-[0.6rem] uppercase tracking-[0.14em] text-off-white/60" data-card-eyebrow />
+            <span class="mt-1 block font-display text-base leading-tight text-off-white" data-card-name />
+          </span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="uf-carousel-controls container-frame absolute inset-x-0 bottom-8 z-10 flex items-center gap-6 md:bottom-10">
+    <div class="flex items-center gap-3">
+      <button type="button" class="uf-carousel-arrow" data-prev aria-label="Previous system">
+        <svg width="16" height="10" viewBox="0 0 18 10" fill="none"><path d="M18 5H1M1 5L5 1M1 5L5 9" stroke="currentColor" stroke-width="1" /></svg>
+      </button>
+      <button type="button" class="uf-carousel-arrow" data-next aria-label="Next system">
+        <svg width="16" height="10" viewBox="0 0 18 10" fill="none"><path d="M0 5H17M17 5L13 1M17 5L13 9" stroke="currentColor" stroke-width="1" /></svg>
+      </button>
+    </div>
+
+    <div class="uf-carousel-progress relative h-px flex-1 bg-off-white/15">
+      <span class="uf-carousel-progress-fill absolute inset-y-0 left-0 bg-brass" data-progress-fill></span>
+    </div>
+
+    <div class="font-display text-2xl text-off-white/80" data-counter>01</div>
+  </div>
+
+  <script type="application/json" id="uf-carousel-data" set:html={JSON.stringify(slideMeta)} />
+</section>
+
+<style>
+  .uf-carousel-bg {
+    opacity: 0;
+    transition: opacity 0.9s var(--ease-precise);
+    z-index: 0;
+  }
+
+  .uf-carousel-bg[data-active="true"] {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .uf-carousel-flyer {
+    position: fixed;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 30;
+    will-change: transform, width, height, border-radius;
+  }
+
+  .uf-carousel-flyer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .uf-carousel-content[data-fading="true"] {
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-precise);
+  }
+
+  .uf-carousel-content {
+    opacity: 1;
+    transition: opacity 0.5s var(--ease-precise) 0.35s;
+  }
+
+  .uf-carousel-card {
+    cursor: pointer;
+    transition: transform var(--duration-normal) var(--ease-precise);
+  }
+
+  .uf-carousel-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .uf-carousel-arrow {
+    display: flex;
+    height: 44px;
+    width: 44px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgb(244 241 234 / 0.35);
+    color: var(--color-off-white);
+    transition: border-color var(--duration-normal) var(--ease-precise), background var(--duration-normal) var(--ease-precise);
+  }
+
+  .uf-carousel-arrow:hover {
+    border-color: var(--color-brass);
+    background: rgb(176 141 87 / 0.12);
+  }
+
+  .uf-carousel-progress-fill {
+    width: 0%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .uf-carousel-bg {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  interface Slide {
+    slug: string;
+    category: string;
+    name: string;
+    headline: string;
+  }
+
+  const section = document.querySelector<HTMLElement>(".uf-carousel");
+  if (section) {
+    const bgLayers = Array.from(section.querySelectorAll<HTMLElement>(".uf-carousel-bg"));
+
+    // Pull display text from the DOM the server rendered, keyed by slug, via a hidden JSON island.
+    const dataEl = document.getElementById("uf-carousel-data");
+    const meta: Record<string, Slide> = dataEl ? JSON.parse(dataEl.textContent || "{}") : {};
+
+    const order = bgLayers.map((el) => el.dataset.bgSlug!);
+    let activeIndex = 0;
+
+    const contentEl = section.querySelector<HTMLElement>(".uf-carousel-content");
+    const eyebrowEl = section.querySelector<HTMLElement>("[data-current-eyebrow]");
+    const titleEl = section.querySelector<HTMLElement>("[data-current-title]");
+    const descEl = section.querySelector<HTMLElement>("[data-current-desc]");
+    const ctaEl = section.querySelector<HTMLAnchorElement>("[data-current-cta-href]");
+    const iconEl = section.querySelector<HTMLAnchorElement>("[data-current-icon-href]");
+    const counterEl = section.querySelector<HTMLElement>("[data-counter]");
+    const progressFill = section.querySelector<HTMLElement>("[data-progress-fill]");
+    const cardButtons = Array.from(section.querySelectorAll<HTMLButtonElement>(".uf-carousel-card"));
+    const flyer = section.querySelector<HTMLElement>("[data-flyer]");
+    const flyerImg = section.querySelector<HTMLImageElement>("[data-flyer-img]");
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function cardSlugsFor(index: number) {
+      return [1, 2, 3, 4].map((offset) => order[(index + offset) % order.length]);
+    }
+
+    function paintCards(index: number) {
+      const slugsInStrip = cardSlugsFor(index);
+      cardButtons.forEach((btn, i) => {
+        const slug = slugsInStrip[i];
+        const m = meta[slug];
+        btn.dataset.targetSlug = slug;
+        const img = btn.querySelector<HTMLImageElement>("[data-card-img]");
+        const bgImg = section!.querySelector<HTMLImageElement>(`.uf-carousel-bg[data-bg-slug="${slug}"] img`);
+        if (img && bgImg) img.src = bgImg.currentSrc || bgImg.src;
+        const eb = btn.querySelector<HTMLElement>("[data-card-eyebrow]");
+        const nm = btn.querySelector<HTMLElement>("[data-card-name]");
+        if (eb && m) eb.textContent = m.category;
+        if (nm && m) nm.textContent = m.name;
+      });
+    }
+
+    function paintContent(index: number) {
+      const slug = order[index];
+      const m = meta[slug];
+      if (!m) return;
+      if (eyebrowEl) eyebrowEl.textContent = m.category;
+      if (titleEl) titleEl.textContent = m.name;
+      if (descEl) descEl.textContent = m.headline;
+      if (ctaEl) ctaEl.href = `/${slug}/`;
+      if (iconEl) iconEl.href = `/${slug}/`;
+      if (counterEl) counterEl.textContent = String(index + 1).padStart(2, "0");
+    }
+
+    function setActiveBg(index: number) {
+      const slug = order[index];
+      bgLayers.forEach((el) => el.setAttribute("data-active", el.dataset.bgSlug === slug ? "true" : "false"));
+    }
+
+    paintCards(0);
+
+    function commit(targetIndex: number) {
+      activeIndex = targetIndex;
+      setActiveBg(activeIndex);
+      paintContent(activeIndex);
+      paintCards(activeIndex);
+    }
+
+    function runFlyer(sourceEl: HTMLElement, targetIndex: number, onDone: () => void) {
+      if (!flyer || !flyerImg || reduceMotion) {
+        onDone();
+        return;
+      }
+      const slug = order[targetIndex];
+      const bgImg = section!.querySelector<HTMLImageElement>(`.uf-carousel-bg[data-bg-slug="${slug}"] img`);
+      if (!bgImg) {
+        onDone();
+        return;
+      }
+
+      const from = sourceEl.getBoundingClientRect();
+      const to = section!.getBoundingClientRect();
+      const fromRadius = parseFloat(getComputedStyle(sourceEl).borderTopLeftRadius) || 0;
+
+      flyerImg.src = bgImg.currentSrc || bgImg.src;
+      gsap.set(flyer, {
+        opacity: 1,
+        top: from.top,
+        left: from.left,
+        width: from.width,
+        height: from.height,
+        borderRadius: fromRadius,
+      });
+      gsap.set(contentEl, { opacity: 0 });
+
+      gsap.to(flyer, {
+        top: to.top,
+        left: to.left,
+        width: to.width,
+        height: to.height,
+        borderRadius: 0,
+        duration: 0.95,
+        ease: "power3.inOut",
+        onComplete: () => {
+          commit(targetIndex);
+          gsap.set(flyer, { opacity: 0 });
+          gsap.to(contentEl, { opacity: 1, duration: 0.5, ease: "power2.out" });
+          onDone();
+        },
+      });
+    }
+
+    let animating = false;
+    let autoplayTimer: number | undefined;
+
+    function goNext() {
+      if (animating) return;
+      animating = true;
+      restartAutoplay();
+      const targetIndex = (activeIndex + 1) % order.length;
+      const frontCard = cardButtons[0];
+      runFlyer(frontCard, targetIndex, () => {
+        animating = false;
+      });
+    }
+
+    function goPrev() {
+      if (animating) return;
+      animating = true;
+      restartAutoplay();
+      const targetIndex = (activeIndex - 1 + order.length) % order.length;
+      if (reduceMotion) {
+        commit(targetIndex);
+        animating = false;
+        return;
+      }
+      gsap.to(contentEl, {
+        opacity: 0,
+        duration: 0.25,
+        onComplete: () => {
+          commit(targetIndex);
+          gsap.to(contentEl, { opacity: 1, duration: 0.5, ease: "power2.out" });
+          animating = false;
+        },
+      });
+    }
+
+    function goToCard(btn: HTMLButtonElement) {
+      if (animating) return;
+      const slug = btn.dataset.targetSlug;
+      const targetIndex = order.indexOf(slug ?? "");
+      if (targetIndex === -1 || targetIndex === activeIndex) return;
+      animating = true;
+      restartAutoplay();
+      runFlyer(btn, targetIndex, () => {
+        animating = false;
+      });
+    }
+
+    section.querySelector<HTMLButtonElement>("[data-next]")?.addEventListener("click", goNext);
+    section.querySelector<HTMLButtonElement>("[data-prev]")?.addEventListener("click", goPrev);
+    cardButtons.forEach((btn) => btn.addEventListener("click", () => goToCard(btn)));
+
+    const AUTOPLAY_MS = 5600;
+
+    function restartAutoplay() {
+      if (reduceMotion) return;
+      if (autoplayTimer) window.clearInterval(autoplayTimer);
+      if (progressFill) gsap.fromTo(progressFill, { width: "0%" }, { width: "100%", duration: AUTOPLAY_MS / 1000, ease: "none" });
+      autoplayTimer = window.setInterval(goNext, AUTOPLAY_MS);
+    }
+
+    if (!reduceMotion) {
+      restartAutoplay();
+      section.addEventListener("mouseenter", () => {
+        if (autoplayTimer) window.clearInterval(autoplayTimer);
+        if (progressFill) gsap.killTweensOf(progressFill);
+      });
+      section.addEventListener("mouseleave", restartAutoplay);
+    }
+  }
+</script>

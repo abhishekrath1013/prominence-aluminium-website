@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProductDetail from "../components/ProductDetail.astro";
+import { getProduct } from "../data/products";
+const product = getProduct("graf-73")!;
+---
+
+<BaseLayout
+  title={`${product.name} — ${product.fullTitle}`}
+  description={product.description}
+  path="/graf-73/"
+  ogImage={product.heroImage.src}
+>
+  <ProductDetail product={product} />
+</BaseLayout>

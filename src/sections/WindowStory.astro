@@ -1,0 +1,444 @@
+---
+import Eyebrow from "../components/Eyebrow.astro";
+
+// A scroll-panned line-art frieze: raw aluminium billet through to an installed,
+// glowing window in a customer's home. A single caption crossfades beneath the
+// artwork in step with each scene — the drawing carries the narrative, the
+// caption names it.
+// xUnit matches the scene marker dots on the spine (350/1000/1650/2300/2900 of the
+// 3200-wide viewBox) — the caption track shares the svg's exact rendered width, so a
+// caption anchored at (xUnit / 3200 * 100)% always sits directly under its scene,
+// panning in lockstep with the artwork above it.
+const steps = [
+  { label: "Extruded", copy: "Every profile begins as 6063 T-6 virgin aluminium billet, pressed through a die to the millimetre.", xUnit: 350 },
+  { label: "Cut & Joined", copy: "Profiles are mitred and locked at a true 90° with reinforced corner cleats.", xUnit: 1000 },
+  { label: "Glazed", copy: "Glass sets into a continuous gasket line — a hairline reveal, sealed for life.", xUnit: 1650 },
+  { label: "Delivered", copy: "Every unit is crated and inspected before it leaves the factory floor.", xUnit: 2300 },
+  { label: "Installed", copy: "Fitted on site — the frame disappears, and the view begins.", xUnit: 2900 },
+] as const;
+const svgViewBoxWidth = 3200;
+---
+
+<section class="uf-story relative bg-ink" data-story-section aria-label="How a Prominance window is made, from raw aluminium to an installed window">
+  <div class="uf-story-pin">
+    <div class="uf-story-heading container-frame" data-reveal-group>
+      <Eyebrow index="—" class="text-aluminium justify-center" data-reveal="fade">The Making Of</Eyebrow>
+      <h2 class="mx-auto mt-4 max-w-xl font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.1] text-off-white text-balance" data-reveal="up">
+        From billet to elevation.
+      </h2>
+    </div>
+
+    <div class="uf-story-viewport">
+      <svg
+        class="uf-story-svg"
+        viewBox="0 0 3200 640"
+        preserveAspectRatio="xMinYMid meet"
+        role="img"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="j-glass" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#eef3f6" stop-opacity="0.75" />
+            <stop offset="55%" stop-color="#9fb0b9" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#eef3f6" stop-opacity="0.7" />
+          </linearGradient>
+          <radialGradient id="j-glow" cx="50%" cy="55%" r="65%">
+            <stop offset="0%" stop-color="#f3d9a6" stop-opacity="0.85" />
+            <stop offset="100%" stop-color="#f3d9a6" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        <!-- spine: always visible, ties every scene to one ground line -->
+        <line x1="0" y1="560" x2="3200" y2="560" stroke="#f4f1ea" stroke-width="1.5" opacity="0.14" />
+        {[350, 1000, 1650, 2300, 2900].map((cx) => (
+          <circle cx={cx} cy="560" r="3" fill="#f4f1ea" opacity="0.3" />
+        ))}
+
+        <!-- ================= SCENE 1 — EXTRUDED ================= -->
+        <g id="j-scene-1" opacity="0" stroke="#f4f1ea" stroke-width="2.5" fill="none">
+          <rect x="150" y="500" width="95" height="58" rx="8" />
+          <line x1="150" y1="519" x2="245" y2="519" opacity="0.5" />
+          <line x1="150" y1="539" x2="245" y2="539" opacity="0.5" />
+          <rect x="285" y="420" width="90" height="138" rx="4" />
+          <rect x="303" y="462" width="24" height="54" opacity="0.6" />
+          <rect id="j-bar" x="375" y="470" width="270" height="26" rx="2" fill="var(--color-ink)" stroke="#f4f1ea" />
+        </g>
+
+        <!-- ================= SCENE 2 — CUT & JOINED ================= -->
+        <g id="j-scene-2" opacity="0" stroke="#f4f1ea" stroke-width="2.5" fill="none">
+          <rect x="830" y="500" width="350" height="24" rx="2" />
+          <g id="j-saw" opacity="0">
+            <circle cx="1005" cy="491" r="27" />
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+              <line
+                x1={1005 + Math.cos((a * Math.PI) / 180) * 20}
+                y1={491 + Math.sin((a * Math.PI) / 180) * 20}
+                x2={1005 + Math.cos((a * Math.PI) / 180) * 27}
+                y2={491 + Math.sin((a * Math.PI) / 180) * 27}
+              />
+            ))}
+          </g>
+          <rect id="j-cut-gap" x="988" y="494" width="34" height="34" fill="var(--color-ink)" stroke="none" opacity="0" />
+
+          <path d="M950,338 L950,418 L1046,418" stroke-width="9" stroke-linejoin="round" />
+          <g id="j-cleat" opacity="0">
+            <rect x="920" y="388" width="30" height="30" transform="rotate(45 935 403)" opacity="0.85" />
+          </g>
+        </g>
+
+        <!-- ================= SCENE 3 — GLAZED ================= -->
+        <g id="j-scene-3" opacity="0">
+          <path
+            fill="#f4f1ea"
+            fill-rule="evenodd"
+            stroke="none"
+            d="M1520,340 H1780 V540 H1520 Z M1532,352 H1768 V528 H1532 Z M1644,352 H1656 V528 H1644 Z"
+          />
+          <g id="j-panes" opacity="0">
+            <rect x="1532" y="352" width="112" height="176" fill="url(#j-glass)" />
+            <rect x="1656" y="352" width="112" height="176" fill="url(#j-glass)" />
+          </g>
+          <g id="j-glaze-tool" opacity="0" stroke="#f4f1ea" stroke-width="2" fill="none">
+            <circle cx="1610" cy="470" r="9" />
+            <circle cx="1610" cy="492" r="9" />
+            <line x1="1619" y1="481" x2="1648" y2="481" />
+          </g>
+        </g>
+
+        <!-- ================= SCENE 4 — DELIVERED ================= -->
+        <g id="j-scene-4" opacity="0" stroke="#f4f1ea" stroke-width="2.5" fill="none">
+          <path d="M2130,540 H2340" stroke-dasharray="10 12" opacity="0.3" />
+          <path d="M2130,480 H2190 V540 H2130 Z" />
+          <path d="M2190,460 H2335 V540 H2190 Z" />
+          <circle cx="2160" cy="545" r="18" fill="var(--color-ink)" />
+          <circle cx="2160" cy="545" r="6" />
+          <circle cx="2300" cy="545" r="18" fill="var(--color-ink)" />
+          <circle cx="2300" cy="545" r="6" />
+          <g id="j-cargo-window" opacity="0">
+            <rect x="2202" y="472" width="118" height="58" />
+            <line x1="2261" y1="472" x2="2261" y2="530" />
+          </g>
+        </g>
+
+        <!-- ================= SCENE 5 — INSTALLED ================= -->
+        <g id="j-scene-5" opacity="0" stroke="#f4f1ea" stroke-width="2.5" fill="none">
+          <path d="M2700,340 L2900,215 L3100,340 Z" stroke-linejoin="round" />
+          <rect x="2720" y="340" width="360" height="220" />
+          <rect x="2758" y="430" width="52" height="130" opacity="0.7" />
+          <line x1="2784" y1="480" x2="2784" y2="494" opacity="0.7" />
+          <circle cx="2960" cy="555" r="16" opacity="0.55" />
+          <line x1="2960" y1="571" x2="2960" y2="560" opacity="0.55" />
+
+          <rect x="2840" y="398" width="122" height="112" stroke-dasharray="4 5" opacity="0.4" />
+
+          <g id="j-house-window" opacity="0">
+            <circle cx="2901" cy="454" r="70" fill="url(#j-glow)" stroke="none" />
+            <path
+              fill="#f4f1ea"
+              fill-rule="evenodd"
+              stroke="none"
+              d="M2840,398 H2962 V510 H2840 Z M2849,407 H2953 V501 H2849 Z M2901,407 H2911 V501 H2901 Z"
+            />
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="uf-story-captions-track">
+      <div class="uf-story-captions">
+        {
+          steps.map((step, i) => (
+            <div
+              class="uf-story-caption"
+              id={`j-caption-${i + 1}`}
+              data-active={i === 0 ? "true" : "false"}
+              style={`left:${(step.xUnit / svgViewBoxWidth) * 100}%`}
+            >
+              <span class="label-eyebrow text-brass">{step.label}</span>
+              <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-stone md:text-base">{step.copy}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="uf-story-progress-wrap container-frame">
+      <div class="uf-story-progress" aria-hidden="true">
+        <span class="uf-story-progress-fill"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .uf-story {
+    position: relative;
+  }
+
+  .uf-story-pin {
+    height: 100svh;
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-block: 3rem;
+  }
+
+  .uf-story-heading {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .uf-story-viewport {
+    width: 100%;
+    height: min(52vh, 540px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .uf-story-svg {
+    height: 100%;
+    width: auto;
+    display: block;
+    will-change: transform;
+  }
+
+  /* Shares the svg's exact rendered width (set in JS) and receives the same pan
+     tween, so a caption positioned at left:X% always sits under the same viewBox
+     coordinate as the artwork above it — text tracks the drawing as it scrolls. */
+  .uf-story-captions-track {
+    position: relative;
+    /* .uf-story-pin is a flex column with align-items:center — once JS widens
+       this to match the svg's full rendered width (wider than the pin), the
+       default centering would shift its left edge away from the svg's own
+       flush-left position, breaking the shared coordinate system below. */
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 2rem;
+    /* Horizontal-only: the track is wider than the page (matches the svg), so
+       overflow-x guards against a stray scrollbar, but overflow-y must stay
+       visible or a two-line caption gets its second line clipped, since its
+       absolutely-positioned children don't contribute to the track's height. */
+    overflow-x: hidden;
+    overflow-y: visible;
+    will-change: transform;
+  }
+
+  .uf-story-captions {
+    position: relative;
+    min-height: 6rem;
+    text-align: center;
+  }
+
+  .uf-story-caption {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: min(28rem, 90vw);
+    opacity: 0;
+  }
+
+  .uf-story-caption[data-active="true"] {
+    opacity: 1;
+  }
+
+  .uf-story-progress-wrap {
+    width: 100%;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .uf-story-progress {
+    width: min(320px, 100%);
+    height: 1px;
+    background: rgb(244 241 234 / 0.15);
+    margin-inline: auto;
+  }
+
+  .uf-story-progress-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--color-off-white);
+    transform-origin: left;
+  }
+
+  @media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+    .uf-story-pin {
+      height: auto;
+      min-height: 0;
+      padding-block: 4rem;
+    }
+    .uf-story-viewport {
+      height: 46vh;
+      min-height: 260px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .uf-story-viewport::-webkit-scrollbar {
+      display: none;
+    }
+    .uf-story-svg {
+      height: 100%;
+      width: auto;
+      max-width: none;
+    }
+    .uf-story-progress-wrap {
+      display: none;
+    }
+    .uf-story-captions-track {
+      width: 100% !important;
+      overflow: visible;
+    }
+    .uf-story-captions {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+    .uf-story-caption {
+      position: static;
+      left: auto;
+      transform: none;
+      width: auto;
+      max-width: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const section = document.querySelector<HTMLElement>("[data-story-section]");
+  const groupIds = ["j-scene-1", "j-scene-2", "j-scene-3", "j-scene-4", "j-scene-5"];
+  const extraIds = ["j-saw", "j-cut-gap", "j-cleat", "j-panes", "j-glaze-tool", "j-cargo-window", "j-house-window"];
+
+  function showFinalState() {
+    [...groupIds, ...extraIds].forEach((id) => {
+      document.getElementById(id)?.setAttribute("opacity", "1");
+    });
+    const bar = document.getElementById("j-bar");
+    if (bar) bar.style.transform = "scaleX(1)";
+    const fill = document.querySelector<HTMLElement>(".uf-story-progress-fill");
+    if (fill) fill.style.transform = "scaleX(1)";
+  }
+
+  if (!section || reduceMotion) {
+    showFinalState();
+  } else {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
+      const pinWrap = section.querySelector<HTMLElement>(".uf-story-pin");
+      const viewport = section.querySelector<HTMLElement>(".uf-story-viewport");
+      const svg = section.querySelector<SVGSVGElement>(".uf-story-svg");
+      const progressFill = section.querySelector<HTMLElement>(".uf-story-progress-fill");
+      const captionsTrack = section.querySelector<HTMLElement>(".uf-story-captions-track");
+      if (!pinWrap || !viewport || !svg) return;
+
+      gsap.set("#j-bar", { scaleX: 0, transformOrigin: "left center" });
+      if (progressFill) gsap.set(progressFill, { scaleX: 0, transformOrigin: "left center" });
+
+      // The captions track must match the svg's own rendered width exactly so a
+      // caption at left:X% lands on the same viewBox coordinate as the artwork —
+      // re-synced on every ScrollTrigger refresh (resize, font load, etc).
+      const syncTrackWidth = () => {
+        if (captionsTrack) captionsTrack.style.width = `${svg.getBoundingClientRect().width}px`;
+      };
+      syncTrackWidth();
+      ScrollTrigger.addEventListener("refresh", syncTrackWidth);
+
+      const getMax = () => Math.max(0, svg.getBoundingClientRect().width - viewport.getBoundingClientRect().width);
+
+      // The scene markers on the spine (350/1000/1650/2300/2900 of the 3200-wide
+      // viewBox), paired with the caption thresholds below — the pan is built so
+      // each scene's marker sits at the viewport's horizontal centre exactly when
+      // its caption becomes active, not just a flat left-to-right sweep.
+      const sceneXUnits = [350, 1000, 1650, 2300, 2900];
+      const captionStarts = [0, 0.2, 0.42, 0.63, 0.82];
+      const svgViewBoxWidth = 3200;
+      const centerOffset = (xUnit: number) => () =>
+        viewport.getBoundingClientRect().width / 2 - xUnit * (svg.getBoundingClientRect().width / svgViewBoxWidth);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => "+=" + Math.max(window.innerHeight * 2.6, getMax() * 1.25),
+          scrub: 1,
+          pin: pinWrap,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Each scene holds dead-centre for the bulk of its caption's dwell time,
+      // then makes a quick, eased pan to the next scene's centred position —
+      // rather than drifting continuously off-centre for the whole window.
+      const panTargets = captionsTrack ? [svg, captionsTrack] : svg;
+      const transitionDuration = 0.08;
+      gsap.set(panTargets, { x: centerOffset(sceneXUnits[0]) });
+      for (let i = 0; i < sceneXUnits.length - 1; i++) {
+        const arrive = captionStarts[i + 1];
+        tl.to(panTargets, { x: centerOffset(sceneXUnits[i + 1]), ease: "power2.inOut", duration: transitionDuration }, arrive - transitionDuration);
+      }
+
+      if (progressFill) {
+        tl.to(progressFill, { scaleX: 1, ease: "none", duration: 1 }, 0);
+      }
+
+      // Scene 1 — extrusion
+      tl.to("#j-scene-1", { opacity: 1, ease: "none", duration: 0.03 }, 0.0)
+        .to("#j-bar", { scaleX: 1, ease: "none", duration: 0.1 }, 0.05)
+        // Scene 2 — cut & joined
+        .to("#j-scene-2", { opacity: 1, ease: "none", duration: 0.03 }, 0.2)
+        .to("#j-saw", { opacity: 1, ease: "none", duration: 0.04 }, 0.25)
+        .to("#j-cut-gap", { opacity: 1, ease: "none", duration: 0.03 }, 0.29)
+        .to("#j-cleat", { opacity: 1, ease: "none", duration: 0.05 }, 0.32)
+        // Scene 3 — glazed
+        .to("#j-scene-3", { opacity: 1, ease: "none", duration: 0.03 }, 0.42
+        )
+        .to("#j-panes", { opacity: 1, ease: "none", duration: 0.08 }, 0.46)
+        .to("#j-glaze-tool", { opacity: 1, ease: "none", duration: 0.05 }, 0.52)
+        // Scene 4 — delivered
+        .to("#j-scene-4", { opacity: 1, ease: "none", duration: 0.03 }, 0.63)
+        .to("#j-cargo-window", { opacity: 1, ease: "none", duration: 0.05 }, 0.68)
+        // Scene 5 — installed
+        .to("#j-scene-5", { opacity: 1, ease: "none", duration: 0.04 }, 0.82)
+        .to("#j-house-window", { opacity: 1, ease: "none", duration: 0.1 }, 0.88);
+
+      // Captions crossfade in step with the same scene thresholds above.
+      captionStarts.forEach((start, i) => {
+        const el = `#j-caption-${i + 1}`;
+        tl.to(el, { opacity: 1, ease: "none", duration: 0.05 }, start);
+        const nextStart = captionStarts[i + 1];
+        if (nextStart !== undefined) {
+          tl.to(el, { opacity: 0, ease: "none", duration: 0.05 }, nextStart - 0.05);
+        }
+      });
+
+      return () => {
+        ScrollTrigger.removeEventListener("refresh", syncTrackWidth);
+        if (captionsTrack) captionsTrack.style.width = "";
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
+    });
+
+    mm.add("(max-width: 1023px)", () => {
+      showFinalState();
+    });
+  }
+</script>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { images } from "../assets/images";
+import ProductList from "../components/ProductList.astro";
+import ContactCTA from "../sections/ContactCTA.astro";
+import { products, productFamilies } from "../data/products";
+
+const casement = products.filter((p) => p.family === "casement");
+---
+
+<BaseLayout
+  title="Casement Systems — Livio & Robus Series"
+  description={productFamilies.casement.description}
+  path="/casement/"
+  ogImage="/media/dew.jpg"
+>
+  <PageHero eyebrow="Casement Systems" image={images.dew} imageAlt="A minimal concealed-frame casement window lit by an integrated LED line, overlooking trees.">
+    Livio &amp; Robus
+    <Fragment slot="description">{productFamilies.casement.description}</Fragment>
+  </PageHero>
+
+  <section class="bg-off-white py-24 md:py-36">
+    <div class="container-frame">
+      <ProductList products={casement} />
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>

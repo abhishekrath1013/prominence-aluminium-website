@@ -1,0 +1,59 @@
+---
+import { Font } from "astro:assets";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogImage?: string;
+  headerTheme?: "dark" | "light";
+}
+
+const { title, description, path, ogImage = "/media/hero-corner.jpg", headerTheme = "dark" } = Astro.props;
+const canonical = new URL(path, Astro.site).toString();
+const fullTitle = title.includes("PROMINANCE") ? title : `${title} | PROMINANCE`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta property="og:site_name" content="PROMINANCE" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <Font cssVariable="--font-display-raw" preload />
+    <Font cssVariable="--font-sans-raw" preload />
+  </head>
+  <body>
+    <Header theme={headerTheme} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script src="../animations/site.ts"></script>
+  </body>
+</html>

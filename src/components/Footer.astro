@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+import { footerLinks } from "../data/nav";
+import { company, sisterBrands } from "../data/company";
+import { images } from "../assets/images";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink text-off-white">
+  <div class="container-frame py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <a href="/" class="inline-block">
+          <Image
+            src={images.prominanceLogo}
+            alt="PROMINANCE Window Systems"
+            width={1367}
+            height={222}
+            class="h-8 w-auto brightness-0 invert"
+            widths={[260, 520]}
+            sizes="200px"
+          />
+        </a>
+        <p class="mt-6 max-w-xs text-sm leading-relaxed text-stone">
+          Precision-engineered aluminium window and door systems, manufactured by {company.legalName}.
+        </p>
+        <div class="mt-8 flex gap-5 label-eyebrow text-stone">
+          <a href={company.social.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-off-white transition-precise">Instagram</a>
+          <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" class="hover:text-off-white transition-precise">LinkedIn</a>
+          <a href={company.social.youtube} target="_blank" rel="noopener noreferrer" class="hover:text-off-white transition-precise">YouTube</a>
+          <a href={company.social.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-off-white transition-precise">Facebook</a>
+        </div>
+      </div>
+
+      <div>
+        <p class="label-eyebrow text-aluminium">Products</p>
+        <ul class="mt-5 space-y-3">
+          {footerLinks.products.map((l) => (
+            <li><a href={l.href} class="text-sm text-stone hover:text-off-white transition-precise">{l.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="label-eyebrow text-aluminium">Company</p>
+        <ul class="mt-5 space-y-3">
+          {footerLinks.company.map((l) => (
+            <li><a href={l.href} class="text-sm text-stone hover:text-off-white transition-precise">{l.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="label-eyebrow text-aluminium">Get in touch</p>
+        <ul class="mt-5 space-y-3 text-sm text-stone">
+          <li><a href={company.phoneHref} class="hover:text-off-white transition-precise">{company.phoneDisplay}</a></li>
+          <li><a href={`mailto:${company.email}`} class="hover:text-off-white transition-precise">{company.email}</a></li>
+          <li class="pt-2 leading-relaxed">
+            {company.addressLine1}<br />
+            {company.addressLine2}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule-thin mt-16 mb-8"></div>
+
+    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <p class="label-eyebrow text-aluminium">Our creative brands</p>
+      <div class="flex flex-wrap gap-x-8 gap-y-2">
+        {sisterBrands.map((b) => (
+          <a href={b.href} target="_blank" rel="noopener noreferrer" class="text-sm text-stone hover:text-off-white transition-precise">
+            {b.name}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="rule-thin mt-8 mb-6"></div>
+
+    <div class="flex flex-col gap-2 text-xs text-aluminium md:flex-row md:items-center md:justify-between">
+      <p>&copy; {year} {company.legalName}. All rights reserved.</p>
+      <p>Prominance Your View.</p>
+    </div>
+  </div>
+</footer>

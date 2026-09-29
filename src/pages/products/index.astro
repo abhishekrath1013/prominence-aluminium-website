@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { images } from "../../assets/images";
+import Eyebrow from "../../components/Eyebrow.astro";
+import ProductList from "../../components/ProductList.astro";
+import Finishes from "../../sections/Finishes.astro";
+import ContactCTA from "../../sections/ContactCTA.astro";
+import { products, productFamilies } from "../../data/products";
+
+const sliding = products.filter((p) => p.family === "sliding");
+const casement = products.filter((p) => p.family === "casement");
+---
+
+<BaseLayout
+  title="Products — Sliding & Casement Aluminium Systems"
+  description="The full Prominance collection: Graf sliding systems and Livio / Robus casement systems, engineered in 6063 T-6 virgin aluminium."
+  path="/products/"
+  ogImage="/media/villa-2.png"
+>
+  <PageHero eyebrow="Products" image={images.villa2} imageAlt="A cliffside modern villa at dusk with expansive aluminium-framed glass walls.">
+    The Collection
+    <Fragment slot="description">
+      Two engineering platforms — sliding and casement — built to the same standard of precision, from
+      residential windows to panoramic, all-around concealed glazing.
+    </Fragment>
+  </PageHero>
+
+  <section id="sliding" class="bg-off-white py-24 md:py-36" data-reveal-group>
+    <div class="container-frame">
+      <Eyebrow index="01" class="text-ink/65" data-reveal="fade">Sliding</Eyebrow>
+      <h2 class="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-ink text-balance" data-reveal="up">
+        {productFamilies.sliding.description}
+      </h2>
+    </div>
+    <div class="container-frame mt-16">
+      <ProductList products={sliding} />
+    </div>
+  </section>
+
+  <section id="casement" class="bg-ink py-24 text-off-white md:py-36" data-reveal-group>
+    <div class="container-frame">
+      <Eyebrow index="02" class="text-aluminium" data-reveal="fade">Casement</Eyebrow>
+      <h2 class="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-balance" data-reveal="up">
+        {productFamilies.casement.description}
+      </h2>
+    </div>
+    <div class="container-frame mt-16">
+      <ProductList products={casement} tone="dark" />
+    </div>
+  </section>
+
+  <div id="finishes"><Finishes /></div>
+  <ContactCTA />
+</BaseLayout>
