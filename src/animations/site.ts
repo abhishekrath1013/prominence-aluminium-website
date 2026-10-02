@@ -1,6 +1,7 @@
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import aMarkUrl from "../assets/media/prominance-a-mark.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -115,8 +116,11 @@ document.querySelectorAll<HTMLElement>("[data-line-draw]").forEach((el) => {
 /* Subtle custom cursor — desktop fine-pointer only                        */
 /* ---------------------------------------------------------------------- */
 if (!reduceMotion && isFinePointer) {
+  document.documentElement.classList.add("uf-custom-cursor");
+
   const cursor = document.createElement("div");
   cursor.className = "uf-cursor";
+  cursor.style.backgroundImage = `url(${aMarkUrl.src})`;
   document.body.appendChild(cursor);
 
   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };

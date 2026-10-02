@@ -26,7 +26,7 @@ export const solutions: Solution[] = [
       { label: "Wind load resistance", value: "Designed for 2000 Pa" },
       { label: "Sash size range", value: "1m² — 36m²" },
     ],
-    image: images.skylightWireframe,
+    image: images.facadeStructuralGlazing,
   },
   {
     slug: "aluminium-skirting",

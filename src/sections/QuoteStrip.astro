@@ -1,0 +1,20 @@
+---
+import { company } from "../data/company";
+---
+
+<section class="border-y border-brass/25 bg-brass-soft/25">
+  <div class="container-frame flex flex-col items-center justify-between gap-5 py-7 text-center md:flex-row md:text-left">
+    <p class="font-display text-xl text-ink md:text-2xl">Ready to specify your next project?</p>
+    <div class="flex flex-wrap items-center justify-center gap-5">
+      <a href={company.phoneHref} class="label-eyebrow text-ink/70 transition-precise hover:text-ink">
+        {company.phoneDisplay}
+      </a>
+      <a
+        href="/contact-us/"
+        class="inline-flex items-center gap-2 rounded-full bg-brass px-6 py-3 text-sm font-semibold text-white transition-precise hover:bg-ink"
+      >
+        Get a Quote
+      </a>
+    </div>
+  </div>
+</section>

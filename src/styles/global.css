@@ -1,15 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Brand palette (UNIFRAME architectural luxury) ---- */
-  --color-ink: #0b0b0a;
-  --color-ink-soft: #171613;
+  /* ---- Brand palette (PROMINANCE, luxury-dark) ----
+     Every hue here is sampled directly from the Prominance logo artwork
+     (src/assets/media/prominance-logo.png: wordmark blue #126ca2, the "A"
+     mark's green #429c42) — nothing invented outside that family. Token
+     *names* stay stable (ink/off-white/stone/aluminium/brass/sage) even
+     though the values are tuned for a dark, rich, luxury register rather
+     than a flat reproduction — every component uses these semantic
+     utilities (bg-ink, text-brass, …), so repointing the values here
+     recolors the whole site without touching component files. */
+  --color-ink: #0b1a26;
+  --color-ink-soft: #142c3d;
   --color-off-white: #f4f1ea;
-  --color-stone: #c8c4ba;
-  --color-aluminium: #a7a9a6;
+  --color-stone: #aebccb;
+  --color-aluminium: #8699a6;
   --color-white: #ffffff;
-  --color-brass: #b08d57;
-  --color-brass-soft: #d9c6a0;
+  --color-brass: #1f7cb4;
+  --color-brass-soft: #6bb3e0;
+  --color-sage: #3f9a46;
+  --color-sage-soft: #85c48c;
 
   /* ---- Type families (chained onto Astro's font component vars,     */
   /* which are deliberately named *-raw to avoid a :root redeclaration */
@@ -84,12 +94,12 @@
     max-width: 100%;
   }
 
-  /* Editorial heading rhythm */
+  /* Editorial heading rhythm — thin, neat geometric sans, not a display serif */
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 300;
     line-height: 1.05;
     letter-spacing: -0.01em;
   }
@@ -176,34 +186,46 @@ html.js [data-line-draw] {
   transform-origin: left center;
 }
 
-/* Custom cursor — desktop only, added by animations/site.ts */
+/* Hides the native OS/browser cursor whenever the custom one is active
+   (site.ts adds this class only on fine-pointer, non-reduced-motion
+   devices), so only the Prominance mark shows — never both at once. */
+html.uf-custom-cursor,
+html.uf-custom-cursor * {
+  cursor: none !important;
+}
+
+/* Custom cursor — desktop only, added by animations/site.ts.
+   The actual "A" mark cropped from the Prominance logo (src/assets/media/
+   prominance-a-mark.png), not a generic dot/ring, so the cursor itself is
+   the brand mark. */
 .uf-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 18px;
+  width: 20px;
   height: 18px;
-  margin-left: -9px;
+  margin-left: -10px;
   margin-top: -9px;
-  border-radius: 999px;
-  border: 1px solid var(--color-ink);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
   pointer-events: none;
   z-index: 200;
   opacity: 0;
-  mix-blend-mode: difference;
-  transition: opacity var(--duration-micro) ease, width var(--duration-micro) var(--ease-precise), height var(--duration-micro) var(--ease-precise), margin var(--duration-micro) var(--ease-precise);
+  transition: opacity var(--duration-micro) ease, width var(--duration-micro) var(--ease-precise), height var(--duration-micro) var(--ease-precise), margin var(--duration-micro) var(--ease-precise), transform var(--duration-micro) var(--ease-precise);
 }
 
 .uf-cursor.is-visible {
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .uf-cursor.is-hovering {
-  width: 48px;
-  height: 48px;
-  margin-left: -24px;
-  margin-top: -24px;
-  background: var(--color-off-white);
+  width: 34px;
+  height: 31px;
+  margin-left: -17px;
+  margin-top: -15.5px;
+  transform: rotate(-8deg);
   opacity: 1;
 }
 

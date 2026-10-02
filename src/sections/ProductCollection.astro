@@ -16,7 +16,7 @@ const featured = featuredSlugs.map((s) => getProduct(s)!).filter(Boolean);
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
         <Eyebrow index="05" class="text-aluminium" data-reveal="fade">The Collection</Eyebrow>
-        <h2 class="mt-6 max-w-xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-off-white text-balance" data-reveal="up">
+        <h2 class="mt-6 max-w-xl font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-off-white text-balance" data-reveal="up">
           Sliding and casement systems, presented as one family.
         </h2>
       </div>
@@ -35,7 +35,7 @@ const featured = featuredSlugs.map((s) => getProduct(s)!).filter(Boolean);
           data-reveal="up"
           data-cursor-hover
         >
-          <div class={`relative h-[58vh] w-full overflow-hidden lg:h-[78vh] ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+          <div class={`relative h-[42vh] w-full overflow-hidden lg:h-[54vh] ${i % 2 === 1 ? "lg:order-2" : ""}`}>
             <Image
               src={product.cardImage}
               alt={`${product.fullTitle} — ${product.headline}`}
@@ -49,7 +49,6 @@ const featured = featuredSlugs.map((s) => getProduct(s)!).filter(Boolean);
           </div>
 
           <div class={`relative flex flex-col justify-center overflow-hidden bg-ink px-6 py-14 sm:px-10 lg:px-16 xl:px-20 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
-            <span class="uf-numeral left-0 text-off-white" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
             <div class="relative">
               <p class="label-eyebrow text-aluminium">{product.category}</p>
               <h3 class="uf-product-title mt-5 font-display text-[clamp(2.5rem,5vw,4.25rem)] leading-none text-off-white transition-precise">

@@ -16,15 +16,12 @@ import prominanceLogo from "./media/prominance-logo.png";
 // Sourced from the Uniframe brand brochure (Prominance Uniframe, Nov 2025 edition).
 import aboutBambooCorner from "./media/brochure/about-bamboo-corner.jpg";
 import materialExtrusionMacro from "./media/brochure/material-extrusion-macro.jpg";
-import facadeNightGlow from "./media/brochure/facade-night-glow.jpg";
+import facadeStructuralGlazing from "./media/brochure/facade-structural-glazing.jpg";
 import lifestyleExteriorDusk from "./media/brochure/lifestyle-exterior-dusk.jpg";
 import detailConcreteWoodDoor from "./media/brochure/detail-concrete-wood-door.jpg";
 import lifestyleFoldslideGarden from "./media/brochure/lifestyle-foldslide-garden.jpg";
 import solutionBayWindow from "./media/brochure/solution-bay-window.jpg";
-import solutionCornerSlider from "./media/brochure/solution-corner-slider.jpg";
 import detailSkirtingRosegold from "./media/brochure/detail-skirting-rosegold.jpg";
-import productFrameIsolated from "./media/brochure/product-frame-isolated.jpg";
-import skylightWireframe from "./media/brochure/skylight-wireframe.jpg";
 import detailMirrorCasementDoor from "./media/brochure/detail-mirror-casement-door.jpg";
 import lifestyleSofaGlasswall from "./media/brochure/lifestyle-sofa-glasswall.jpg";
 import heroDuskLivingroom from "./media/brochure/hero-dusk-livingroom.jpg";
@@ -46,15 +43,12 @@ export const images = {
   prominanceLogo,
   aboutBambooCorner,
   materialExtrusionMacro,
-  facadeNightGlow,
+  facadeStructuralGlazing,
   lifestyleExteriorDusk,
   detailConcreteWoodDoor,
   lifestyleFoldslideGarden,
   solutionBayWindow,
-  solutionCornerSlider,
   detailSkirtingRosegold,
-  productFrameIsolated,
-  skylightWireframe,
   detailMirrorCasementDoor,
   lifestyleSofaGlasswall,
   heroDuskLivingroom,

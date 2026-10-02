@@ -17,14 +17,12 @@ const tiers: FinishTier[] = ["natural", "solid", "premium"];
 const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
 ---
 
-<section class="uf-config relative overflow-hidden bg-ink py-24 text-off-white md:py-36" data-reveal-group>
-  <span class="uf-numeral left-0 text-off-white" aria-hidden="true">03</span>
-
+<section class="uf-config relative flex min-h-screen flex-col justify-center overflow-hidden bg-ink py-14 text-off-white" data-reveal-group>
   <div class="container-frame relative">
-    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
       <div>
-        <Eyebrow index="03" class="text-aluminium" data-reveal="fade">The Atelier</Eyebrow>
-        <h2 class="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-balance" data-reveal="up">
+        <Eyebrow class="text-aluminium" data-reveal="fade">The Atelier</Eyebrow>
+        <h2 class="mt-4 max-w-2xl font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.08] text-balance" data-reveal="up">
           Design your view, in real time.
         </h2>
       </div>
@@ -35,10 +33,10 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
     </div>
   </div>
 
-  <div class="container-frame mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12" data-reveal="up">
+  <div class="container-frame mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10" data-reveal="up">
     <!-- Stage -->
     <div class="uf-config-stage-host uf-frame-host relative lg:col-span-7" style={`--uf-cfg-color:${defaultFinish.swatch}`}>
-      <div class="uf-config-stage relative flex aspect-[4/5] items-center justify-center overflow-hidden md:aspect-[6/7]">
+      <div class="uf-config-stage relative flex aspect-[4/5] items-center justify-center overflow-hidden sm:aspect-[16/11] lg:h-full lg:aspect-auto lg:max-h-[52vh]">
         <div class="uf-config-glow" aria-hidden="true"></div>
 
         {
@@ -63,9 +61,11 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
               {s.key === "sliding" && (
                 <g>
                   <rect x="14" y="14" width="138" height="392" fill={`url(#glass-${s.key})`} />
-                  <rect x="168" y="14" width="138" height="392" fill={`url(#glass-${s.key})`} />
+                  <g class="uf-cfg-sash" style="--slide-x:-134px">
+                    <rect x="168" y="14" width="138" height="392" fill={`url(#glass-${s.key})`} />
+                    <line x1="168" y1="80" x2="306" y2="14" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2" />
+                  </g>
                   <line x1="14" y1="80" x2="152" y2="14" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" />
-                  <line x1="168" y1="80" x2="306" y2="14" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2" />
                   <path
                     class="uf-cfg-frame"
                     fill-rule="evenodd"
@@ -81,8 +81,10 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
               {/* ---- PANORAMIC CORNER (Graf 73) ---- */}
               {s.key === "corner" && (
                 <g>
-                  <rect x="14" y="14" width="292" height="392" fill={`url(#glass-${s.key})`} />
-                  <line x1="14" y1="120" x2="150" y2="14" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" />
+                  <g class="uf-cfg-sash" style="--slide-x:-96px">
+                    <rect x="14" y="14" width="292" height="392" fill={`url(#glass-${s.key})`} />
+                    <line x1="14" y1="120" x2="150" y2="14" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" />
+                  </g>
                   <path
                     class="uf-cfg-frame"
                     fill-rule="evenodd"
@@ -100,10 +102,14 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
               {/* ---- CASEMENT (Livio) ---- */}
               {s.key === "casement" && (
                 <g>
-                  <rect x="14" y="14" width="140" height="392" fill={`url(#glass-${s.key})`} />
-                  <rect x="166" y="14" width="140" height="392" fill={`url(#glass-${s.key})`} />
-                  <line x1="14" y1="80" x2="154" y2="14" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" />
-                  <line x1="166" y1="80" x2="306" y2="14" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2" />
+                  <g class="uf-cfg-swing uf-cfg-swing--left">
+                    <rect x="14" y="14" width="140" height="392" fill={`url(#glass-${s.key})`} />
+                    <line x1="14" y1="80" x2="154" y2="14" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" />
+                  </g>
+                  <g class="uf-cfg-swing uf-cfg-swing--right">
+                    <rect x="166" y="14" width="140" height="392" fill={`url(#glass-${s.key})`} />
+                    <line x1="166" y1="80" x2="306" y2="14" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2" />
+                  </g>
                   <path d="M14,406 L84,210" stroke="#171613" stroke-width="1" stroke-dasharray="3 4" opacity="0.55" fill="none" />
                   <path d="M306,406 L236,210" stroke="#171613" stroke-width="1" stroke-dasharray="3 4" opacity="0.55" fill="none" />
                   <path
@@ -120,9 +126,15 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
               {s.key === "foldslide" && (
                 <g>
                   <rect x="14" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
-                  <rect x="89" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
-                  <rect x="164" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
-                  <rect x="239" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
+                  <g class="uf-cfg-sash" style="--slide-x:-67px">
+                    <rect x="89" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
+                  </g>
+                  <g class="uf-cfg-sash" style="--slide-x:-134px">
+                    <rect x="164" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
+                  </g>
+                  <g class="uf-cfg-sash" style="--slide-x:-201px">
+                    <rect x="239" y="14" width="67" height="392" fill={`url(#glass-${s.key})`} />
+                  </g>
                   <line x1="14" y1="70" x2="81" y2="14" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2" />
                   <path
                     class="uf-cfg-frame"
@@ -141,6 +153,13 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
       </div>
       <Frame tone="off-white" />
 
+      <button type="button" class="uf-config-open-toggle absolute right-6 top-6 md:right-8 md:top-8" data-config-open-toggle aria-pressed="false">
+        <span class="label-eyebrow" data-config-open-label>View Open</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="uf-config-open-icon">
+          <path d="M2 8H14M14 8L9 3M14 8L9 13" stroke="currentColor" stroke-width="1.3" />
+        </svg>
+      </button>
+
       <div class="uf-config-caption absolute inset-x-6 bottom-6 flex flex-wrap items-end justify-between gap-4 md:inset-x-8 md:bottom-8">
         <div>
           <p class="label-eyebrow text-aluminium" data-config-category>{stages[0].product.category}</p>
@@ -154,15 +173,15 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
     </div>
 
     <!-- Controls -->
-    <div class="flex flex-col gap-10 lg:col-span-5">
+    <div class="flex flex-col gap-6 lg:col-span-5">
       <div>
-        <p class="label-eyebrow text-aluminium">01 — Choose a system</p>
-        <div class="mt-5 grid grid-cols-2 gap-3" role="radiogroup" aria-label="Select a window system">
+        <p class="label-eyebrow text-aluminium">Choose a system</p>
+        <div class="mt-4 grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Select a window system">
           {
             stages.map((s, i) => (
               <button
                 type="button"
-                class="uf-config-tab group relative flex flex-col items-start gap-3 border border-off-white/15 p-4 text-left transition-precise hover:border-off-white/40"
+                class="uf-config-tab group relative flex flex-col items-start gap-2 border border-off-white/15 p-3 text-left transition-precise hover:border-off-white/40"
                 data-stage-btn={s.key}
                 role="radio"
                 aria-checked={i === 0 ? "true" : "false"}
@@ -214,19 +233,19 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
       </div>
 
       <div>
-        <p class="label-eyebrow text-aluminium">02 — Choose a finish</p>
-        <div class="mt-5 flex flex-col gap-6">
+        <p class="label-eyebrow text-aluminium">Choose a finish</p>
+        <div class="mt-4 flex flex-col gap-4">
           {
             tiers.map((tier) => (
               <div>
                 <p class="text-xs text-stone">{finishTiers[tier].label}</p>
-                <div class="mt-3 flex flex-wrap gap-3" role="radiogroup" aria-label={finishTiers[tier].label}>
+                <div class="mt-2 flex flex-wrap gap-2.5" role="radiogroup" aria-label={finishTiers[tier].label}>
                   {finishes
                     .filter((f) => f.tier === tier)
                     .map((f) => (
                       <button
                         type="button"
-                        class="uf-config-swatch group relative h-10 w-10 rounded-full border border-off-white/20 transition-precise"
+                        class="uf-config-swatch group relative h-8 w-8 rounded-full border border-off-white/20 transition-precise"
                         style={`background-color:${f.swatch}`}
                         data-swatch={f.swatch}
                         data-name={f.name}
@@ -244,7 +263,7 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
             ))
           }
         </div>
-        <p class="mt-6 max-w-sm text-sm leading-relaxed text-stone" data-config-description>{defaultFinish.description}</p>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-stone" data-config-description>{defaultFinish.description}</p>
       </div>
 
       <div>
@@ -256,19 +275,83 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
 
 <style>
   .uf-config-stage-host {
-    background: radial-gradient(120% 100% at 50% 15%, rgb(244 241 234 / 0.06), transparent 60%), var(--color-ink-soft);
+    background: radial-gradient(120% 100% at 50% 15%, rgb(247 245 240 / 0.06), transparent 60%), var(--color-ink-soft);
   }
 
   .uf-config-stage {
-    background: linear-gradient(180deg, rgb(11 11 10 / 0) 0%, rgb(11 11 10 / 0.4) 100%);
+    background: linear-gradient(180deg, rgb(47 63 82 / 0) 0%, rgb(47 63 82 / 0.4) 100%);
   }
 
   .uf-config-glow {
     position: absolute;
     inset: 8% 14%;
-    background: radial-gradient(closest-side, rgb(244 241 234 / 0.16), transparent 72%);
+    background: radial-gradient(closest-side, rgb(247 245 240 / 0.16), transparent 72%);
     filter: blur(6px);
     pointer-events: none;
+  }
+
+  /* The "View Open" toggle slides the moving sash(es) of whichever system is
+     active — real motion demonstrating how each system actually operates,
+     not just a static render. */
+  .uf-config-open-toggle {
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgb(247 245 240 / 0.3);
+    padding: 0.5rem 0.9rem;
+    color: var(--color-off-white);
+    background: rgb(11 26 38 / 0.35);
+    backdrop-filter: blur(6px);
+    transition: border-color var(--duration-micro) ease, background var(--duration-micro) ease;
+  }
+
+  .uf-config-open-toggle:hover {
+    border-color: var(--color-brass-soft);
+  }
+
+  .uf-config-open-toggle[aria-pressed="true"] {
+    border-color: var(--color-brass-soft);
+    background: rgb(31 124 180 / 0.25);
+  }
+
+  .uf-config-open-icon {
+    transition: transform var(--duration-normal) var(--ease-precise);
+  }
+
+  .uf-config-open-toggle[aria-pressed="true"] .uf-config-open-icon {
+    transform: rotate(180deg);
+  }
+
+  .uf-cfg-sash {
+    transform-box: fill-box;
+    transition: transform 0.9s var(--ease-precise);
+  }
+
+  .uf-config-art[data-open="true"] .uf-cfg-sash {
+    transform: translateX(var(--slide-x, 0));
+  }
+
+  .uf-cfg-swing {
+    transform-box: fill-box;
+    transition: transform 0.9s var(--ease-precise);
+  }
+
+  .uf-cfg-swing--left {
+    transform-origin: left center;
+  }
+
+  .uf-cfg-swing--right {
+    transform-origin: right center;
+  }
+
+  .uf-config-art[data-open="true"] .uf-cfg-swing--left {
+    transform: rotateY(0deg) skewY(-6deg) scaleX(0.92) translateX(2px);
+  }
+
+  .uf-config-art[data-open="true"] .uf-cfg-swing--right {
+    transform: skewY(6deg) scaleX(0.92) translateX(-2px);
   }
 
   .uf-config-art {
@@ -300,7 +383,7 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
     font-size: 6px;
     font-weight: 600;
     letter-spacing: 0.14em;
-    fill: rgb(244 241 234 / 0.55);
+    fill: rgb(247 245 240 / 0.55);
   }
 
   .uf-config-caption {
@@ -356,6 +439,14 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
   const categoryEl = document.querySelector<HTMLElement>("[data-config-category]");
   const finishEl = document.querySelector<HTMLElement>("[data-config-finish]");
   const descriptionEl = document.querySelector<HTMLElement>("[data-config-description]");
+  const openToggle = document.querySelector<HTMLButtonElement>("[data-config-open-toggle]");
+  const openLabel = document.querySelector<HTMLElement>("[data-config-open-label]");
+
+  function closeStage() {
+    stageArts.forEach((art) => art.setAttribute("data-open", "false"));
+    openToggle?.setAttribute("aria-pressed", "false");
+    if (openLabel) openLabel.textContent = "View Open";
+  }
 
   stageTabs.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -368,8 +459,18 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
         art.setAttribute("data-active", art.getAttribute("data-stage") === key ? "true" : "false");
       });
 
+      closeStage();
       if (nameEl) nameEl.textContent = btn.dataset.name ?? "";
       if (categoryEl) categoryEl.textContent = btn.dataset.category ?? "";
+    });
+  });
+
+  openToggle?.addEventListener("click", () => {
+    const isOpen = openToggle.getAttribute("aria-pressed") === "true";
+    openToggle.setAttribute("aria-pressed", String(!isOpen));
+    if (openLabel) openLabel.textContent = isOpen ? "View Open" : "View Closed";
+    stageArts.forEach((art) => {
+      if (art.getAttribute("data-active") === "true") art.setAttribute("data-open", String(!isOpen));
     });
   });
 

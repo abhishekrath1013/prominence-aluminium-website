@@ -5,6 +5,7 @@ import { images } from "../../assets/images";
 import Eyebrow from "../../components/Eyebrow.astro";
 import ProductList from "../../components/ProductList.astro";
 import Finishes from "../../sections/Finishes.astro";
+import ProofCatalogue from "../../sections/ProofCatalogue.astro";
 import ContactCTA from "../../sections/ContactCTA.astro";
 import { products, productFamilies } from "../../data/products";
 
@@ -29,7 +30,7 @@ const casement = products.filter((p) => p.family === "casement");
   <section id="sliding" class="bg-off-white py-24 md:py-36" data-reveal-group>
     <div class="container-frame">
       <Eyebrow index="01" class="text-ink/65" data-reveal="fade">Sliding</Eyebrow>
-      <h2 class="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-ink text-balance" data-reveal="up">
+      <h2 class="mt-6 max-w-2xl font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-ink text-balance" data-reveal="up">
         {productFamilies.sliding.description}
       </h2>
     </div>
@@ -41,7 +42,7 @@ const casement = products.filter((p) => p.family === "casement");
   <section id="casement" class="bg-ink py-24 text-off-white md:py-36" data-reveal-group>
     <div class="container-frame">
       <Eyebrow index="02" class="text-aluminium" data-reveal="fade">Casement</Eyebrow>
-      <h2 class="mt-6 max-w-2xl font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-balance" data-reveal="up">
+      <h2 class="mt-6 max-w-2xl font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-balance" data-reveal="up">
         {productFamilies.casement.description}
       </h2>
     </div>
@@ -51,5 +52,6 @@ const casement = products.filter((p) => p.family === "casement");
   </section>
 
   <div id="finishes"><Finishes /></div>
+  <ProofCatalogue />
   <ContactCTA />
 </BaseLayout>

@@ -1,0 +1,9 @@
+Homepage hero background video
+
+Source: Pexels (free license — no attribution required, free for commercial use)
+Title: "Modern Luxury Villa with Ocean View Interiors"
+Creator: Rene Strgar
+URL: https://www.pexels.com/video/modern-luxury-villa-with-ocean-view-interiors-34874523/
+Downloaded: 2026-10-02
+
+hero-villa-poster.jpg is a frame extracted locally from hero-villa.mp4 for use as the <video poster>.

@@ -15,10 +15,11 @@ export default defineConfig({
   },
   fonts: [
     {
+      // Neat, thin, geometric — replaces the earlier curvy display serif.
       provider: fontProviders.google(),
-      name: 'DM Serif Display',
+      name: 'Jost',
       cssVariable: '--font-display-raw',
-      weights: ['400'],
+      weights: ['200', '300', '400', '500'],
       styles: ['normal', 'italic'],
     },
     {

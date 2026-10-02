@@ -31,7 +31,7 @@ import { solutions } from "../data/solutions";
             <Eyebrow index={String(i + 1).padStart(2, "0")} class={i % 2 === 0 ? "text-ink/65" : "text-aluminium"} data-reveal="fade">
               Solution
             </Eyebrow>
-            <h2 class:list={["mt-6 font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.08] text-balance", i % 2 === 0 ? "text-ink" : "text-off-white"]} data-reveal="up">
+            <h2 class:list={["mt-6 font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-balance", i % 2 === 0 ? "text-ink" : "text-off-white"]} data-reveal="up">
               {solution.name}
             </h2>
             <p class:list={["mt-4 label-eyebrow", i % 2 === 0 ? "text-ink/60" : "text-aluminium"]} data-reveal="fade">

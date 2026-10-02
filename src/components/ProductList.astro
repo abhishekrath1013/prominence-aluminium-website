@@ -24,10 +24,6 @@ const frameTone = isDark ? "off-white" : "ink";
         data-reveal="up"
         data-cursor-hover
       >
-        <span class:list={["uf-numeral", i % 2 === 1 ? "right-0" : "left-0", titleColor]} aria-hidden="true">
-          {String(i + 1).padStart(2, "0")}
-        </span>
-
         <div class={`relative md:col-span-7 ${i % 2 === 1 ? "md:order-2" : ""}`}>
           <div class="relative aspect-[4/3] w-full overflow-hidden">
             <Image
@@ -43,7 +39,7 @@ const frameTone = isDark ? "off-white" : "ink";
         </div>
 
         <div class={`md:col-span-5 ${i % 2 === 1 ? "md:order-1" : ""}`}>
-          <p class:list={["label-eyebrow", eyebrowColor]}>{String(i + 1).padStart(2, "0")} — {product.category}</p>
+          <p class:list={["label-eyebrow", eyebrowColor]}>{product.category}</p>
           <h3 class:list={["uf-product-title mt-4 font-display text-[clamp(2.25rem,4.5vw,3.75rem)] leading-none transition-precise", titleColor]}>
             {product.name}
           </h3>

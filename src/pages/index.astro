@@ -1,16 +1,19 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../sections/Hero.astro";
+import QuoteStrip from "../sections/QuoteStrip.astro";
+import Certifications from "../sections/Certifications.astro";
+import CategoryGrid from "../sections/CategoryGrid.astro";
 import WindowStory from "../sections/WindowStory.astro";
 import BrandStatement from "../sections/BrandStatement.astro";
+import WhyProminance from "../sections/WhyProminance.astro";
 import Configurator from "../sections/Configurator.astro";
-import Material from "../sections/Material.astro";
 import ProductCollection from "../sections/ProductCollection.astro";
 import ArchitecturalSolutions from "../sections/ArchitecturalSolutions.astro";
 import Projects from "../sections/Projects.astro";
-import ProofCatalogue from "../sections/ProofCatalogue.astro";
-import InsightsPreview from "../sections/InsightsPreview.astro";
+import FAQ from "../sections/FAQ.astro";
 import ContactCTA from "../sections/ContactCTA.astro";
+import Newsletter from "../sections/Newsletter.astro";
 ---
 
 <BaseLayout
@@ -20,14 +23,17 @@ import ContactCTA from "../sections/ContactCTA.astro";
   headerTheme="dark"
 >
   <Hero />
+  <QuoteStrip />
+  <Certifications />
+  <CategoryGrid />
   <WindowStory />
   <BrandStatement />
+  <WhyProminance />
   <Configurator />
-  <Material />
   <ProductCollection />
   <ArchitecturalSolutions />
   <Projects />
-  <ProofCatalogue />
-  <InsightsPreview />
+  <FAQ />
   <ContactCTA />
+  <Newsletter />
 </BaseLayout>

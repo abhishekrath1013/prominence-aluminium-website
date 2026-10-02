@@ -1,12 +1,13 @@
 ---
 interface Props {
-  index?: string; // e.g. "01"
+  // Accepted but intentionally not rendered — subhead numerals were removed
+  // site-wide, kept here so the ~35 existing call sites don't need touching.
+  index?: string;
   class?: string;
 }
-const { index, class: className = "" } = Astro.props;
+const { class: className = "" } = Astro.props;
 ---
 
-<p class:list={["label-eyebrow flex items-center gap-3", className]}>
-  {index && <span>{index}</span>}
+<p class:list={["label-eyebrow", className]}>
   <slot />
 </p>
