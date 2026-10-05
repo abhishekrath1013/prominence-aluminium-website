@@ -62,6 +62,20 @@ revealEls.forEach((el) => {
   });
 });
 
+// Failsafe: [data-reveal] starts hidden purely so this reveal can run — if
+// ScrollTrigger never fires for some element (a timing race, a layout
+// shift before its initial refresh, a future regression), that content
+// must never stay invisible forever. Force anything still gsap-hidden
+// visible shortly after load.
+window.setTimeout(() => {
+  revealEls.forEach((el) => {
+    if (el.style.opacity === "0") {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    }
+  });
+}, 2000);
+
 /* ---------------------------------------------------------------------- */
 /* Numeric counters: [data-counter="1500"] [data-counter-suffix="+"]       */
 /* ---------------------------------------------------------------------- */
@@ -125,6 +139,11 @@ if (!reduceMotion && isFinePointer) {
 
   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   const target = { x: pos.x, y: pos.y };
+  // The pointer tilts left like a native OS arrow cursor. This has to be
+  // baked into the same inline `transform` the ticker writes every frame —
+  // a separate CSS `transform` rule on .is-hovering/.is-visible would be
+  // silently clobbered by that per-frame translate3d() write below.
+  let tiltDeg = -22;
 
   window.addEventListener("mousemove", (e) => {
     target.x = e.clientX;
@@ -135,12 +154,18 @@ if (!reduceMotion && isFinePointer) {
   gsap.ticker.add(() => {
     pos.x += (target.x - pos.x) * 0.18;
     pos.y += (target.y - pos.y) * 0.18;
-    cursor.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+    cursor.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) rotate(${tiltDeg}deg)`;
   });
 
   document.querySelectorAll<HTMLElement>("[data-cursor-hover]").forEach((el) => {
-    el.addEventListener("mouseenter", () => cursor.classList.add("is-hovering"));
-    el.addEventListener("mouseleave", () => cursor.classList.remove("is-hovering"));
+    el.addEventListener("mouseenter", () => {
+      cursor.classList.add("is-hovering");
+      tiltDeg = -14;
+    });
+    el.addEventListener("mouseleave", () => {
+      cursor.classList.remove("is-hovering");
+      tiltDeg = -22;
+    });
   });
 
   document.addEventListener("mouseleave", () => cursor.classList.remove("is-visible"));

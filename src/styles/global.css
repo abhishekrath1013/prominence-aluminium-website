@@ -219,15 +219,16 @@ html.uf-custom-cursor * {
 
 .uf-cursor.is-visible {
   opacity: 0.9;
-  transform: rotate(-22deg);
 }
 
+/* Rotation is applied in site.ts, baked into the same inline transform that
+   positions the cursor each frame — a transform set here would be
+   overwritten every frame by that positioning write. */
 .uf-cursor.is-hovering {
   width: 34px;
   height: 31px;
   margin-left: -3px;
   margin-top: -2px;
-  transform: rotate(-14deg);
   opacity: 1;
 }
 

@@ -23,15 +23,15 @@
   </div>
 
   <div class="container-frame relative z-10 flex h-full flex-col justify-end pb-20 pt-32 md:pb-24">
-    <p class="label-eyebrow text-off-white/70" data-reveal="fade">Precision-Engineered Aluminium Systems</p>
-    <h1 class="mt-5 max-w-2xl font-display text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] text-off-white text-balance" data-reveal="up">
+    <p class="uf-hero-in label-eyebrow text-off-white/70" style="animation-delay: 0.05s">Precision-Engineered Aluminium Systems</p>
+    <h1 class="uf-hero-in mt-5 max-w-2xl font-display text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] text-off-white text-balance" style="animation-delay: 0.15s">
       Where the frame disappears, <span class="italic text-brass-soft">the view begins.</span>
     </h1>
-    <p class="mt-6 max-w-md text-base leading-relaxed text-off-white/70" data-reveal="up">
+    <p class="uf-hero-in mt-6 max-w-md text-base leading-relaxed text-off-white/70" style="animation-delay: 0.28s">
       Prominance crafts aluminium window, door and facade systems for architects who specify to the millimetre.
     </p>
 
-    <div class="mt-9 flex flex-wrap items-center gap-4" data-reveal="up">
+    <div class="uf-hero-in mt-9 flex flex-wrap items-center gap-4" style="animation-delay: 0.4s">
       <a
         href="/contact-us/"
         class="inline-flex items-center gap-2 rounded-full bg-brass px-7 py-4 text-sm font-semibold text-ink transition-precise hover:bg-off-white"
@@ -47,6 +47,29 @@
     </div>
   </div>
 </section>
+
+<style>
+  /* The hero is always in view on load, so its entrance animates in plain
+     CSS, not the scroll-triggered [data-reveal] system (which depends on
+     GSAP/ScrollTrigger finishing init and can race or silently fail for
+     content that's already on-screen at first paint — exactly the content
+     that must never be stuck invisible). */
+  .uf-hero-in {
+    opacity: 0;
+    animation: uf-hero-in 0.9s var(--ease-precise) forwards;
+  }
+
+  @keyframes uf-hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
 
 <script>
   // Respect reduced motion: pause on the poster frame rather than autoplaying.
