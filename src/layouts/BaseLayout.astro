@@ -2,6 +2,8 @@
 import { Font } from "astro:assets";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import BrochureButton from "../components/BrochureButton.astro";
+import ContactCTA from "../sections/ContactCTA.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -10,9 +12,21 @@ interface Props {
   path: string;
   ogImage?: string;
   headerTheme?: "dark" | "light";
+  // Almost every page already embeds its own contact section (ContactCTA
+  // directly, or a bespoke "get in touch" layout, or ProductDetail's built-in
+  // form) — so this defaults to off, and only the rare page with no contact
+  // section of its own (e.g. a project detail page) opts in.
+  showContactCTA?: boolean;
 }
 
-const { title, description, path, ogImage = "/media/hero-corner.jpg", headerTheme = "dark" } = Astro.props;
+const {
+  title,
+  description,
+  path,
+  ogImage = "/media/hero-corner.jpg",
+  headerTheme = "dark",
+  showContactCTA = false,
+} = Astro.props;
 const canonical = new URL(path, Astro.site).toString();
 const fullTitle = title.includes("PROMINANCE") ? title : `${title} | PROMINANCE`;
 ---
@@ -52,8 +66,10 @@ const fullTitle = title.includes("PROMINANCE") ? title : `${title} | PROMINANCE`
     <Header theme={headerTheme} />
     <main>
       <slot />
+      {showContactCTA && <ContactCTA />}
     </main>
     <Footer />
+    <BrochureButton />
     <script src="../animations/site.ts"></script>
   </body>
 </html>

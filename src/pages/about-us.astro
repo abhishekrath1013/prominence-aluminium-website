@@ -5,7 +5,7 @@ import PageHero from "../components/PageHero.astro";
 import { images } from "../assets/images";
 import Eyebrow from "../components/Eyebrow.astro";
 import Frame from "../components/Frame.astro";
-import { engineeringStats, company, sisterBrands } from "../data/company";
+import { company, sisterBrands } from "../data/company";
 import ContactCTA from "../sections/ContactCTA.astro";
 ---
 
@@ -23,7 +23,7 @@ import ContactCTA from "../sections/ContactCTA.astro";
     </Fragment>
   </PageHero>
 
-  <section class="bg-off-white py-24 md:py-36" data-reveal-group>
+  <section class="bg-off-white py-16 md:py-24" data-reveal-group>
     <div class="container-frame grid grid-cols-1 gap-12 md:grid-cols-12">
       <div class="md:col-span-4">
         <Eyebrow index="01" class="text-ink/65" data-reveal="fade">Mission</Eyebrow>
@@ -50,7 +50,7 @@ import ContactCTA from "../sections/ContactCTA.astro";
     </div>
   </section>
 
-  <section class="bg-ink py-24 text-off-white md:py-36" data-reveal-group>
+  <section class="bg-ink py-16 text-off-white md:py-24" data-reveal-group>
     <div class="container-frame">
       <Eyebrow index="03" class="text-aluminium" data-reveal="fade">What We Stand For</Eyebrow>
       <div class="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
@@ -69,23 +69,7 @@ import ContactCTA from "../sections/ContactCTA.astro";
     </div>
   </section>
 
-  <section class="bg-off-white py-24 md:py-36" data-reveal-group>
-    <div class="container-frame grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-5">
-      {
-        engineeringStats.map((stat) => (
-          <div data-reveal="up" class="border-t border-ink/10 pt-6">
-            <p class="font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-ink">
-              {stat.value}
-              {stat.unit && <span class="ml-1 text-base text-ink/60">{stat.unit}</span>}
-            </p>
-            <p class="mt-4 text-sm text-ink/60">{stat.label}</p>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="bg-off-white pb-24 md:pb-36" data-reveal-group>
+  <section class="bg-off-white pb-16 md:pb-24" data-reveal-group>
     <div class="container-frame grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-16">
       <div class="uf-frame-host relative md:col-span-6" data-reveal="up">
         <div class="relative aspect-[4/3] w-full overflow-hidden">

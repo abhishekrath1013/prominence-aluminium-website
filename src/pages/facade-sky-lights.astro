@@ -25,7 +25,7 @@ import { solutions } from "../data/solutions";
 
   {
     solutions.map((solution, i) => (
-      <section id={solution.slug} class:list={["py-24 md:py-32", i % 2 === 0 ? "bg-off-white" : "bg-ink text-off-white"]} data-reveal-group>
+      <section id={solution.slug} class:list={["py-16 md:py-24", i % 2 === 0 ? "bg-off-white" : "bg-ink text-off-white"]} data-reveal-group>
         <div class="container-frame grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-16">
           <div class:list={["md:col-span-6", i % 2 === 1 && "md:order-2"]}>
             <Eyebrow index={String(i + 1).padStart(2, "0")} class={i % 2 === 0 ? "text-ink/65" : "text-aluminium"} data-reveal="fade">

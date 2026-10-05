@@ -79,19 +79,24 @@ const isDark = tone === "dark";
   }
 
   .uf-contact-form button[type="submit"] {
-    border-color: currentColor;
-    color: currentColor;
+    border-color: var(--color-brass);
+    background: var(--color-brass);
+    color: var(--color-white);
+    transition: background var(--duration-micro) ease, border-color var(--duration-micro) ease, color var(--duration-micro) ease;
   }
 
-  .uf-contact-form button[type="submit"]:hover {
-    background: currentColor;
+  /* Light forms sit on an off-white section, so the hover state can safely
+     invert to a black outline. Dark forms sit on var(--color-ink) — a black
+     outline there would vanish, so they invert to off-white instead. */
+  .uf-contact-form:not(.uf-contact-form--dark) button[type="submit"]:hover {
+    background: transparent;
+    border-color: #000;
+    color: #000;
   }
 
   .uf-contact-form--dark button[type="submit"]:hover {
-    color: var(--color-ink);
-  }
-
-  .uf-contact-form:not(.uf-contact-form--dark) button[type="submit"]:hover {
+    background: transparent;
+    border-color: var(--color-off-white);
     color: var(--color-off-white);
   }
 </style>

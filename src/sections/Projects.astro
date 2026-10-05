@@ -8,7 +8,7 @@ import { projects } from "../data/projects";
 const featured = projects.slice(0, 4);
 ---
 
-<section class="bg-off-white py-24 md:py-36" data-reveal-group>
+<section class="bg-off-white py-16 md:py-24" data-reveal-group>
   <div class="container-frame">
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
@@ -36,20 +36,20 @@ const featured = projects.slice(0, 4);
             <Image
               src={project.image}
               alt={`${project.title} — featuring the ${project.systemName} system.`}
-              class="h-full w-full object-cover transition-precise duration-[1200ms] group-hover:scale-[1.02]"
+              class="h-full w-full object-cover transition-precise duration-[1200ms] group-hover:scale-[1.08]"
               loading="lazy"
               widths={[400, 800, 1200]}
               sizes="(min-width: 640px) 50vw, 100vw"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-0 transition-precise group-hover:opacity-100"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent"></div>
             <Frame tone="off-white" hover />
 
-            <div class="absolute inset-x-3 bottom-3 flex translate-y-2 items-end justify-between gap-2 opacity-0 transition-precise group-hover:translate-y-0 group-hover:opacity-100">
+            <div class="absolute inset-x-3 bottom-3 flex items-end justify-between gap-2">
               <div class="min-w-0">
                 <p class="label-eyebrow text-off-white/70">{project.systemName}</p>
                 <p class="mt-1.5 truncate font-display text-base text-off-white">{project.title}</p>
               </div>
-              <svg width="16" height="10" viewBox="0 0 18 10" fill="none" class="flex-none text-off-white">
+              <svg width="16" height="10" viewBox="0 0 18 10" fill="none" class="flex-none text-off-white opacity-0 transition-precise group-hover:opacity-100">
                 <path d="M0 5H17M17 5L13 1M17 5L13 9" stroke="currentColor" stroke-width="1"></path>
               </svg>
             </div>

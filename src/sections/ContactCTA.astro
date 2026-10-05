@@ -4,7 +4,7 @@ import ContactForm from "../components/ContactForm.astro";
 import { company } from "../data/company";
 ---
 
-<section class="bg-off-white py-24 md:py-36" data-reveal-group>
+<section class="bg-off-white py-16 md:py-24" data-reveal-group>
   <div class="container-frame grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-12">
     <div class="md:col-span-6">
       <Eyebrow index="10" class="text-ink/65" data-reveal="fade">Contact</Eyebrow>
@@ -16,9 +16,11 @@ import { company } from "../data/company";
         partnership.
       </p>
 
-      <div class="mt-10 flex flex-col gap-3 label-eyebrow text-ink/70" data-reveal="up">
-        <a href={company.phoneHref} class="hover:text-ink transition-precise">{company.phoneDisplay}</a>
-        <a href={`mailto:${company.email}`} class="hover:text-ink transition-precise">{company.email}</a>
+      <div class="mt-10 flex flex-col gap-4" data-reveal="up">
+        <a href={company.phoneHref} class="inline-flex w-fit items-center gap-2 border-b-2 border-brass font-display text-2xl text-ink transition-precise hover:text-brass">
+          {company.phoneDisplay}
+        </a>
+        <a href={`mailto:${company.email}`} class="label-eyebrow text-ink/70 transition-precise hover:text-ink">{company.email}</a>
       </div>
     </div>
 

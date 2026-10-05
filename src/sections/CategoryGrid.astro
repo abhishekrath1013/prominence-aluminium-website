@@ -4,14 +4,14 @@ import Eyebrow from "../components/Eyebrow.astro";
 const categories = [
   { name: "Sliding Systems", desc: "Slim residential sliders to all-around concealed panoramic glazing.", href: "/sliding/", icon: "sliding" },
   { name: "Casement Systems", desc: "Precision-hinged windows and doors with concealed hardware.", href: "/casement/", icon: "casement" },
-  { name: "Panoramic Sliding", desc: "Graf 73 — our largest-format, all-concealed sliding series.", href: "/graf-73/", icon: "sliding" },
-  { name: "Fold & Slide", desc: "Robus 40 fold & slide, for openings up to 2.4 metres.", href: "/robus-40/", icon: "casement" },
+  { name: "Panoramic Sliding", desc: "Graf 73 — our largest-format, all-concealed sliding series.", href: "/graf-73/", icon: "panoramic" },
+  { name: "Fold & Slide", desc: "Robus 40 fold & slide, for openings up to 2.4 metres.", href: "/robus-40/", icon: "foldslide" },
   { name: "Facade & Sky Lights", desc: "Structural glazing for full elevations and roof lights.", href: "/facade-sky-lights/", icon: "facade" },
   { name: "Finishes & Colours", desc: "100+ anodised, powder-coated and metallic finishes.", href: "/products/#finishes", icon: "swatch" },
 ] as const;
 ---
 
-<section class="bg-off-white py-24 md:py-32" data-reveal-group>
+<section class="bg-off-white py-16 md:py-24" data-reveal-group>
   <div class="container-frame">
     <Eyebrow class="text-ink/65" data-reveal="fade">Explore</Eyebrow>
     <h2 class="mt-6 max-w-xl font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-ink text-balance" data-reveal="up">
@@ -34,7 +34,28 @@ const categories = [
             {cat.icon === "casement" && (
               <svg viewBox="0 0 34 22" fill="none" width="36" height="24">
                 <rect x="1" y="1" width="32" height="20" rx="1.5" stroke="currentColor" stroke-width="1.3" opacity="0.4" />
-                <rect class="uf-cat-sash" x="2.5" y="2.5" width="14.5" height="17" stroke="currentColor" stroke-width="1.5" />
+                <path class="uf-cat-arc" d="M2.5,2.5 A17,17 0 0 1 17.5,19.5" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 2" opacity="0" />
+                <rect class="uf-cat-swing" x="2.5" y="2.5" width="15" height="17" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            )}
+            {cat.icon === "panoramic" && (
+              <svg viewBox="0 0 34 22" fill="none" width="36" height="24">
+                <rect x="1" y="1" width="32" height="20" rx="1.5" stroke="currentColor" stroke-width="1.3" opacity="0.4" />
+                <line x1="11" y1="1" x2="11" y2="21" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="1.6 2" />
+                <line x1="21" y1="1" x2="21" y2="21" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="1.6 2" />
+                <g class="uf-cat-pano">
+                  <rect x="12.5" y="2.5" width="8" height="17" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="22.5" y="2.5" width="9" height="17" stroke="currentColor" stroke-width="1.5" />
+                </g>
+              </svg>
+            )}
+            {cat.icon === "foldslide" && (
+              <svg viewBox="0 0 34 22" fill="none" width="36" height="24">
+                <rect x="1" y="1" width="32" height="20" rx="1.5" stroke="currentColor" stroke-width="1.3" opacity="0.4" />
+                <rect x="2.5" y="2.5" width="6" height="17" stroke="currentColor" stroke-width="1.3" />
+                <rect class="uf-cat-fold" x="9.5" y="2.5" width="6" height="17" stroke="currentColor" stroke-width="1.3" />
+                <rect class="uf-cat-fold" x="16.5" y="2.5" width="6" height="17" stroke="currentColor" stroke-width="1.3" />
+                <rect class="uf-cat-fold" x="23.5" y="2.5" width="6" height="17" stroke="currentColor" stroke-width="1.3" />
               </svg>
             )}
             {cat.icon === "facade" && (
@@ -43,6 +64,7 @@ const categories = [
                 <line x1="12" y1="1" x2="12" y2="21" stroke="currentColor" stroke-width="1" opacity="0.4" />
                 <line x1="23" y1="1" x2="23" y2="21" stroke="currentColor" stroke-width="1" opacity="0.4" />
                 <line x1="1" y1="11" x2="33" y2="11" stroke="currentColor" stroke-width="1" opacity="0.4" />
+                <circle class="uf-cat-glow" cx="17" cy="11" r="9" fill="currentColor" opacity="0" />
               </svg>
             )}
             {cat.icon === "swatch" && (
@@ -90,5 +112,54 @@ const categories = [
   .uf-cat-card:hover .uf-cat-sash {
     transition: transform 0.5s var(--ease-precise);
     transform: translateX(3px);
+  }
+
+  /* Casement: the sash swings open on its hinge, revealing a door-swing arc. */
+  .uf-cat-arc {
+    transition: opacity 0.4s ease;
+  }
+
+  .uf-cat-card:hover .uf-cat-arc {
+    opacity: 0.5;
+  }
+
+  .uf-cat-swing {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transition: transform 0.5s var(--ease-precise);
+  }
+
+  .uf-cat-card:hover .uf-cat-swing {
+    transform: rotate(-22deg);
+  }
+
+  /* Panoramic sliding: multiple wide panels glide and stack together. */
+  .uf-cat-pano {
+    transform-box: fill-box;
+    transition: transform 0.5s var(--ease-precise);
+  }
+
+  .uf-cat-card:hover .uf-cat-pano {
+    transform: translateX(-9px);
+  }
+
+  /* Fold & slide: each panel concertinas shut toward the fixed leaf. */
+  .uf-cat-fold {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transition: transform 0.5s var(--ease-precise);
+  }
+
+  .uf-cat-card:hover .uf-cat-fold {
+    transform: scaleX(0.35) translateX(-4px);
+  }
+
+  /* Facade & sky lights: fixed glazing, so light glows through instead of moving. */
+  .uf-cat-glow {
+    transition: opacity 0.6s ease;
+  }
+
+  .uf-cat-card:hover .uf-cat-glow {
+    opacity: 0.16;
   }
 </style>

@@ -1,8 +1,13 @@
 ---
 // Running certifications strip. Update this list only with certifications
 // Prominance actually holds — do not add placeholder/unverified marks.
+// Repeated as two mirrored halves (5 copies each) so a -50% translateX always
+// lines up exactly, and each half is wide enough to outrun any realistic
+// viewport width — that's what keeps the loop seamless instead of visibly
+// "running out" of content on wide screens.
 const certifications = ["ISO 9001:2015 Certified", "CE Marking Compliant", "BIS / IS Standards"];
-const track = [...certifications, ...certifications, ...certifications];
+const half = Array.from({ length: 5 }, () => certifications).flat();
+const track = [...half, ...half];
 ---
 
 <section class="overflow-hidden border-y border-ink/10 bg-off-white py-6" aria-label="Certifications">
@@ -38,7 +43,7 @@ const track = [...certifications, ...certifications, ...certifications];
     display: flex;
     width: max-content;
     gap: 3.5rem;
-    animation: uf-cert-scroll 28s linear infinite;
+    animation: uf-cert-scroll 140s linear infinite;
   }
 
   .uf-cert-item {
@@ -63,7 +68,7 @@ const track = [...certifications, ...certifications, ...certifications];
       transform: translateX(0);
     }
     to {
-      transform: translateX(-33.3333%);
+      transform: translateX(-50%);
     }
   }
 

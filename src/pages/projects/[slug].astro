@@ -26,6 +26,7 @@ const systemHeadline = product?.headline ?? solution?.headline ?? "";
   description={`${project.title}, featuring the Prominance ${project.systemName} system.`}
   path={`/projects/${project.slug}/`}
   ogImage={project.image.src}
+  showContactCTA
 >
   <section class="relative h-[85svh] min-h-[520px] w-full overflow-hidden bg-ink" data-reveal-group>
     <Image
@@ -36,7 +37,7 @@ const systemHeadline = product?.headline ?? solution?.headline ?? "";
       widths={[640, 1200, 1920]}
       sizes="100vw"
     />
-    <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-ink/50"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-ink/65"></div>
     <div class="pointer-events-none absolute inset-3 md:inset-6"><Frame tone="off-white" /></div>
 
     <div class="container-frame absolute inset-x-0 bottom-16 md:bottom-20">
@@ -47,7 +48,7 @@ const systemHeadline = product?.headline ?? solution?.headline ?? "";
     </div>
   </section>
 
-  <section class="bg-off-white py-20 md:py-28" data-reveal-group>
+  <section class="bg-off-white py-14 md:py-20" data-reveal-group>
     <div class="container-frame grid grid-cols-1 gap-16 md:grid-cols-12">
       <div class="md:col-span-4">
         <Eyebrow index="01" class="text-ink/65" data-reveal="fade">The Setting</Eyebrow>
@@ -63,7 +64,7 @@ const systemHeadline = product?.headline ?? solution?.headline ?? "";
     </div>
   </section>
 
-  <section class="bg-off-white pb-20 md:pb-28" data-reveal-group>
+  <section class="bg-off-white pb-14 md:pb-20" data-reveal-group>
     <div class="container-frame grid grid-cols-1 gap-6 sm:grid-cols-2">
       <div class="uf-frame-host relative" data-reveal="up">
         <div class="relative aspect-[4/3] w-full overflow-hidden">
@@ -94,7 +95,7 @@ const systemHeadline = product?.headline ?? solution?.headline ?? "";
     </div>
   </section>
 
-  <section class="bg-ink py-20 text-off-white md:py-28" data-reveal-group>
+  <section class="bg-ink py-14 text-off-white md:py-20" data-reveal-group>
     <div class="container-frame grid grid-cols-1 gap-16 md:grid-cols-12">
       <div class="md:col-span-4">
         <Eyebrow index="02" class="text-aluminium" data-reveal="fade">The System</Eyebrow>
