@@ -19,7 +19,7 @@ const casementProducts = products.filter((p) => p.family === "casement");
   <div class="uf-header__scrim" aria-hidden="true"></div>
   <div class="container-frame uf-header__bar">
     <a href="/" class="uf-header__logo" aria-label="Prominance home">
-      <Image src={images.prominanceLogo} alt="PROMINANCE Window Systems" width={1367} height={222} widths={[260, 520]} sizes="180px" />
+      <Image src={images.prominanceLogo} alt="PROMINANCE Window Systems" width={1060} height={198} widths={[260, 520]} sizes="180px" />
     </a>
 
     <button class="uf-header__toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
@@ -396,9 +396,9 @@ const casementProducts = products.filter((p) => p.family === "casement");
   .uf-mega {
     position: absolute;
     top: -1.5rem;
-    left: calc(100% + 1.5rem);
+    left: calc(100% + 2rem);
     z-index: 10;
-    width: min(520px, 36vw, calc(100vw - 8rem));
+    width: min(460px, 30vw, calc(100vw - 8rem));
     background: var(--color-ink-soft);
     border: 1px solid rgb(247 245 240 / 0.1);
     padding: 1.75rem;
@@ -407,6 +407,23 @@ const casementProducts = products.filter((p) => p.family === "casement");
     transform: translateX(-6px);
     box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.6);
     transition: opacity var(--duration-normal) var(--ease-precise), transform var(--duration-normal) var(--ease-precise);
+  }
+
+  /* Bridges the visual gap between the trigger row and the panel. Without
+     this, moving the pointer from the "Products" label toward the panel
+     crosses a strip that belongs to neither element's hit box — hover is
+     lost mid-crossing and the panel closes (and, because pointer-events
+     flips off immediately, can't be re-entered). This pseudo-element is a
+     descendant of .uf-mega-trigger just like the panel itself, so hovering
+     it keeps the trigger's :hover — and therefore the panel's visibility —
+     active all the way across. */
+  .uf-mega::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -2rem;
+    width: 2rem;
   }
 
   .uf-mega-trigger:hover .uf-mega,
@@ -632,16 +649,22 @@ const casementProducts = products.filter((p) => p.family === "casement");
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 4rem;
+      gap: 5rem;
     }
     .uf-menu-links {
       flex: 1 1 auto;
-      max-width: 40rem;
+      max-width: 34rem;
     }
     .uf-menu-aside {
       grid-template-columns: 1fr;
-      width: 15rem;
+      width: 18rem;
       flex: 0 0 auto;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .uf-menu-inner {
+      gap: 7rem;
     }
   }
 </style>

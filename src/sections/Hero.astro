@@ -20,6 +20,7 @@
       <source src="/media/hero-villa.mp4" type="video/mp4" />
     </video>
     <div class="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-ink/65"></div>
+    <div class="uf-hero-text-scrim absolute inset-0" aria-hidden="true"></div>
   </div>
 
   <div class="container-frame relative z-10 flex h-full flex-col justify-end pb-20 pt-32 md:pb-24">
@@ -67,6 +68,20 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* A second, dedicated scrim focused on the text block itself — dark right
+     behind the headline/copy, fading to transparent away from it — so the
+     text stays readable no matter how bright that patch of video happens to
+     be, independent of the full-frame top/bottom gradient above. */
+  .uf-hero-text-scrim {
+    background: radial-gradient(ellipse 900px 650px at 18% 82%, rgb(11 26 38 / 0.85), transparent 68%);
+  }
+
+  @media (max-width: 48rem) {
+    .uf-hero-text-scrim {
+      background: radial-gradient(ellipse 100% 70% at 50% 100%, rgb(11 26 38 / 0.85), transparent 70%);
     }
   }
 </style>

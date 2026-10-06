@@ -28,18 +28,16 @@ import { images } from "../assets/images";
       </div>
     </div>
 
-    <div class="relative order-1 flex items-center justify-center p-6 lg:order-2 lg:col-span-4 lg:p-10">
-      <div class="uf-frame-host group relative aspect-[4/5] w-full max-w-sm" data-reveal="fade">
-        <Image
-          src={images.detailConcreteWoodDoor}
-          alt="A moody detail shot of an aluminium door frame set into a concrete and timber elevation."
-          class="h-full w-full object-cover transition-precise duration-[1200ms] group-hover:scale-[1.02]"
-          loading="lazy"
-          widths={[400, 700, 900]}
-          sizes="(min-width: 1024px) 28vw, 80vw"
-        />
-        <Frame tone="off-white" hover />
-      </div>
+    <div class="uf-frame-host group relative order-1 h-[40vh] w-full overflow-hidden lg:order-2 lg:col-span-4 lg:h-auto" data-reveal="fade">
+      <Image
+        src={images.detailConcreteWoodDoor}
+        alt="A moody detail shot of an aluminium door frame set into a concrete and timber elevation."
+        class="h-full w-full object-cover transition-precise duration-[1200ms] group-hover:scale-[1.02]"
+        loading="lazy"
+        widths={[400, 700, 900]}
+        sizes="(min-width: 1024px) 28vw, 100vw"
+      />
+      <Frame tone="off-white" hover />
     </div>
   </div>
 </section>

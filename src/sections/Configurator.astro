@@ -17,6 +17,17 @@ const typologies = [
 const stages = typologies.map((t) => ({ ...t, product: getProduct(t.productSlug)! }));
 const tiers: FinishTier[] = ["natural", "solid", "premium"];
 const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
+
+// A different real interior scene per system, each thematically matched (a
+// sliding-door garden shot behind the sliding stage, a fold & slide garden
+// behind the fold & slide stage, etc.) rather than one photo reused for
+// every option.
+const backdrops = {
+  sliding: images.lifestyleSlidingBrightGarden,
+  corner: images.lifestyleExteriorDusk,
+  casement: images.lifestyleCasementGardenWarm,
+  foldslide: images.lifestyleFoldslideGarden,
+} as const;
 ---
 
 <section class="uf-config relative flex min-h-screen flex-col justify-center overflow-hidden bg-ink py-14 text-off-white" data-reveal-group>
@@ -39,15 +50,21 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
     <!-- Stage -->
     <div class="uf-config-stage-host uf-frame-host relative lg:col-span-7" style={`--uf-cfg-color:${defaultFinish.swatch}`}>
       <div class="uf-config-stage relative flex aspect-[4/5] items-center justify-center overflow-hidden sm:aspect-[16/11] lg:h-full lg:aspect-auto lg:max-h-[52vh]">
-        <Image
-          src={images.lifestyleSofaGlasswall}
-          alt=""
-          aria-hidden="true"
-          class="uf-config-backdrop absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
-          widths={[640, 1000, 1400]}
-          sizes="(min-width: 1024px) 45vw, 100vw"
-        />
+        {
+          stages.map((s, i) => (
+            <Image
+              src={backdrops[s.key]}
+              alt=""
+              aria-hidden="true"
+              class="uf-config-backdrop absolute inset-0 h-full w-full object-cover"
+              data-backdrop={s.key}
+              data-active={i === 0 ? "true" : "false"}
+              loading="lazy"
+              widths={[640, 1000, 1400]}
+              sizes="(min-width: 1024px) 45vw, 100vw"
+            />
+          ))
+        }
         <div class="uf-config-glow" aria-hidden="true"></div>
 
         {
@@ -294,12 +311,21 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
 
   /* A real interior scene behind the window line-art, so "designing your
      view" reads as placing a window into an actual room rather than
-     floating on a flat colour. Dimmed hard so the stroke art and captions
-     stay the legible, primary layer. */
+     floating on a flat colour. Heavily blurred as well as dimmed — these
+     source photos have their own window/door in them, and at normal
+     sharpness that reads as a second, misaligned "window" competing with
+     the line-art. Blurring it into soft bokeh keeps only ambient colour and
+     depth, so the SVG is unambiguously the one window in the scene. */
   .uf-config-backdrop {
     z-index: 0;
-    opacity: 0.4;
-    filter: saturate(0.7) brightness(0.8);
+    opacity: 0;
+    filter: saturate(0.6) brightness(0.75) blur(14px);
+    transform: scale(1.08);
+    transition: opacity var(--duration-cinematic) var(--ease-precise);
+  }
+
+  .uf-config-backdrop[data-active="true"] {
+    opacity: 0.45;
   }
 
   .uf-config-stage::before {
@@ -466,6 +492,7 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
 <script>
   const host = document.querySelector<HTMLElement>(".uf-config-stage-host");
   const stageArts = document.querySelectorAll<SVGElement>(".uf-config-art");
+  const stageBackdrops = document.querySelectorAll<HTMLElement>(".uf-config-backdrop");
   const stageTabs = document.querySelectorAll<HTMLButtonElement>("[data-stage-btn]");
   const swatches = document.querySelectorAll<HTMLButtonElement>(".uf-config-swatch");
 
@@ -491,6 +518,9 @@ const defaultFinish = finishes.find((f) => f.slug === "noir") ?? finishes[0];
 
       stageArts.forEach((art) => {
         art.setAttribute("data-active", art.getAttribute("data-stage") === key ? "true" : "false");
+      });
+      stageBackdrops.forEach((bg) => {
+        bg.setAttribute("data-active", bg.getAttribute("data-backdrop") === key ? "true" : "false");
       });
 
       closeStage();
