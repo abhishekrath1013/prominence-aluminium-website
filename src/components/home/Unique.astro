@@ -9,7 +9,7 @@ const cards = [
   { n: "01", title: ["6063 T-6", "Virgin Aluminium"], text: "Provides excellent strength and great corrosion resistance.", cls: "c1" },
   { n: "02", title: ["1,00,000 Cycles", "Tested"], text: "Hardware are tested upto 1 Lakh Cycles for smooth and reliable operations", cls: "c2" },
   { n: "03", title: ["25 Years of", "Warranty"], text: "Against surface corrosion with the help of our Super-Durable Powders for Coating", cls: "c3" },
-  { n: "04", title: ["100+ Colours of Shades", "to Choose"], text: "Choose your colours according to your prefferences with wide range of colour choise", cls: "c4" },
+  { n: "04", title: ["100+ Colours of Shades", "to Choose"], text: "Choose your colours according to your preferences with wide range of colour choise", cls: "c4" },
 ];
 ---
 
@@ -84,6 +84,7 @@ const cards = [
     font-size: calc(66 * var(--u));
     line-height: calc(68 * var(--u));
     letter-spacing: -0.05em;
+    text-transform: uppercase;
   }
   /* each line carries its own slice of the grey gradient (so lines can animate independently) */
   .hu__title .ln__t {
@@ -92,9 +93,9 @@ const cards = [
     -webkit-text-fill-color: transparent;
     color: transparent;
   }
-  .hu__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(180deg, #ececec, #d6d6d6); }
-  .hu__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(180deg, #d4d4d4, #bdbdbd); }
-  .hu__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(180deg, #bcbcbc, #a6a6a6); }
+  .hu__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(180deg, #e2e2e2, #cfcfcf); }
+  .hu__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(180deg, #c9c9c9, #b4b4b4); }
+  .hu__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(180deg, #b0b0b0, #9b9b9b); }
 
   /* two equal columns pinned to the left/right margins; rows are the design's heights */
   .hu__grid {
@@ -126,7 +127,7 @@ const cards = [
     font-weight: 800;
     font-size: calc(41 * var(--u));
     line-height: calc(50 * var(--u));
-    color: var(--color-brand-blue);
+    color: #ddd;
   }
   .hu__card h3 {
     font-family: var(--font-poppins);
@@ -135,14 +136,14 @@ const cards = [
     line-height: calc(53 * var(--u));
     letter-spacing: -0.04em;
     white-space: nowrap;
-    color: #f2f2f2;
+    color: #afafaf; /* the design sets these titles in a mid grey */
   }
   .hu__card p {
     margin-top: calc(11 * var(--u));
     font-size: calc(18 * var(--u));
     line-height: calc(28 * var(--u));
-    font-weight: 400;
-    color: rgb(255 255 255 / 0.5);
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.45);
   }
   .hu__c1 p { max-width: calc(420 * var(--u)); }
   .hu__c2 p { max-width: calc(440 * var(--u)); }

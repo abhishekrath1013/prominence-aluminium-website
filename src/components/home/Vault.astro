@@ -138,31 +138,32 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
   .hv__title {
     position: absolute;
     z-index: 1;
-    left: calc(50% + (100 - 663) * var(--u));
-    top: calc(269 * var(--u));
+    left: calc(50% + (138 - 663) * var(--u));
+    top: calc(292 * var(--u));
     font-family: var(--font-poppins);
-    font-weight: 600;
-    font-size: calc(128.2 * var(--u));
-    line-height: calc(111 * var(--u));
+    font-weight: 700;
+    font-size: calc(125.2 * var(--u));
+    line-height: calc(108 * var(--u));
     letter-spacing: -0.03em;
     text-transform: uppercase;
     white-space: nowrap;
   }
   /* each line carries its own slice of the silver gradient (so lines can animate independently) */
   .hv__title .ln__t {
+    display: inline-block; /* box = the word, so each line's silver sweep runs across the word */
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
   }
-  .hv__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(180deg, #ececed, #d6d6d8); }
-  .hv__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(180deg, #d2d2d4, #a8a8ac); }
-  .hv__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(180deg, #9c9ca0, #8a8a8f); }
+  .hv__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(90deg, #d8d8d8 0%, #d8d8d8 28%, #adadad 100%); }
+  .hv__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(90deg, #c0c0c0 0%, #a7a7a7 42%, #bdbdbd 100%); }
+  .hv__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(90deg, #ababab 0%, #d8d8d8 68%, #d8d8d8 100%); }
   .hv__title .ln:nth-child(2) {
-    margin-left: calc(78 * var(--u));
+    margin-left: calc(45 * var(--u));
   }
   .hv__title .ln:nth-child(3) {
-    margin-left: calc(150 * var(--u));
+    margin-left: calc(111 * var(--u));
   }
 
   /* the cards drift left forever, very slowly; hovering (or focusing) the row holds them still */
@@ -212,15 +213,15 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
     font-size: calc(43 * var(--u));
     line-height: calc(53 * var(--u));
     letter-spacing: -0.04em;
-    color: #f3f3f3;
+    color: #d8d8d8;
   }
   .hv__card p {
     margin-top: calc(18 * var(--u));
     max-width: calc(440 * var(--u));
     font-size: calc(18 * var(--u));
     line-height: calc(28 * var(--u));
-    font-weight: 400;
-    color: rgb(255 255 255 / 0.5);
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.46);
   }
   .hv__icon {
     position: absolute;

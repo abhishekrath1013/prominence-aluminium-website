@@ -46,7 +46,7 @@
     background: var(--color-ink);
     color: var(--color-ivory);
     font-family: var(--font-sans);
-    font-weight: 300;
+    font-weight: 500; /* Manrope Medium, as in the design */
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
