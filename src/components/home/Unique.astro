@@ -1,0 +1,231 @@
+---
+// "Unique solutions. Unique homes." — four glass feature cards over the kitchen photograph.
+// One screen tall. Sizes come from the 1326 × 1052 design scaled to fit the screen height (var(--u)); the title and the
+// card grid are pinned to the left and right edges, so on wide screens the cards grow wider instead of leaving margins.
+import { Image } from "astro:assets";
+import bg from "../../assets/home/unique-bg.jpg";
+
+const cards = [
+  { n: "01", title: ["6063 T-6", "Virgin Aluminium"], text: "Provides excellent strength and great corrosion resistance.", cls: "c1" },
+  { n: "02", title: ["1,00,000 Cycles", "Tested"], text: "Hardware are tested upto 1 Lakh Cycles for smooth and reliable operations", cls: "c2" },
+  { n: "03", title: ["25 Years of", "Warranty"], text: "Against surface corrosion with the help of our Super-Durable Powders for Coating", cls: "c3" },
+  { n: "04", title: ["100+ Colours of Shades", "to Choose"], text: "Choose your colours according to your prefferences with wide range of colour choise", cls: "c4" },
+];
+---
+
+<section class="hu uf-panel" data-panel style="z-index:2" aria-labelledby="hu-title">
+  <Image src={bg} alt="" class="hu__bg" data-hm="uq-bg" widths={[900, 1600]} sizes="115vw" loading="lazy" />
+  <div class="hu__shade" aria-hidden="true"></div>
+
+  <div class="hu__stage">
+    <h2 id="hu-title" class="hu__title" aria-label="Unique solutions. Unique homes.">
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">Unique</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">solutions.</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">Unique homes.</span></span>
+    </h2>
+    <div class="hu__grid">
+      {
+        cards.map((c) => (
+          <article class={`hu__card hu__${c.cls}`} data-hm="uq-card">
+            <span class="hu__num" aria-hidden="true">{c.n}</span>
+            <h3>{c.title[0]}<br />{c.title[1]}</h3>
+            <p>{c.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .hu {
+    container-type: size;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    height: 100svh;
+    min-height: 520px;
+    background: #0b0b0c;
+  }
+  /* full-width band, as tall as the design scaled to fit the screen height, centred vertically */
+  .hu__stage {
+    --u: calc(min(100cqw, 100cqh * 1326 / 1052) / 1326);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    translate: 0 -50%;
+    height: calc(1052 * var(--u));
+  }
+  .hu__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 45% 50%;
+  }
+  .hu__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgb(10 10 11 / 0.6) 0%, rgb(10 10 11 / 0.55) 50%, rgb(10 10 11 / 0.85) 100%),
+      linear-gradient(90deg, rgb(10 10 11 / 0.45), transparent 60%);
+  }
+  .hu__title {
+    position: absolute;
+    left: calc(154 * var(--u));
+    top: calc(204 * var(--u));
+    white-space: nowrap;
+    font-family: var(--font-poppins);
+    font-weight: 700;
+    font-size: calc(66 * var(--u));
+    line-height: calc(68 * var(--u));
+    letter-spacing: -0.05em;
+  }
+  /* each line carries its own slice of the grey gradient (so lines can animate independently) */
+  .hu__title .ln__t {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .hu__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(180deg, #ececec, #d6d6d6); }
+  .hu__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(180deg, #d4d4d4, #bdbdbd); }
+  .hu__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(180deg, #bcbcbc, #a6a6a6); }
+
+  /* two equal columns pinned to the left/right margins; rows are the design's heights */
+  .hu__grid {
+    position: absolute;
+    left: calc(154 * var(--u));
+    right: calc(153 * var(--u));
+    top: calc(174 * var(--u));
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: calc(266 * var(--u)) calc(266 * var(--u)) calc(170 * var(--u));
+    gap: calc(13 * var(--u)) calc(15 * var(--u));
+  }
+  .hu__card {
+    position: relative;
+    padding: calc(48 * var(--u)) calc(20 * var(--u)) 0;
+    background: rgb(8 8 9 / 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .hu__c1 { grid-column: 2; grid-row: 1; }
+  .hu__c2 { grid-column: 1; grid-row: 2; }
+  .hu__c3 { grid-column: 2; grid-row: 2; }
+  .hu__c4 { grid-column: 1 / -1; grid-row: 3; padding-top: calc(31 * var(--u)); }
+  .hu__num {
+    position: absolute;
+    top: calc(12 * var(--u));
+    right: calc(20 * var(--u));
+    font-family: var(--font-poppins);
+    font-weight: 800;
+    font-size: calc(41 * var(--u));
+    line-height: calc(50 * var(--u));
+    color: var(--color-brand-blue);
+  }
+  .hu__card h3 {
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: calc(43 * var(--u));
+    line-height: calc(53 * var(--u));
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    color: #f2f2f2;
+  }
+  .hu__card p {
+    margin-top: calc(11 * var(--u));
+    font-size: calc(18 * var(--u));
+    line-height: calc(28 * var(--u));
+    font-weight: 400;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .hu__c1 p { max-width: calc(420 * var(--u)); }
+  .hu__c2 p { max-width: calc(440 * var(--u)); }
+  .hu__c3 p { max-width: calc(410 * var(--u)); }
+  .hu__c4 p {
+    position: absolute;
+    left: calc(50% + 27.5 * var(--u)); /* same x as the text of the right-hand column cards (half the gap + the 20u card padding) */
+    top: calc(45 * var(--u));
+    margin: 0;
+    width: calc(400 * var(--u));
+  }
+
+  /* phone: a plain stack instead of the scaled stage */
+  @media (max-width: 860px) {
+    .hu {
+      container-type: normal;
+      height: auto;
+      min-height: 0;
+    }
+    .hu__stage {
+      position: relative;
+      left: auto;
+      top: auto;
+      translate: none;
+      height: auto;
+      display: grid;
+      gap: 0.75rem;
+      padding: 5rem 1.25rem 4rem;
+    }
+    .hu__grid {
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      gap: 0.75rem;
+    }
+    .hu__title,
+    .hu__card,
+    .hu__c1,
+    .hu__c2,
+    .hu__c3,
+    .hu__c4 {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: auto;
+      height: auto;
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .hu__title {
+      font-size: clamp(2.2rem, 11vw, 3.4rem);
+      line-height: 1.04;
+      margin-bottom: 1rem;
+    }
+    .hu__card,
+    .hu__c4 {
+      padding: 1.5rem 1.25rem 1.6rem;
+    }
+    .hu__num {
+      top: 0.4rem;
+      right: 1.1rem;
+      font-size: 2.2rem;
+    }
+    .hu__card h3 {
+      font-size: 1.7rem;
+      line-height: 1.25;
+      white-space: normal;
+    }
+    .hu__card p,
+    .hu__c4 p,
+    .hu__c1 p,
+    .hu__c2 p,
+    .hu__c3 p {
+      position: static;
+      width: auto;
+      max-width: none;
+      margin-top: 0.9rem;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+  }
+</style>

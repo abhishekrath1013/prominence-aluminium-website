@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import StudioInvite from "../../components/StudioInvite.astro";
+import { images } from "../../assets/images";
+import { insights, getInsight } from "../../data/insights";
+import { articleBodies } from "../../data/articles";
+
+export function getStaticPaths() {
+  return insights.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const body = articleBodies[post.slug] ?? [];
+const more = insights.filter((p) => p.slug !== post.slug).slice(0, 2);
+void getInsight;
+
+// a short contents list from the article's own headings
+const headings = body.filter((b) => b.t === "h2").map((b) => (b as { x: string }).x);
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+---
+
+<BaseLayout title={post.title} description={post.description} path={`/insights/${post.slug}/`} ogImage="/media/hero-corner.jpg">
+  <PageHero eyebrow={`Blog · ${post.category}`} image={images[post.image]} imageAlt="" size="lg" compact>
+    {post.title}
+    <Fragment slot="description">{post.author} · {post.date} · {post.readMinutes} min read</Fragment>
+  </PageHero>
+
+  <section class="art">
+    <div class="container-frame art__grid">
+      <aside class="art__aside" data-reveal="up">
+        <div class="pg-glass art__card">
+          <p class="label-eyebrow text-champagne">Contents</p>
+          <ol class="art__toc">
+            {headings.map((h, i) => (
+              <li>
+                <a href={`#${slugify(h)}`}><span class="pg-num">{String(i + 1).padStart(2, "0")}</span><span>{h}</span></a>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div class="pg-glass art__card">
+          <p class="label-eyebrow text-champagne">Talk to us</p>
+          <p class="art__cardtext">Choosing windows for a home or a project? Our team will walk you through the options.</p>
+          <a href="/contact-us/" class="btn-pg">Get a free quote</a>
+        </div>
+      </aside>
+
+      <article class="art__body prose-pg">
+        {
+          body.map((b) => {
+            if (b.t === "h2") return <h2 id={slugify(b.x)}>{b.x}</h2>;
+            if (b.t === "h3") return <h3>{b.x}</h3>;
+            if (b.t === "h4") return <h3>{b.x}</h3>;
+            if (b.t === "ul") return <ul>{b.x.map((li) => <li set:html={li} />)}</ul>;
+            return <p set:html={b.x} />;
+          })
+        }
+        <p class="art__source">
+          First published on the Uniframe blog —
+          <a href={post.source} target="_blank" rel="noopener noreferrer">read the original</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  {
+    more.length > 0 && (
+      <section class="art-more">
+        <div class="container-frame">
+          <p class="label-eyebrow text-champagne" data-reveal="fade">Keep reading</p>
+          <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {more.map((p) => <ArticleCard post={p} />)}
+          </div>
+          <div class="mt-12" data-reveal="up">
+            <a href="/insights/" class="btn-pg btn-pg--ghost">All articles</a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <StudioInvite />
+</BaseLayout>
+
+<style is:global>
+  .art {
+    padding: clamp(4rem, 8vw, 7rem) 0 clamp(4rem, 8vw, 7rem);
+    background: #0a0a0b;
+  }
+  .art__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .art__body {
+    max-width: 46rem;
+  }
+  .art__aside {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+  }
+  .art__card {
+    padding: 1.6rem 1.6rem 1.8rem;
+  }
+  .art__toc {
+    list-style: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+  .art__toc a {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: rgb(255 255 255 / 0.65);
+    transition: color 0.3s ease;
+  }
+  .art__toc a:hover {
+    color: #fff;
+  }
+  .art__toc .pg-num {
+    font-size: 0.95rem;
+    flex: 0 0 auto;
+  }
+  .art__cardtext {
+    margin: 1rem 0 1.4rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.6);
+  }
+  .art__card .btn-pg {
+    min-width: 0;
+    width: 100%;
+    padding: 1.1rem 1.4rem;
+    font-size: 0.8rem;
+  }
+  .art__source {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.45);
+  }
+  .art-more {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: #141317;
+  }
+  @media (min-width: 1000px) {
+    .art__grid {
+      grid-template-columns: 19rem minmax(0, 1fr);
+      gap: clamp(3rem, 7vw, 7rem);
+      align-items: start;
+    }
+    .art__aside {
+      position: sticky;
+      top: 2rem;
+    }
+  }
+</style>

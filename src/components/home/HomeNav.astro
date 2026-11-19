@@ -1,0 +1,102 @@
+---
+// Transparent top bar of the Aluminium homepage (lives inside the hero so it scales with it):
+// three links, centred logo, "Get a Quote".
+import { Image } from "astro:assets";
+import { images } from "../../assets/images";
+---
+
+<header class="hn">
+  <nav class="hn__links" aria-label="Primary">
+    <a href="/products/">Products</a>
+    <a href="/about-us/">About us</a>
+    <a href="/insights/">Blog</a>
+  </nav>
+  <a href="/" class="hn__logo" aria-label="Prominance — home">
+    <Image src={images.prominanceLogo} alt="Prominance Window Systems" width={1060} height={198} widths={[260, 520]} sizes="200px" loading="eager" />
+  </a>
+  <a href="/contact-us/" class="hn__quote">Get a Quote</a>
+</header>
+
+<style is:global>
+  /* design coordinates: 1326px-wide stage, 1u = 100cqw / 1326 (set on the hero's children) */
+  .hn {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: calc(90 * var(--u));
+    color: #fff;
+  }
+  .hn a {
+    position: absolute;
+    transition: opacity 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+  .hn__links {
+    position: absolute;
+    left: calc(26 * var(--u));
+    top: calc(36 * var(--u));
+    display: flex;
+    gap: calc(16 * var(--u));
+    font-size: calc(12 * var(--u));
+    line-height: calc(16 * var(--u));
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hn__links a {
+    position: static;
+  }
+  .hn__links a:hover {
+    opacity: 0.65;
+  }
+  .hn__logo {
+    left: 50%;
+    translate: -50% 0;
+    top: calc(30 * var(--u));
+    width: calc(199 * var(--u));
+  }
+  .hn__logo img {
+    width: 100%;
+    height: auto;
+  }
+  .hn__quote {
+    right: calc(23 * var(--u));
+    top: calc(30 * var(--u));
+    width: calc(119 * var(--u));
+    height: calc(30 * var(--u));
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    font-size: calc(12 * var(--u));
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hn__quote:hover {
+    background: #fff;
+    color: #0a0a0b;
+  }
+  @media (max-width: 800px) {
+    .hn {
+      height: 72px;
+    }
+    .hn__links {
+      display: none;
+    }
+    .hn__logo {
+      left: 1.25rem;
+      translate: none;
+      top: 22px;
+      width: 150px;
+    }
+    .hn__quote {
+      right: 1.25rem;
+      top: 20px;
+      width: auto;
+      height: auto;
+      padding: 0.5rem 0.9rem;
+      font-size: 12px;
+    }
+  }
+</style>

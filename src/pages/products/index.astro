@@ -1,0 +1,247 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ProductList from "../../components/ProductList.astro";
+import StudioInvite from "../../components/StudioInvite.astro";
+import { images } from "../../assets/images";
+import { products, productFamilies } from "../../data/products";
+import { finishes, finishTiers } from "../../data/finishes";
+import type { FinishTier } from "../../data/finishes";
+
+const sliding = products.filter((p) => p.family === "sliding");
+const casement = products.filter((p) => p.family === "casement");
+const tiers = Object.keys(finishTiers) as FinishTier[];
+
+const families = [
+  { n: "01", id: "sliding", fam: productFamilies.sliding, count: sliding.length },
+  { n: "02", id: "casement", fam: productFamilies.casement, count: casement.length },
+];
+const more = [
+  { href: "/projects/", title: "Residences", text: "Prominance systems in real architectural settings." },
+  { href: "/architects/", title: "Architects", text: "Specifications, details and support for design teams." },
+  { href: "/fabricators/", title: "Fabricators", text: "Partner with us to fabricate and install the systems." },
+  { href: "/facade-sky-lights/", title: "Facade & skylights", text: "Structural glazing and skylights beyond the window." },
+];
+---
+
+<BaseLayout
+  title="The Collection — Sliding & Casement Aluminium Systems"
+  description="The full Prominance collection: Graf sliding systems and Livio / Robus casement systems, engineered in 6063 T-6 virgin aluminium."
+  path="/products/"
+  ogImage="/media/villa-2.png"
+>
+  <PageHero eyebrow="The Collection" image={images.villa2} imageAlt="A cliffside modern villa at dusk with expansive aluminium-framed glass walls.">
+    Two platforms. One standard.
+    <Fragment slot="description">
+      Sliding and casement systems built to the same standard of precision — from residential windows to panoramic,
+      all-around concealed glazing.
+    </Fragment>
+    <Fragment slot="cta">
+      <a href="#sliding" class="btn-pg">Sliding systems</a>
+      <a href="#casement" class="btn-pg btn-pg--ghost">Casement systems</a>
+    </Fragment>
+  </PageHero>
+
+  <!-- the two platforms at a glance -->
+  <section class="pp pp--dark">
+    <div class="container-frame">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {
+          families.map((f) => (
+            <a href={`#${f.id}`} class="pp__fam pg-glass" data-reveal="up">
+              <span class="pg-num">{f.n}</span>
+              <h2 class="pp__famname">{f.fam.name}</h2>
+              <p class="pp__famtext">{f.fam.description}</p>
+              <p class="label-eyebrow text-champagne">{f.count} systems</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="sliding" class="pp pp--alt">
+    <div class="container-frame" data-reveal-group>
+      <p class="label-eyebrow text-champagne" data-reveal="fade">01 — Sliding</p>
+      <h2 class="display-lg pp__title" data-split>Panoramic openings that disappear.</h2>
+      <p class="pp__sub" data-reveal="up">{productFamilies.sliding.description}</p>
+    </div>
+    <div class="container-frame mt-16"><ProductList products={sliding} /></div>
+  </section>
+
+  <section id="casement" class="pp pp--dark">
+    <div class="container-frame" data-reveal-group>
+      <p class="label-eyebrow text-champagne" data-reveal="fade">02 — Casement</p>
+      <h2 class="display-lg pp__title" data-split>Precision-hinged, airtight, quiet.</h2>
+      <p class="pp__sub" data-reveal="up">{productFamilies.casement.description}</p>
+    </div>
+    <div class="container-frame mt-16"><ProductList products={casement} /></div>
+  </section>
+
+  <section id="finishes" class="pp pp--alt">
+    <div class="container-frame" data-reveal-group>
+      <p class="label-eyebrow text-champagne" data-reveal="fade">03 — Finishes</p>
+      <h2 class="display-lg pp__title" data-split>Choose the colour of your light.</h2>
+      <p class="pp__sub" data-reveal="up">
+        Over 100 anodised, powder-coated and metallic finishes are available across every system. Swatches shown are
+        a faithful reading of our printed fan chart; we recommend viewing finishes in daylight at the studio.
+      </p>
+    </div>
+
+    <div class="container-frame mt-16 grid gap-6">
+      {
+        tiers.map((tier) => (
+          <div class="pg-glass pp__tier" data-reveal="up">
+            <div class="pp__tierhead">
+              <h3>{finishTiers[tier].label}</h3>
+              <p>{finishTiers[tier].description}</p>
+            </div>
+            <ul class="pp__swatches">
+              {finishes
+                .filter((f) => f.tier === tier)
+                .map((f) => (
+                  <li title={f.description}>
+                    <span class="pp__swatch" style={`background:${f.swatch}`}></span>
+                    <span class="pp__swname">{f.name}</span>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="pp pp--dark">
+    <div class="container-frame">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">Beyond the window</p>
+      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          more.map((m) => (
+            <a href={m.href} class="pp__more pg-glass" data-reveal="up">
+              <h3>{m.title}</h3>
+              <p>{m.text}</p>
+              <span class="label-eyebrow text-champagne">Explore →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <StudioInvite />
+</BaseLayout>
+
+<style is:global>
+  .pp {
+    padding: clamp(4rem, 8vw, 7.5rem) 0;
+  }
+  .pp--dark {
+    background: #0a0a0b;
+  }
+  .pp--alt {
+    background: #141317;
+  }
+  .pp__title {
+    margin-top: 1.2rem;
+    max-width: 52rem;
+    text-wrap: balance;
+  }
+  .pp__sub {
+    margin-top: 1.6rem;
+    max-width: 38rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: rgb(255 255 255 / 0.62);
+  }
+  .pp__fam {
+    display: block;
+    padding: 2.2rem 2.2rem 2.4rem;
+    transition: transform 0.6s var(--ease-lux), background-color 0.4s ease;
+  }
+  .pp__fam:hover {
+    transform: translateY(-6px);
+    background: rgb(14 14 16 / 0.85);
+  }
+  .pp__famname {
+    margin-top: 1.4rem;
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: clamp(2rem, 3.4vw, 3rem);
+    letter-spacing: -0.035em;
+    color: #f3f3f3;
+  }
+  .pp__famtext {
+    margin: 1rem 0 1.6rem;
+    max-width: 30rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .pp__tier {
+    padding: 2rem 2rem 2.2rem;
+  }
+  .pp__tierhead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem 2rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+  .pp__tierhead h3 {
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: 1.9rem;
+    letter-spacing: -0.03em;
+    color: #f3f3f3;
+  }
+  .pp__tierhead p {
+    max-width: 28rem;
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .pp__swatches {
+    list-style: none;
+    margin: 1.8rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    gap: 1.6rem 1rem;
+  }
+  .pp__swatch {
+    display: block;
+    aspect-ratio: 3 / 4;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14);
+  }
+  .pp__swname {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: rgb(255 255 255 / 0.75);
+  }
+  .pp__more {
+    display: block;
+    padding: 1.8rem 1.8rem 2rem;
+    transition: transform 0.6s var(--ease-lux), background-color 0.4s ease;
+  }
+  .pp__more:hover {
+    transform: translateY(-6px);
+    background: rgb(14 14 16 / 0.85);
+  }
+  .pp__more h3 {
+    font-family: var(--font-poppins);
+    font-weight: 500;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    color: #f3f3f3;
+  }
+  .pp__more p {
+    margin: 0.7rem 0 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.55);
+  }
+</style>

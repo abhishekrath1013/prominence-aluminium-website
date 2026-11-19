@@ -1,0 +1,472 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Obsidian & Prominance Green ----
+     A night-register palette: warm obsidian grounds, ivory type, and a single
+     accent — Prominance green (#429B46, sampled from the logo). The token is
+     still called "champagne" so every component keeps working; only its value
+     changed. Token names are the only colour vocabulary components use. */
+  --color-ink: #0a0a0b;
+  --color-ink-soft: #131314;
+  --color-ink-raised: #1b1b1d;
+  --color-ivory: #f1ece2;
+  --color-bone: #d8d0bf;
+  --color-mute: #8f897c;
+  --color-champagne: #429b46;
+  --color-champagne-soft: #7cc780;
+  --color-green-deep: #378a3e;
+  --color-brand-blue: #076ea1;
+  --color-white: #ffffff;
+
+  /* Prominance type system: Poppins for headlines, Manrope for everything else */
+  --font-display: var(--font-poppins-raw), "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-sans-raw), "Segoe UI", system-ui, sans-serif;
+  --font-poppins: var(--font-poppins-raw), "Poppins", "Segoe UI", system-ui, sans-serif;
+
+  --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+  --container-max: 1680px;
+  --gutter: clamp(1.25rem, 4.5vw, 5rem);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: var(--color-ink);
+    scroll-behavior: auto;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-champagne);
+    color: var(--color-ink);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-champagne);
+    outline-offset: 4px;
+  }
+}
+
+@layer utilities {
+  .container-frame {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .label-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6.4vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  .display-lg {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 4.4vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .display-md {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.65rem, 3vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .lead {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+    line-height: 1.5;
+  }
+
+  .hairline {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.18;
+  }
+
+  .text-champagne {
+    color: var(--color-champagne);
+  }
+
+  /* Masked line wrapper produced by site.ts for [data-split] text */
+  .split-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+  .split-inner {
+    display: inline-block;
+    will-change: transform;
+  }
+}
+
+/* ---------- Pre-hydration hide (only when JS is running) ----------
+   Everything animated is hidden until site.ts has split text and built its
+   triggers, then `uf-ready` is added. A hard failsafe in site.ts adds the
+   class regardless, so content can never stay invisible. */
+html.js:not(.uf-ready) [data-split],
+html.js:not(.uf-ready) [data-reveal],
+html.js:not(.uf-ready) [data-img-reveal] {
+  visibility: hidden;
+}
+
+html.js [data-line-draw] {
+  transform-origin: left center;
+}
+
+/* ---------- Preloader ---------- */
+.uf-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: var(--color-ink);
+  color: var(--color-ivory);
+}
+.uf-preloader[hidden] {
+  display: none;
+}
+
+/* ---------- Scroll progress ---------- */
+.uf-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--color-champagne);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 120;
+  pointer-events: none;
+}
+
+/* ---------- Cursor ---------- */
+html.uf-custom-cursor,
+html.uf-custom-cursor a,
+html.uf-custom-cursor button {
+  cursor: none;
+}
+.uf-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 250;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 1px solid var(--color-champagne);
+  border-radius: 999px;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: width 0.45s var(--ease-lux), height 0.45s var(--ease-lux), margin 0.45s var(--ease-lux),
+    background-color 0.3s ease, opacity 0.3s ease;
+}
+.uf-cursor.is-visible {
+  opacity: 1;
+}
+.uf-cursor.is-hover {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  background: rgb(201 169 107 / 0.18);
+}
+@media (hover: none), (pointer: coarse) {
+  .uf-cursor {
+    display: none;
+  }
+}
+
+/* ---------- Links & buttons ---------- */
+.btn-lux {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.15rem 2.1rem;
+  border: 1px solid var(--color-champagne);
+  color: var(--color-ivory);
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.5s var(--ease-lux);
+}
+.btn-lux::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-champagne);
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-lux);
+  z-index: -1;
+}
+.btn-lux:hover {
+  color: var(--color-ink);
+}
+.btn-lux:hover::before {
+  transform: translateY(0);
+}
+
+.link-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 0.6s var(--ease-lux);
+  opacity: 0.5;
+}
+.link-underline:hover::after {
+  transform: scaleX(0.35);
+}
+
+/* ---------- Lenis ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* The accent is flat Prominance green — no gradient, glint or glow. */
+.text-champagne,
+.gold-text {
+  color: var(--color-champagne);
+}
+.text-champagne-soft {
+  color: var(--color-champagne-soft);
+}
+/* One line of a headline inside a clipping mask — the text slides up out of it on reveal. The padding/negative margin
+   keeps descenders from being clipped without changing the line box. */
+.ln {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+.ln__t {
+  display: block;
+  will-change: transform;
+}
+
+/* Stacked panels (the "z-index scroll"): a .uf-panel docks at the top while the next section slides over it.
+   Same breakpoint as initStack() in site.ts, which also lets the covered panel recede. */
+@media (min-width: 1024px) and (min-height: 760px) {
+  .uf-stack {
+    position: relative;
+  }
+  .uf-stack > .uf-panel {
+    position: sticky;
+    top: 0;
+  }
+}
+
+/* Homepage reveals (src/animations/home.ts): these start hidden and home.ts brings them in. The class is added as soon
+   as the start states are set, or after a failsafe delay, so nothing can stay invisible. */
+html.js:not(.hm-ready) [data-hm]:not([data-hm$="bg"]),
+html.js:not(.hm-ready) .hh .hn {
+  opacity: 0;
+}
+
+/* Sans-serif has no true italic: emphasis words stay upright and carry the accent colour instead. */
+em,
+.italic {
+  font-style: normal;
+}
+
+
+/* ======================================================================
+   Inner-page kit — the homepage design system, reusable on every other page.
+   Dark ground, Poppins headlines, glass cards, brand-blue numbers, green accent.
+   ====================================================================== */
+
+/* the dark "texture" band the homepage uses behind the statement and the 21-day section */
+.pg-pattern {
+  background-color: #141317;
+  background-image: linear-gradient(180deg, rgb(20 19 23 / 0.35), rgb(20 19 23 / 0.35)), url("/media/pattern-dark.jpg");
+  background-size: cover;
+  background-position: 50% 100%;
+}
+
+/* frosted glass card (as on "Unique solutions") */
+.pg-glass {
+  background: rgb(8 8 9 / 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* big brand-blue index number (01, 02 …) */
+.pg-num {
+  font-family: var(--font-poppins);
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--color-brand-blue);
+}
+
+/* the homepage's primary button: deep-blue panel, bright green label */
+.btn-pg {
+  display: inline-grid;
+  place-items: center;
+  min-width: 15rem;
+  padding: 1.35rem 2.2rem;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 6px;
+  background: radial-gradient(ellipse 80% 120% at 50% 0%, #0c4d71 0%, #08334f 48%, #05192d 100%);
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #49e858;
+  transition: filter 0.3s ease, transform 0.3s var(--ease-lux);
+}
+.btn-pg:hover {
+  filter: brightness(1.25);
+  transform: translateY(-2px);
+}
+.btn-pg--ghost {
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.28);
+  color: #fff;
+}
+
+/* long-form article typography */
+.prose-pg {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: rgb(241 236 226 / 0.78);
+}
+.prose-pg > * + * {
+  margin-top: 1.35rem;
+}
+.prose-pg h2 {
+  margin-top: 3.4rem;
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #f3f3f3;
+}
+.prose-pg h3 {
+  margin-top: 2.4rem;
+  font-family: var(--font-poppins);
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #e9e9ea;
+}
+.prose-pg ul,
+.prose-pg ol {
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+.prose-pg li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.prose-pg ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--color-champagne);
+}
+.prose-pg strong {
+  font-weight: 600;
+  color: #fff;
+}
+.prose-pg a {
+  color: var(--color-champagne-soft);
+  text-decoration: underline;
+  text-decoration-color: rgb(66 155 70 / 0.5);
+  text-underline-offset: 4px;
+}

@@ -1,0 +1,233 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import StudioInvite from "../components/StudioInvite.astro";
+import { images } from "../assets/images";
+import factory from "../assets/home/factory.jpg";
+import { company, sisterBrands, engineeringStats } from "../data/company";
+
+const values = [
+  { title: "Sustainability", body: "Naturally corrosion-resistant, 100% recyclable virgin aluminium." },
+  { title: "Quality & Reliability", body: "Rigorously tested hardware, gaskets and finishes, backed by warranty." },
+  { title: "Performance & Security", body: "Vault-like durability engineered into every locking system." },
+  { title: "Customisation", body: "The freedom to specify a finish, configuration and scale for every space." },
+];
+---
+
+<BaseLayout
+  title="About Prominance"
+  description="PROMINANCE is a precision-engineered aluminium window and door systems brand, manufactured by PWDS Extrusions Private Limited in Coimbatore, India."
+  path="/about-us/"
+  ogImage="/media/villa.jpeg"
+>
+  <PageHero eyebrow="About us" image={images.villa} imageAlt="A minimalist villa terrace framed by slim aluminium glazing over a tropical landscape.">
+    Precision, by design.
+    <Fragment slot="description">
+      Prominance engineers aluminium window, door and facade systems that combine durability, strength and a slim,
+      minimal sightline — to deepen the connection between a home and the world outside it.
+    </Fragment>
+    <Fragment slot="cta">
+      <a href="/products/" class="btn-pg">Explore products</a>
+      <a href="/contact-us/" class="btn-pg btn-pg--ghost">Contact us</a>
+    </Fragment>
+  </PageHero>
+
+  <!-- mission + vision -->
+  <section class="ab ab--pattern pg-pattern">
+    <div class="container-frame">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">Our mission</p>
+      <h2 class="display-lg ab__mission" data-split>
+        To craft precision-engineered aluminium window systems, customisable and vault-like in quality, backed by
+        service that makes Prominance a trusted partner in framing every space.
+      </h2>
+      <div class="ab__vision pg-glass" data-reveal="up">
+        <p class="label-eyebrow text-champagne">Our vision</p>
+        <p>
+          To become the global standard for premium aluminium window systems — recognised for quality, aesthetics and
+          sustainable innovation, and trusted by architects and homeowners to beautifully frame every space.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- values, over a photograph -->
+  <section class="ab ab--photo">
+    <Image src={images.aboutBambooCorner} alt="" class="ab__bg" loading="lazy" widths={[900, 1600]} sizes="100vw" />
+    <div class="ab__shade" aria-hidden="true"></div>
+    <div class="container-frame relative">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">What we stand for</p>
+      <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          values.map((v, i) => (
+            <div class="ab__value pg-glass" data-reveal="up">
+              <span class="pg-num">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{v.title}</h3>
+              <p>{v.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- by the numbers -->
+  <section class="ab ab--dark">
+    <div class="container-frame">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">By the numbers</p>
+      <h2 class="display-lg ab__title" data-split>Engineered, tested, guaranteed.</h2>
+      <div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {
+          engineeringStats.map((s) => (
+            <div class="ab__stat pg-glass" data-reveal="up">
+              <p class="ab__statval">{s.value}</p>
+              {s.unit && <p class="label-eyebrow text-champagne">{s.unit}</p>}
+              <p class="ab__statlabel">{s.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- the factory -->
+  <section class="ab ab--factory">
+    <Image src={factory} alt="Aerial view of the Prominance manufacturing campus" class="ab__bg" loading="lazy" widths={[1200, 1800, 2400]} sizes="100vw" />
+    <div class="ab__shade ab__shade--factory" aria-hidden="true"></div>
+    <div class="container-frame relative">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">Crafted in Coimbatore</p>
+      <h2 class="display-lg ab__title" data-split>Manufactured by {company.legalName}.</h2>
+      <p class="ab__text" data-reveal="up">
+        Every Prominance system is made at our facility in Coimbatore, Tamil Nadu — {company.addressLine1} {company.addressLine2}.
+      </p>
+    </div>
+  </section>
+
+  <!-- sister brands -->
+  <section class="ab ab--dark">
+    <div class="container-frame">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">Our creative brands</p>
+      <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+        {
+          sisterBrands.map((b, i) => (
+            <a href={b.href} target="_blank" rel="noopener noreferrer" class="ab__brand pg-glass" data-reveal="up">
+              <span class="pg-num">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{b.name}</h3>
+              <p>{b.line}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <StudioInvite />
+</BaseLayout>
+
+<style is:global>
+  .ab {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(4.5rem, 9vw, 8rem) 0;
+  }
+  .ab--dark {
+    background: #0a0a0b;
+  }
+  .ab__mission {
+    margin-top: 1.6rem;
+    max-width: 62rem;
+    text-wrap: balance;
+  }
+  .ab__vision {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    max-width: 46rem;
+    padding: 2rem 2.2rem 2.2rem;
+  }
+  .ab__vision p:last-child {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: rgb(255 255 255 / 0.78);
+  }
+  .ab__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ab__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgb(10 10 11 / 0.8), rgb(10 10 11 / 0.55) 50%, rgb(10 10 11 / 0.85));
+  }
+  .ab__shade--factory {
+    background: linear-gradient(90deg, rgb(10 10 11 / 0.85) 0%, rgb(10 10 11 / 0.45) 55%, rgb(10 10 11 / 0.2) 100%);
+  }
+  .ab__value {
+    padding: 1.8rem 1.8rem 2.1rem;
+    min-height: 15rem;
+  }
+  .ab__value h3,
+  .ab__brand h3 {
+    margin-top: 2.2rem;
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #f3f3f3;
+  }
+  .ab__value p,
+  .ab__brand p {
+    margin-top: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .ab__title {
+    margin-top: 1.2rem;
+    max-width: 48rem;
+    text-wrap: balance;
+  }
+  .ab__stat {
+    padding: 1.8rem 1.6rem 2rem;
+  }
+  .ab__statval {
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: #f3f3f3;
+    margin-bottom: 0.7rem;
+  }
+  .ab__statlabel {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 0.6);
+  }
+  .ab--factory {
+    padding: clamp(7rem, 16vw, 14rem) 0;
+  }
+  .ab__text {
+    margin-top: 1.6rem;
+    max-width: 34rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgb(255 255 255 / 0.75);
+  }
+  .ab__brand {
+    display: block;
+    padding: 1.8rem 1.8rem 2.1rem;
+    transition: transform 0.6s var(--ease-lux), background-color 0.4s ease;
+  }
+  .ab__brand:hover {
+    transform: translateY(-6px);
+    background: rgb(14 14 16 / 0.85);
+  }
+</style>

@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ContactCta from "../components/ContactCta.astro";
+import { images } from "../assets/images";
+import { company } from "../data/company";
+
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(company.mapAddress)}&output=embed`;
+const cards = [
+  { label: "Toll free", value: company.phoneDisplay, href: company.phoneHref, sub: "" },
+  { label: "Email", value: company.email, href: `mailto:${company.email}`, sub: "" },
+  { label: "Head office", value: company.legalName, href: "", sub: `${company.addressLine1} ${company.addressLine2}` },
+];
+---
+
+<BaseLayout
+  title="Contact us"
+  description="Contact Prominance in Coimbatore — call 1800 102 106, email enquiry@uniframe.com, or request a free consultation."
+  path="/contact-us/"
+>
+  <PageHero eyebrow="Contact us" image={images.heroCorner} imageAlt="" compact>
+    Let’s build something better.
+    <Fragment slot="description">
+      Whether you are building a villa, renovating a family home, or planning a facade — our team will walk you
+      through every system.
+    </Fragment>
+  </PageHero>
+
+  <section class="ct">
+    <div class="container-frame">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        {
+          cards.map((c, i) => (
+            <div class="ct__card pg-glass" data-reveal="up">
+              <span class="pg-num">{String(i + 1).padStart(2, "0")}</span>
+              <p class="label-eyebrow text-champagne">{c.label}</p>
+              {c.href ? <a href={c.href} class="ct__value">{c.value}</a> : <p class="ct__value">{c.value}</p>}
+              {c.sub && <p class="ct__sub">{c.sub}</p>}
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="ct__map pg-glass" data-reveal="up">
+        <iframe
+          src={mapSrc}
+          title="Prominance location on Google Maps"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="h-full w-full grayscale invert-[0.92] contrast-[0.9]"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>
+
+<style is:global>
+  .ct {
+    padding: clamp(4rem, 8vw, 7rem) 0 clamp(4rem, 8vw, 7rem);
+    background: #0a0a0b;
+  }
+  .ct__card {
+    position: relative;
+    padding: 1.8rem 1.8rem 2.1rem;
+    min-height: 11rem;
+  }
+  .ct__card .pg-num {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.4rem;
+  }
+  .ct__value {
+    display: block;
+    margin-top: 1.1rem;
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: #f3f3f3;
+    overflow-wrap: anywhere;
+  }
+  a.ct__value:hover {
+    color: var(--color-champagne-soft);
+  }
+  .ct__sub {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .ct__map {
+    margin-top: 1.25rem;
+    height: clamp(18rem, 36vw, 28rem);
+    overflow: hidden;
+  }
+</style>

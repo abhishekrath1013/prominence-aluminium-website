@@ -1,0 +1,45 @@
+---
+// Aluminium homepage — rebuilt from the design "UNIFRAME · Aluminium homepage".
+// Order, top to bottom:
+//   hero → unique solutions (4 cards) → 3D configurator (existing) → built with precision / factory / 21-day delivery
+//   → inside the frame (existing) → built like a vault → contact (CTA) → footer (BaseLayout)
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import Unique from "../components/home/Unique.astro";
+import PromiseBand from "../components/home/Promise.astro";
+import Vault from "../components/home/Vault.astro";
+import Configurator from "../components/Configurator.astro";
+import RobusComponents from "../components/RobusComponents.astro";
+import StudioInvite from "../components/StudioInvite.astro";
+---
+
+<BaseLayout
+  title="PROMINANCE — Prominance Your View"
+  description="Premium aluminium window and door systems — 6063 T-6 virgin aluminium, hardware tested to 1 lakh cycles, a 25-year warranty and 21-day delivery. Crafted in Coimbatore."
+  path="/"
+  ogImage="/media/hero-villa-poster.jpg"
+  nav="none"
+>
+  <!-- Stacked scroll ("z-index scroll") only here: the hero stays docked while "Unique solutions" slides over it.
+       Everything else scrolls normally (smooth scrolling comes from Lenis in site.ts). -->
+  <div class="uf-stack">
+    <Hero />
+    <Unique />
+  </div>
+  <Configurator />
+  <PromiseBand />
+  <RobusComponents />
+  <Vault />
+  <StudioInvite />
+</BaseLayout>
+
+<script>
+  import "../animations/home";
+</script>
+
+<style is:global>
+  /* the green scroll-progress line is off on the homepage */
+  .uf-progress {
+    display: none;
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import { Font, Image } from "astro:assets";
+import InnerNav from "../components/InnerNav.astro";
+import Footer from "../components/Footer.astro";
+import { images } from "../assets/images";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogImage?: string;
+  preloader?: boolean;
+  /** "none" = the page draws its own top bar (the Aluminium homepage puts it inside the hero); default = the site-wide header with the full menu */
+  nav?: "default" | "none";
+}
+
+const { title, description, path, ogImage = "/media/hero-corner.jpg", preloader = false, nav = "default" } = Astro.props;
+const canonical = new URL(path, Astro.site).toString();
+const fullTitle = title.includes("PROMINANCE") ? title : `${title} | PROMINANCE`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0a0b" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta property="og:site_name" content="PROMINANCE" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <Font cssVariable="--font-sans-raw" preload />
+    <Font cssVariable="--font-poppins-raw" />
+  </head>
+  <body>
+    {
+      preloader && (
+        <div class="uf-preloader" data-preloader aria-hidden="true">
+          <div class="flex w-[min(80vw,420px)] flex-col items-center gap-10">
+            <div data-preloader-logo>
+              <Image src={images.prominanceLogo} alt="" width={1060} height={198} class="h-9 w-auto brightness-0 invert" widths={[260, 520]} sizes="260px" />
+            </div>
+            <div class="w-full">
+              <div class="h-px w-full origin-left bg-champagne" data-preloader-line></div>
+              <div class="mt-4 flex justify-between label-eyebrow text-ivory/50">
+                <span>Prominance Your View</span>
+                <span data-preloader-count>000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    {nav !== "none" && <InnerNav />}
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script src="../animations/site.ts"></script>
+  </body>
+</html>

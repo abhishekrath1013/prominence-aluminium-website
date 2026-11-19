@@ -1,0 +1,236 @@
+---
+import { Image } from "astro:assets";
+import PageHero from "./PageHero.astro";
+import StudioInvite from "./StudioInvite.astro";
+import ProductCard from "./ProductCard.astro";
+import type { Product } from "../data/products";
+import { relatedProducts } from "../data/products";
+
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+const related = relatedProducts(product.slug, 3);
+
+const specGroups = [
+  { title: "Frame", rows: product.frame },
+  { title: "Glazing", rows: product.glazing },
+  { title: "Sash", rows: product.sash },
+  { title: "Performance", rows: product.performance },
+];
+// four headline figures taken straight from the spec tables
+const headline = [product.frame[0], product.glazing[0], product.sash[1] ?? product.sash[0], product.performance[0]].filter(Boolean);
+---
+
+<PageHero
+  eyebrow={product.family === "sliding" ? "Sliding System" : "Casement System"}
+  image={product.heroImage}
+  imageAlt={`${product.fullTitle} — ${product.headline}`}
+>
+  {product.name}
+  <Fragment slot="description">{product.headline}</Fragment>
+  <Fragment slot="cta">
+    <a href="#specifications" class="btn-pg">Specifications</a>
+    <a href="/contact-us/" class="btn-pg btn-pg--ghost">Get a quote</a>
+  </Fragment>
+</PageHero>
+
+<section class="pd pd--dark">
+  <div class="container-frame grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16" data-reveal-group>
+    <div class="lg:col-span-5">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">The system</p>
+      <h2 class="display-md pd__lead" data-reveal="up">{product.description}</h2>
+      <p class="pd__made" data-reveal="up">
+        <span class="label-eyebrow mr-2 text-champagne">Made for</span>{product.applications}
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
+      {
+        headline.map((h, i) => (
+          <div class="pd__stat pg-glass" data-reveal="up">
+            <span class="pg-num">{String(i + 1).padStart(2, "0")}</span>
+            <p class="pd__statval">{h.value}</p>
+            <p class="pd__statlabel">{h.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="pd__band">
+  <Image
+    src={product.heroImage}
+    alt={`${product.fullTitle} in situ.`}
+    class="pd__bandimg"
+    data-parallax="0.16"
+    loading="lazy"
+    widths={[640, 1200, 1920]}
+    sizes="100vw"
+  />
+</section>
+
+<section id="specifications" class="pd pd--alt">
+  <div class="container-frame" data-reveal-group>
+    <p class="label-eyebrow text-champagne" data-reveal="fade">Specifications</p>
+    <h2 class="display-lg pd__title" data-split>Engineered to the millimetre.</h2>
+
+    <div class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
+      {
+        specGroups.map((group, i) => (
+          <div class="pd__spec pg-glass" data-reveal="up">
+            <div class="pd__spechead">
+              <h3>{group.title}</h3>
+              <span class="pg-num">{String(i + 1).padStart(2, "0")}</span>
+            </div>
+            <dl>
+              {group.rows.map((row) => (
+                <div>
+                  <dt>{row.label}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div class="pd__spec pg-glass" data-reveal="up">
+        <p class="label-eyebrow text-champagne">Hardware</p>
+        <p class="pd__text">{product.hardware}</p>
+      </div>
+      <div class="pd__spec pg-glass" data-reveal="up">
+        <p class="label-eyebrow text-champagne">Finishes</p>
+        <p class="pd__text">
+          Available across the full Prominance palette of 100+ anodised, powder-coated and metallic colours.
+          <a href="/products/#finishes" class="ml-1 underline decoration-champagne/50 underline-offset-4 hover:decoration-champagne">View finishes</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{
+  related.length > 0 && (
+    <section class="pd pd--dark">
+      <div class="container-frame" data-reveal-group>
+        <p class="label-eyebrow text-champagne" data-reveal="fade">Continue exploring</p>
+        <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {related.map((p) => <ProductCard product={p} />)}
+        </div>
+        <div class="mt-12" data-reveal="up">
+          <a href="/products/" class="btn-pg btn-pg--ghost">The full collection</a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<StudioInvite />
+
+<style is:global>
+  .pd {
+    padding: clamp(4rem, 8vw, 7.5rem) 0;
+  }
+  .pd--dark {
+    background: #0a0a0b;
+  }
+  .pd--alt {
+    background: #141317;
+  }
+  .pd__lead {
+    margin-top: 1.4rem;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    line-height: 1.3;
+    color: #f0f0f0;
+  }
+  .pd__made {
+    margin-top: 2rem;
+    max-width: 30rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .pd__stat {
+    position: relative;
+    padding: 1.6rem 1.6rem 1.8rem;
+    min-height: 11rem;
+  }
+  .pd__stat .pg-num {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.4rem;
+  }
+  .pd__statval {
+    margin-top: 2.2rem;
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #f3f3f3;
+  }
+  .pd__statlabel {
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .pd__band {
+    position: relative;
+    height: clamp(22rem, 62svh, 44rem);
+    overflow: hidden;
+    background: #0a0a0b;
+  }
+  .pd__bandimg {
+    width: 100%;
+    height: 118%;
+    object-fit: cover;
+  }
+  .pd__title {
+    margin-top: 1.2rem;
+    max-width: 44rem;
+    text-wrap: balance;
+  }
+  .pd__spec {
+    padding: 2rem 2rem 2.2rem;
+  }
+  .pd__spechead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+  .pd__spechead h3 {
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: 1.9rem;
+    letter-spacing: -0.03em;
+    color: #f3f3f3;
+  }
+  .pd__spec dl > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.07);
+  }
+  .pd__spec dt {
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .pd__spec dd {
+    text-align: right;
+    font-size: 0.875rem;
+    color: #fff;
+  }
+  .pd__text {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgb(255 255 255 / 0.68);
+  }
+</style>

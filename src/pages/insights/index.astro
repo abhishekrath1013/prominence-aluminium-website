@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import StudioInvite from "../../components/StudioInvite.astro";
+import { images } from "../../assets/images";
+import { insights } from "../../data/insights";
+
+const [lead, ...rest] = insights;
+---
+
+<BaseLayout
+  title="Blog — Notes on Material, Performance & Design"
+  description="Prominance Blog: guides to aluminium window durability, how to judge window quality, and the types of casement windows."
+  path="/insights/"
+  ogImage="/media/hero-corner.jpg"
+>
+  <PageHero eyebrow="Blog" image={images.heroDuskLivingroom} imageAlt="" compact>
+    Notes on material, performance &amp; design.
+    <Fragment slot="description">
+      Straight answers on how aluminium windows are made, how long they last and how to choose them well.
+    </Fragment>
+  </PageHero>
+
+  <section class="blog-sec">
+    <div class="container-frame">
+      <p class="label-eyebrow text-champagne" data-reveal="fade">Latest</p>
+      <div class="mt-10">
+        <ArticleCard post={lead} feature />
+      </div>
+
+      {
+        rest.length > 0 && (
+          <>
+            <p class="label-eyebrow mt-24 text-champagne" data-reveal="fade">More articles</p>
+            <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {rest.map((p) => <ArticleCard post={p} />)}
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  <StudioInvite />
+</BaseLayout>
+
+<style is:global>
+  .blog-sec {
+    padding: clamp(4rem, 9vw, 8rem) 0 clamp(5rem, 10vw, 9rem);
+    background: #0a0a0b;
+  }
+</style>

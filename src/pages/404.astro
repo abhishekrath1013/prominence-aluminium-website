@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page Not Found" description="This page could not be found." path="/404/">
+  <section class="flex min-h-[100svh] flex-col justify-center bg-ink pt-24 pg-pattern">
+    <div class="container-frame" data-reveal-group>
+      <p class="label-eyebrow text-champagne" data-reveal="fade">404</p>
+      <h1 class="display-xl mt-8" data-split>This view doesn’t exist.</h1>
+      <p class="lead mt-10 max-w-md text-ivory/70" data-reveal="up">The page you were looking for may have moved. Explore the collection or return home.</p>
+      <div class="mt-12 flex flex-wrap gap-4" data-reveal="up">
+        <a href="/" class="btn-pg">Return home</a>
+        <a href="/products/" class="btn-pg btn-pg--ghost">The collection</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

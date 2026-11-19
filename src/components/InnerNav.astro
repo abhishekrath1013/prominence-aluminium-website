@@ -1,0 +1,155 @@
+---
+// Top bar for every page except the homepage (which draws the same bar inside its hero):
+// three links, centred logo, "Get a Quote". On phones it folds into a menu that also lists the rest of the site.
+import { Image } from "astro:assets";
+import { images } from "../assets/images";
+
+const main = [
+  { label: "Products", href: "/products/" },
+  { label: "About us", href: "/about-us/" },
+  { label: "Blog", href: "/insights/" },
+];
+const more = [
+  { label: "Residences", href: "/projects/" },
+  { label: "Architects", href: "/architects/" },
+  { label: "Fabricators", href: "/fabricators/" },
+  { label: "Facade & skylights", href: "/facade-sky-lights/" },
+  { label: "Contact us", href: "/contact-us/" },
+];
+---
+
+<header class="in-nav" data-in-nav>
+  <nav class="in-nav__links" aria-label="Primary">
+    {main.map((l) => <a href={l.href}>{l.label}</a>)}
+  </nav>
+  <a href="/" class="in-nav__logo" aria-label="Prominance — home">
+    <Image src={images.prominanceLogo} alt="Prominance Window Systems" width={1060} height={198} widths={[260, 520]} sizes="200px" loading="eager" />
+  </a>
+  <div class="in-nav__right">
+    <a href="/contact-us/" class="in-nav__quote">Get a Quote</a>
+    <button type="button" class="in-nav__burger" aria-expanded="false" aria-controls="in-nav-menu" data-in-nav-toggle>
+      <span>Menu</span>
+    </button>
+  </div>
+
+  <div id="in-nav-menu" class="in-nav__menu" hidden>
+    <ul>
+      {[...main, ...more].map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </div>
+</header>
+
+<style is:global>
+  .in-nav {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 150;
+    height: 90px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0 clamp(1rem, 2vw, 1.625rem);
+    color: #fff;
+  }
+  .in-nav__links {
+    display: flex;
+    gap: 1rem;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .in-nav__links a,
+  .in-nav__quote {
+    transition: opacity 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+  .in-nav__links a:hover {
+    opacity: 0.65;
+  }
+  .in-nav__logo img {
+    width: 199px;
+    height: auto;
+  }
+  .in-nav__right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .in-nav__quote {
+    padding: 0.55rem 1.1rem;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .in-nav__quote:hover {
+    background: #fff;
+    color: #0a0a0b;
+  }
+  .in-nav__burger,
+  .in-nav__menu {
+    display: none;
+  }
+  @media (max-width: 800px) {
+    .in-nav {
+      grid-template-columns: auto 1fr;
+      height: 72px;
+    }
+    .in-nav__links {
+      display: none;
+    }
+    .in-nav__logo img {
+      width: 150px;
+    }
+    .in-nav__burger {
+      display: block;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid rgb(255 255 255 / 0.55);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .in-nav__quote {
+      display: none;
+    }
+    .in-nav__menu {
+      position: absolute;
+      top: 72px;
+      left: 0.75rem;
+      right: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: rgb(10 10 11 / 0.96);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgb(255 255 255 / 0.1);
+    }
+    .in-nav__menu:not([hidden]) {
+      display: block;
+    }
+    .in-nav__menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .in-nav__menu a {
+      display: block;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgb(255 255 255 / 0.08);
+      font-size: 0.95rem;
+    }
+    .in-nav__menu li:last-child a {
+      border-bottom: 0;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-in-nav-toggle]");
+  const menu = document.getElementById("in-nav-menu");
+  toggle?.addEventListener("click", () => {
+    if (!menu) return;
+    const open = menu.hasAttribute("hidden");
+    menu.toggleAttribute("hidden", !open);
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+</script>

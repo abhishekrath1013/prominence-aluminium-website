@@ -1,0 +1,99 @@
+---
+// Inner-page hero, in the homepage's language: a photograph under the same dark shade, a large Poppins headline
+// that rises out of a mask, Manrope lead copy, and the brand's blue/green button.
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  eyebrow: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  /** a hero with only a short line can be a bit lower */
+  compact?: boolean;
+  /** "lg" for long titles (articles): a step smaller than the default "xl" */
+  size?: "xl" | "lg";
+}
+const { eyebrow, image, imageAlt, compact = false, size = "xl" } = Astro.props;
+const hasCta = Astro.slots.has("cta");
+---
+
+<section class:list={["ph", compact && "ph--compact"]}>
+  <div class="ph__media" aria-hidden={imageAlt ? undefined : "true"}>
+    <Image src={image} alt={imageAlt} class="ph__img" data-parallax="0.12" fetchpriority="high" widths={[640, 1200, 1920]} sizes="100vw" />
+  </div>
+  <div class="ph__shade" aria-hidden="true"></div>
+
+  <div class="ph__copy" data-reveal-group>
+    <p class="label-eyebrow text-champagne" data-reveal="fade">{eyebrow}</p>
+    <h1 class:list={[size === "lg" ? "display-lg" : "display-xl", "ph__title"]} data-split data-split-delay="0.15"><slot /></h1>
+    <div class="ph__lead" data-reveal="up">
+      <slot name="description" />
+    </div>
+    {
+      hasCta && (
+        <div class="ph__cta" data-reveal="up">
+          <slot name="cta" />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style is:global>
+  .ph {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    height: max(88svh, 560px);
+    background: #0a0a0b;
+    color: #fff;
+  }
+  .ph--compact {
+    height: max(70svh, 520px);
+  }
+  .ph__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+  }
+  .ph__img {
+    width: 100%;
+    height: 118%;
+    object-fit: cover;
+  }
+  /* same dark treatment as the homepage hero: heavy at the top and bottom, lighter through the middle, darker at the left where the copy sits */
+  .ph__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgb(8 10 12 / 0.64) 0%, rgb(8 10 12 / 0.3) 26%, rgb(8 10 12 / 0.4) 62%, rgb(8 10 12 / 0.9) 100%),
+      linear-gradient(90deg, rgb(8 10 12 / 0.6) 0%, rgb(8 10 12 / 0.2) 60%, transparent 100%);
+  }
+  .ph__copy {
+    position: absolute;
+    left: clamp(1.25rem, 6vw, 7.5rem);
+    right: clamp(1.25rem, 6vw, 7.5rem);
+    bottom: clamp(3rem, 9svh, 6.5rem);
+    max-width: 62rem;
+  }
+  .ph__title {
+    margin-top: 1.25rem;
+    text-wrap: balance;
+    color: #e8e6e5;
+  }
+  .ph__lead {
+    margin-top: 1.75rem;
+    max-width: 38rem;
+    font-size: clamp(1rem, 1.35vw, 1.25rem);
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.88);
+  }
+  .ph__cta {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+</style>

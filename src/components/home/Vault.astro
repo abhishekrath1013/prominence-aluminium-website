@@ -1,0 +1,320 @@
+---
+// "Built like a vault" — a dark vault corridor, SRK pointing down at a slowly looping row of hardware-test cards.
+// One screen tall. The design is a 1326 × 1086 stage scaled to fit the screen; every length is calc(N * var(--u)).
+// The backdrop and the card row run full-bleed; SRK and the heading sit on the stage.
+import { Image } from "astro:assets";
+import bg from "../../assets/home/vault-bg.webp";
+import srk from "../../assets/home/srk-vault.webp";
+
+const cards = [
+  {
+    title: ["Environmental", "Durability"],
+    text: "Tested against moisture, UV, temperature extremes and corrosion so the hardware keeps working with minimal maintenance",
+    icon: "shield",
+  },
+  {
+    title: ["Durability &", "Wear Resistant"],
+    text: "To test surface durability, resisting wear, scratches, and impacts to maintain appearance and functionality",
+    icon: "wear",
+  },
+  {
+    title: ["Aesthetic", "Quality"],
+    text: "Provides a high quality finish that resists fading, discolouration, and everyday wear and tear",
+    icon: "eye",
+  },
+  {
+    title: ["Structural", "Integrity"],
+    text: "Assessed for structural strength under load so doors and windows stay true, safe and square",
+    icon: "bolt",
+  },
+];
+// the row is rendered twice, back to back, so the loop never shows a seam
+const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => ({ ...c, dup: true }))];
+---
+
+<section class="hv" aria-labelledby="hv-title">
+  <Image src={bg} alt="" class="hv__bg" data-hm="hv-bg" widths={[1335, 2000]} sizes="100vw" loading="lazy" />
+
+  <div class="hv__stage">
+    <Image src={srk} alt="" class="hv__srk" data-hm="hv-srk" widths={[696]} sizes="(max-width: 860px) 70vw, 53vw" loading="lazy" />
+    <h2 id="hv-title" class="hv__title" aria-label="Built like a vault">
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">Built</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">like a</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">vault</span></span>
+    </h2>
+  </div>
+
+  <div class="hv__rail" data-hm="hv-rail" aria-label="Hardware durability tests">
+    <div class="hv__belt">
+      {
+        loop.map((c) => (
+          <article class="hv__card" aria-hidden={c.dup ? "true" : undefined}>
+            <h3>{c.title[0]}<br />{c.title[1]}</h3>
+            <p>{c.text}</p>
+            <svg class="hv__icon" viewBox="0 0 92 92" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {c.icon === "shield" && (
+                <>
+                  <path d="M46 6 L16 18 V44 C16 62 29 74 46 82 C63 74 76 62 76 44 V18 Z" />
+                  <path d="M46 28 C46 28 34 44 34 52 a12 12 0 0 0 24 0 C58 44 46 28 46 28 Z" />
+                  <path d="M6 88 Q46 74 86 88" />
+                </>
+              )}
+              {c.icon === "wear" && (
+                <>
+                  <path d="M46 6 C46 6 30 28 30 42 a16 16 0 0 0 32 0 C62 28 46 6 46 6 Z" />
+                  <path d="M30 64 C16 60 12 46 16 38 M16 38 l-1 8 M16 38 l7 3" />
+                  <path d="M62 64 C76 60 80 46 76 38 M76 38 l1 8 M76 38 l-7 3" />
+                  <path d="M6 72 H86 V80 H6 Z" />
+                  <path d="M14 76 H20 M30 76 H36 M46 76 H52 M62 76 H68 M76 76 H80" />
+                </>
+              )}
+              {c.icon === "eye" && (
+                <>
+                  <path d="M6 56 C24 28 68 28 86 56 C68 84 24 84 6 56 Z" />
+                  <circle cx="46" cy="56" r="14" />
+                  <circle cx="46" cy="56" r="6" fill="currentColor" />
+                  <path d="M46 14 V24 M26 20 L32 29 M66 20 L60 29" />
+                </>
+              )}
+              {c.icon === "bolt" && (
+                <>
+                  <path d="M46 8 L76 25 V59 L46 76 L16 59 V25 Z" />
+                  <circle cx="46" cy="42" r="13" />
+                  <path d="M46 76 V88" />
+                </>
+              )}
+            </svg>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .hv {
+    container-type: size;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    height: 100svh;
+    min-height: 520px;
+    background: #0a0a0d;
+  }
+  /* full-bleed children share the stage's scale; the stage's own top is 50% - 543u (half of 1086) */
+  .hv > .hv__bg,
+  .hv > .hv__rail {
+    --u: calc(min(100cqw, 100cqh * 1326 / 1086) / 1326);
+  }
+  .hv__bg {
+    position: absolute;
+    z-index: -2;
+    left: 0;
+    width: 100%;
+    top: calc(50% + (108 - 543) * var(--u));
+    height: calc(975 * var(--u));
+    max-width: none;
+    object-fit: cover;
+  }
+  /* full-width band, as tall as the design scaled to fit the screen height; the heading and SRK keep the design's composition, centred */
+  .hv__stage {
+    --u: calc(min(100cqw, 100cqh * 1326 / 1086) / 1326);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    translate: 0 -50%;
+    height: calc(1086 * var(--u));
+  }
+  .hv__srk {
+    position: absolute;
+    z-index: 2; /* SRK stands in front of the heading */
+    left: calc(50% + (594 - 663) * var(--u));
+    top: calc(188 * var(--u));
+    width: calc(696 * var(--u));
+    height: calc(898 * var(--u));
+    max-width: none;
+  }
+  .hv__title {
+    position: absolute;
+    z-index: 1;
+    left: calc(50% + (100 - 663) * var(--u));
+    top: calc(269 * var(--u));
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    font-size: calc(128.2 * var(--u));
+    line-height: calc(111 * var(--u));
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* each line carries its own slice of the silver gradient (so lines can animate independently) */
+  .hv__title .ln__t {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .hv__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(180deg, #ececed, #d6d6d8); }
+  .hv__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(180deg, #d2d2d4, #a8a8ac); }
+  .hv__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(180deg, #9c9ca0, #8a8a8f); }
+  .hv__title .ln:nth-child(2) {
+    margin-left: calc(78 * var(--u));
+  }
+  .hv__title .ln:nth-child(3) {
+    margin-left: calc(150 * var(--u));
+  }
+
+  /* the cards drift left forever, very slowly; hovering (or focusing) the row holds them still */
+  .hv__rail {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    top: calc(50% + (607 - 543) * var(--u));
+    height: calc(301 * var(--u));
+    overflow: hidden;
+  }
+  .hv__belt {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    margin-left: calc(-253 * var(--u)); /* first card peeks in from the left, as in the design */
+    animation: hv-drift 110s linear infinite;
+    will-change: transform;
+  }
+  .hv__rail:hover .hv__belt,
+  .hv__rail:focus-within .hv__belt {
+    animation-play-state: paused;
+  }
+  @keyframes hv-drift {
+    to {
+      transform: translateX(-50%); /* exactly one full set of cards */
+    }
+  }
+  .hv__card {
+    position: relative;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    width: calc(502 * var(--u));
+    height: 100%;
+    margin-right: calc(16 * var(--u));
+    padding: calc(40 * var(--u)) calc(34 * var(--u)) 0;
+    /* frosted: SRK and the corridor behind are blurred, and dense enough that nothing glows through */
+    background: rgb(4 4 6 / 0.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    color: #fff;
+  }
+  .hv__card h3 {
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    font-size: calc(43 * var(--u));
+    line-height: calc(53 * var(--u));
+    letter-spacing: -0.04em;
+    color: #f3f3f3;
+  }
+  .hv__card p {
+    margin-top: calc(18 * var(--u));
+    max-width: calc(440 * var(--u));
+    font-size: calc(18 * var(--u));
+    line-height: calc(28 * var(--u));
+    font-weight: 400;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .hv__icon {
+    position: absolute;
+    right: calc(28 * var(--u));
+    top: calc(48 * var(--u));
+    width: calc(92 * var(--u));
+    height: calc(92 * var(--u));
+    color: rgb(255 255 255 / 0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hv__belt {
+      animation: none;
+    }
+    .hv__rail {
+      overflow-x: auto;
+    }
+  }
+
+  /* phone: stack instead of scaling the stage */
+  @media (max-width: 860px) {
+    .hv {
+      container-type: normal;
+      height: auto;
+      min-height: 0;
+      padding: 5.5rem 0 3rem;
+    }
+    .hv__bg {
+      top: 0;
+      height: 100%;
+    }
+    .hv__stage {
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      translate: none;
+      height: auto;
+    }
+    .hv__title {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-left: 1.5rem;
+      font-size: clamp(3.2rem, 17vw, 5rem);
+      line-height: 0.9;
+    }
+    .hv__title .ln:nth-child(2) {
+      margin-left: 0.55em;
+    }
+    .hv__title .ln:nth-child(3) {
+      margin-left: 1.1em;
+    }
+    .hv__srk {
+      position: absolute;
+      left: auto;
+      right: -34vw;
+      top: 3.5rem;
+      width: 92vw;
+      height: auto;
+    }
+    .hv__rail {
+      position: relative;
+      top: auto;
+      height: auto;
+      margin-top: clamp(11rem, 52vw, 16rem);
+    }
+    .hv__belt {
+      margin-left: 1.25rem;
+      animation-duration: 90s;
+    }
+    .hv__card {
+      width: min(84vw, 24rem);
+      height: auto;
+      min-height: 16.5rem;
+      margin-right: 0.75rem;
+      padding: 1.6rem 1.4rem;
+    }
+    .hv__card h3 {
+      font-size: 1.7rem;
+      line-height: 1.22;
+      max-width: 70%;
+    }
+    .hv__card p {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      max-width: none;
+    }
+    .hv__icon {
+      width: 3.6rem;
+      height: 3.6rem;
+      right: 1.2rem;
+      top: 1.4rem;
+    }
+  }
+</style>

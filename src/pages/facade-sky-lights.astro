@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import StudioInvite from "../components/StudioInvite.astro";
+import { images } from "../assets/images";
+import { solutions } from "../data/solutions";
+---
+
+<BaseLayout
+  title="Facade, Sky Lights & Architectural Solutions"
+  description="Facade and sky light glazing, aluminium skirting, aluminium shrouds and geometrical windows — Prominance's architectural systems beyond the standard window."
+  path="/facade-sky-lights/"
+  ogImage="/media/full-view.png"
+>
+  <PageHero eyebrow="Architectural Solutions" image={images.fullView} imageAlt="A two-storey modern villa with continuous glazed facades and a pool.">
+    Facade &amp; Beyond
+    <Fragment slot="description">
+      Structural glazing for full elevations, roof lights and non-standard openings — engineered on the same platform
+      as every Prominance window and door.
+    </Fragment>
+  </PageHero>
+
+  {
+    solutions.map((s, i) => (
+      <section id={s.slug} class:list={["py-28 md:py-44", i % 2 === 0 ? "bg-ink" : "bg-ink-soft"]}>
+        <div class="container-frame grid grid-cols-1 items-center gap-14 md:grid-cols-12 md:gap-20" data-reveal-group>
+          <div class:list={["md:col-span-5", i % 2 === 1 && "md:order-2"]}>
+            <p class="label-eyebrow text-champagne" data-reveal="fade">{String(i + 1).padStart(2, "0")}</p>
+            <h2 class="display-md mt-6 text-balance" data-split>{s.name}</h2>
+            <p class="lead mt-6 text-ivory/80" data-reveal="up">{s.headline}</p>
+            <p class="mt-6 max-w-md text-sm leading-relaxed text-ivory/60" data-reveal="up">{s.description}</p>
+
+            {s.specs && (
+              <dl class="mt-12">
+                {s.specs.map((spec) => (
+                  <div class="flex items-baseline justify-between gap-6 border-t border-ivory/12 py-3" data-reveal="up">
+                    <dt class="text-sm text-ivory/55">{spec.label}</dt>
+                    <dd class="text-right text-sm">{spec.value}</dd>
+                  </div>
+                ))}
+                <div class="border-t border-ivory/12"></div>
+              </dl>
+            )}
+          </div>
+
+          <div class:list={["md:col-span-7", i % 2 === 1 && "md:order-1"]}>
+            <div class="relative aspect-[4/3] overflow-hidden" data-img-reveal>
+              <Image
+                src={s.image}
+                alt={s.headline}
+                class="h-[116%] w-full object-cover"
+                data-parallax="0.2"
+                loading="lazy"
+                widths={[500, 900, 1400]}
+                sizes="(min-width: 768px) 58vw, 100vw"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <StudioInvite />
+</BaseLayout>
