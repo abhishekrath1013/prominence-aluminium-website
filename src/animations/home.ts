@@ -58,10 +58,12 @@ function init() {
   gsap.set("[data-hm='hp-factory'] img", { scale: 1.3, transformOrigin: "50% 60%" });
   gsap.set(hm("hp-bg"), { scale: 1.12 });
 
-  gsap.set(hm("hd-21"), { opacity: 0, yPercent: 45 });
-  gsap.set(hm("hd-dash"), { scaleX: 0, transformOrigin: "0% 50%" });
-  gsap.set(hm("hd-day"), { opacity: 0, xPercent: -10 });
-  gsap.set(hm("hd-delivery"), { opacity: 0, letterSpacing: "1.5em" });
+  // the lockup is an SVG: x / y are in its own 538 x 248 units
+  gsap.set(hm("hd-21"), { opacity: 0, y: 90 });
+  gsap.set(hm("hd-dash"), { opacity: 0, scaleX: 0, transformOrigin: "0% 50%" });
+  gsap.set(hm("hd-day"), { opacity: 0, x: -60 });
+  // DELIVERY starts spread wide around its centre and draws in (the old letter-spacing tighten)
+  gsap.set(hm("hd-delivery"), { opacity: 0, x: (i: number) => (i - 3.5) * 34 });
   gsap.set(hm("hd-copy"), { opacity: 0, y: 34 });
   gsap.set(hm("hd-bg"), { scale: 1.12 });
 
@@ -119,10 +121,10 @@ function init() {
   /* ---------------- 21-day delivery ---------------- */
   reveal($$<HTMLElement>(".hd")[0], (tl) => {
     tl.to(hm("hd-bg"), { scale: 1, duration: 2.6, ease: "power3.out" }, 0)
-      .to(hm("hd-21"), { opacity: 1, yPercent: 0, duration: 1.7 }, 0.1)
-      .to(hm("hd-dash"), { scaleX: 1, duration: 0.9, ease: "power3.inOut" }, 0.65)
-      .to(hm("hd-day"), { opacity: 1, xPercent: 0, duration: 1.7 }, 0.35)
-      .to(hm("hd-delivery"), { opacity: 1, letterSpacing: "0.92em", duration: 2.2, ease: "power3.out" }, 0.6)
+      .to(hm("hd-21"), { opacity: 1, y: 0, duration: 1.7, stagger: 0.08 }, 0.1)
+      .to(hm("hd-dash"), { opacity: 1, scaleX: 1, duration: 0.9, ease: "power3.inOut" }, 0.65)
+      .to(hm("hd-day"), { opacity: 1, x: 0, duration: 1.7, stagger: 0.1 }, 0.35)
+      .to(hm("hd-delivery"), { opacity: 1, x: 0, duration: 2.2, stagger: 0.05, ease: "power3.out" }, 0.6)
       .to(hm("hd-copy"), { opacity: 1, y: 0, duration: 1.3, stagger: 0.14, ease: EASE_SOFT }, 0.75);
   }, "top 62%");
 
