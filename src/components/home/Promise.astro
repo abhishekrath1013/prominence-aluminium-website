@@ -13,6 +13,7 @@ import factory from "../../assets/home/factory.jpg";
   <Image src={bgA} alt="" class="hp__bg" data-hm="hp-bg" widths={[1326, 1800]} sizes="100vw" loading="lazy" />
 
   <div class="hp__stage">
+    <p class="hp__eyebrow" data-hm="hp-eyebrow">In-House Manufacturing</p>
     <h2 id="hp-title" class="hp__statement" aria-label="Delivered right on time. Built to last a lifetime.">
       <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hp-line">Delivered right on time.</span></span>
       <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hp-line">Built to last a lifetime.</span></span>
@@ -55,7 +56,7 @@ import factory from "../../assets/home/factory.jpg";
     </div>
 
     <div class="hd__copy">
-      <p><span data-hm="hd-copy">Delivered promptly right to your doorstep, </span><span data-hm="hd-copy">and backed by a 25-year guarantee. From </span><span data-hm="hd-copy">blueprint to the final bolt, we design and </span><span data-hm="hd-copy">build every single detail under one roof.</span></p>
+      <p><span data-hm="hd-copy">Spanning an impressive 6&nbsp;lakh sq.&nbsp;ft., </span><span data-hm="hd-copy">our world-class manufacturing facility </span><span data-hm="hd-copy">brings together cutting-edge robotics, </span><span data-hm="hd-copy">sophisticated automation and an </span><span data-hm="hd-copy">unwavering pursuit of excellence.</span></p>
       <p class="hd__way" data-hm="hd-copy">The Prominance way.</p>
     </div>
   </div>
@@ -92,18 +93,32 @@ import factory from "../../assets/home/factory.jpg";
     translate: 0 -50%;
     height: calc(968 * var(--u));
   }
+  /* small green tag above the statement */
+  .hp__eyebrow {
+    position: absolute;
+    left: calc(113 * var(--u));
+    top: calc(84 * var(--u));
+    font-family: var(--font-sans);
+    font-size: calc(14 * var(--u));
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-champagne);
+  }
+  /* same voice as the "Tailored to your taste." heading: light Poppins, sentence case, ivory */
   .hp__statement {
     position: absolute;
     left: calc(111 * var(--u));
     top: calc(119 * var(--u));
     white-space: nowrap;
-    font-family: var(--font-poppins);
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: calc(71.9 * var(--u));
-    line-height: calc(77 * var(--u));
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: #e6e6e6;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-ivory);
   }
   .hp__factory {
     --u: calc(min(100cqw, 100cqh * 1326 / 968) / 1326);
@@ -193,11 +208,18 @@ import factory from "../../assets/home/factory.jpg";
       translate: none;
       height: auto;
     }
+    .hp__eyebrow {
+      position: relative;
+      left: auto;
+      top: auto;
+      padding: 3.5rem 1.25rem 0;
+      font-size: 0.75rem;
+    }
     .hp__statement {
       position: relative;
       left: auto;
       top: auto;
-      padding: 3.5rem 1.25rem 3rem;
+      padding: 0.9rem 1.25rem 3rem;
       font-size: clamp(1.7rem, 7.4vw, 3rem);
       line-height: 1.1;
       white-space: normal;

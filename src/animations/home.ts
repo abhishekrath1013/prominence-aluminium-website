@@ -53,6 +53,7 @@ function init() {
 
   gsap.set(".cf__stage", { opacity: 0, x: 70, scale: 0.94 });
 
+  gsap.set(hm("hp-eyebrow"), { opacity: 0, y: 18 });
   gsap.set(lines("hp-line"), { yPercent: 118 });
   gsap.set(hm("hp-factory"), { clipPath: "inset(0% 0% 100% 0%)" });
   gsap.set("[data-hm='hp-factory'] img", { scale: 1.3, transformOrigin: "50% 60%" });
@@ -113,6 +114,7 @@ function init() {
   /* ---------------- built with precision + factory ---------------- */
   reveal($$<HTMLElement>(".hp")[0], (tl) => {
     tl.to(hm("hp-bg"), { scale: 1, duration: 2.6, ease: "power3.out" }, 0)
+      .to(hm("hp-eyebrow"), { opacity: 1, y: 0, duration: 1.2, ease: EASE_SOFT }, 0.05)
       .to(lines("hp-line"), { yPercent: 0, duration: 1.5, stagger: 0.14 }, 0.1)
       .to(hm("hp-factory"), { clipPath: "inset(0% 0% 0% 0%)", duration: 1.8, ease: "expo.inOut" }, 0.55)
       .to("[data-hm='hp-factory'] img", { scale: 1, duration: 2.8, ease: "power3.out" }, 0.55);
