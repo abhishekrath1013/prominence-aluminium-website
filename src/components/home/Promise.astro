@@ -23,6 +23,7 @@ import factory from "../../assets/home/factory.jpg";
   <!-- full-bleed band, vertically placed by the stage's scale -->
   <div class="hp__factory" data-hm="hp-factory">
     <Image src={factory} alt="Aerial view of the Prominance manufacturing campus" widths={[1200, 1800, 2400]} sizes="100vw" loading="lazy" />
+    <p class="hp__fcopy" data-hm="hp-fcopy">Spanning an impressive 6&nbsp;lakh sq.&nbsp;ft., our world-class manufacturing facility brings together cutting-edge robotics, sophisticated automation and an unwavering pursuit of excellence.</p>
   </div>
 </section>
 
@@ -56,7 +57,7 @@ import factory from "../../assets/home/factory.jpg";
     </div>
 
     <div class="hd__copy">
-      <p><span data-hm="hd-copy">Spanning an impressive 6&nbsp;lakh sq.&nbsp;ft., </span><span data-hm="hd-copy">our world-class manufacturing facility </span><span data-hm="hd-copy">brings together cutting-edge robotics, </span><span data-hm="hd-copy">sophisticated automation and an </span><span data-hm="hd-copy">unwavering pursuit of excellence.</span></p>
+      <p><span data-hm="hd-copy">Delivered promptly right to your doorstep, </span><span data-hm="hd-copy">and backed by a 25-year guarantee. From </span><span data-hm="hd-copy">blueprint to the final bolt, we design and </span><span data-hm="hd-copy">build every single detail under one roof.</span></p>
       <p class="hd__way" data-hm="hd-copy">The Prominance way.</p>
     </div>
   </div>
@@ -136,6 +137,29 @@ import factory from "../../assets/home/factory.jpg";
     max-width: none;
     object-fit: cover;
     object-position: 50% 52%; /* frames the buildings' glazed fronts and the car park, not just the roofs */
+  }
+  /* the facility paragraph sits on the bottom of the photo, over a soft dark gradient so it stays readable */
+  .hp__factory::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(300 * var(--u));
+    background: linear-gradient(180deg, rgb(10 11 12 / 0) 0%, rgb(10 11 12 / 0.55) 45%, rgb(10 11 12 / 0.88) 100%);
+    pointer-events: none;
+  }
+  .hp__fcopy {
+    position: absolute;
+    z-index: 1;
+    left: calc(111 * var(--u));
+    bottom: calc(46 * var(--u));
+    width: calc(800 * var(--u));
+    max-width: calc(100% - 222 * var(--u));
+    font-size: calc(23 * var(--u));
+    line-height: calc(35 * var(--u));
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.92);
   }
 
   /* ---------- 2. 21-day delivery ---------- */
@@ -224,11 +248,28 @@ import factory from "../../assets/home/factory.jpg";
       line-height: 1.1;
       white-space: normal;
     }
+    /* phone: the photo keeps its shape and the paragraph sits under it instead of on it */
     .hp__factory {
       position: relative;
       top: auto;
       height: auto;
+      background: none;
+    }
+    .hp__factory img {
+      display: block;
+      height: auto;
       aspect-ratio: 1326 / 515;
+    }
+    .hp__factory::after {
+      display: none;
+    }
+    .hp__fcopy {
+      position: static;
+      width: auto;
+      max-width: none;
+      padding: 1.5rem 1.25rem 2rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
     }
     .hd__stage {
       padding: 3rem 0 3.5rem;
