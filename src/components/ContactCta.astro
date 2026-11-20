@@ -5,9 +5,21 @@
 import { Image } from "astro:assets";
 import ambassador from "../assets/media/ambassador.png";
 import { company } from "../data/company";
+
+// The copy block can be overridden per page (the homepage has its own); the defaults are the site-wide text.
+interface Props {
+  eyebrow?: string;
+  title?: string[]; // one entry per line
+  lead?: string;
+}
+const {
+  eyebrow = "Let’s build something better",
+  title = ["Your next", "chapter", "starts with a", "better window."],
+  lead = "Building or renovating? Discover premium aluminium window and door systems, configurations and finishes for your space.",
+} = Astro.props;
 ---
 
-<section class="cta" id="studio" data-cta aria-labelledby="cta-title">
+<section class="cta" id="studio" data-cta aria-labelledby="cta-title" style={`--cta-lines:${title.length};--cta-lead-lines:${Math.ceil(lead.length / 36)}`}>
   <div class="cta__stage">
     <Image
       class="cta__man"
@@ -21,9 +33,9 @@ import { company } from "../data/company";
       decoding="async"
     />
     <div class="cta__copy">
-      <p class="cta__eyebrow">Let’s build something better</p>
-      <h2 id="cta-title">Your next<br />chapter<br />starts with a<br />better window.</h2>
-      <p class="cta__lead">Building or renovating? Discover premium aluminium window and door systems, configurations and finishes for your space.</p>
+      <p class="cta__eyebrow">{eyebrow}</p>
+      <h2 id="cta-title">{title.map((line, i) => (i === 0 ? line : [<br />, line]))}</h2>
+      <p class="cta__lead">{lead}</p>
       <div class="cta__talk">
         <p class="cta__eyebrow">Prefer to talk?</p>
         <a class="cta__phone" href={company.phoneHref}>{company.phoneDisplay}</a>
@@ -114,7 +126,7 @@ import { company } from "../data/company";
     color: #dadbde;
   }
   .cta__lead {
-    top: 399px;
+    top: calc(159px + 60px * var(--cta-lines, 4)); /* sits 40px under the headline (4 lines → 399px) */
     width: 302px;
     font-size: 16px;
     line-height: 25px;
@@ -122,7 +134,7 @@ import { company } from "../data/company";
     color: rgb(255 255 255 / 0.9);
   }
   .cta__talk {
-    top: 527px;
+    top: calc(187px + 60px * var(--cta-lines, 4) + 25px * var(--cta-lead-lines, 4)); /* 28px under the lead (4 + 4 lines → 527px) */
     width: 260px;
   }
   .cta__talk > * {

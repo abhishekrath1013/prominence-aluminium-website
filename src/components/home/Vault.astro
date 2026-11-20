@@ -1,5 +1,5 @@
 ---
-// "Built like a vault" — a dark vault corridor, SRK pointing down at a slowly looping row of hardware-test cards.
+// "Looks sleek. Acts tough." — a dark vault corridor, SRK pointing down at a slowly looping row of hardware-test cards.
 // One screen tall. The design is a 1326 × 1086 stage scaled to fit the screen; every length is calc(N * var(--u)).
 // The backdrop and the card row run full-bleed; SRK and the heading sit on the stage.
 import { Image } from "astro:assets";
@@ -13,8 +13,8 @@ const cards = [
     icon: "shield",
   },
   {
-    title: ["Durability &", "Wear Resistant"],
-    text: "To test surface durability, resisting wear, scratches, and impacts to maintain appearance and functionality",
+    title: ["Durable and", "wear-resistant."],
+    text: "Engineered for rock-solid performance. Built to stay scratch-free, take on harsh weather, and handle everyday challenges with ease.",
     icon: "wear",
   },
   {
@@ -37,10 +37,11 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
 
   <div class="hv__stage">
     <Image src={srk} alt="" class="hv__srk" data-hm="hv-srk" widths={[696]} sizes="(max-width: 860px) 70vw, 53vw" loading="lazy" />
-    <h2 id="hv-title" class="hv__title" aria-label="Built like a vault">
-      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">Built</span></span>
-      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">like a</span></span>
-      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">vault</span></span>
+    <h2 id="hv-title" class="hv__title" aria-label="Looks sleek. Acts tough.">
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">Looks</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">sleek.</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">Acts</span></span>
+      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hv-line">tough.</span></span>
     </h2>
   </div>
 
@@ -139,11 +140,11 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
     position: absolute;
     z-index: 1;
     left: calc(50% + (138 - 663) * var(--u));
-    top: calc(292 * var(--u));
+    top: calc(232 * var(--u)); /* four lines now (was three at 125u, from 292u), so it starts higher to clear the card rail at 607u */
     font-family: var(--font-poppins);
     font-weight: 700;
-    font-size: calc(125.2 * var(--u));
-    line-height: calc(108 * var(--u));
+    font-size: calc(96 * var(--u)); /* "Looks sleek." / "Acts tough." */
+    line-height: calc(82 * var(--u));
     letter-spacing: -0.03em;
     text-transform: uppercase;
     white-space: nowrap;
@@ -159,11 +160,11 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
   .hv__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(90deg, #d8d8d8 0%, #d8d8d8 28%, #adadad 100%); }
   .hv__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(90deg, #c0c0c0 0%, #a7a7a7 42%, #bdbdbd 100%); }
   .hv__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(90deg, #ababab 0%, #d8d8d8 68%, #d8d8d8 100%); }
-  .hv__title .ln:nth-child(2) {
+  .hv__title .ln:nth-child(4) .ln__t { background-image: linear-gradient(90deg, #c4c4c4 0%, #a7a7a7 50%, #d0d0d0 100%); }
+  /* each sentence is a pair of lines, the second one stepped in */
+  .hv__title .ln:nth-child(2),
+  .hv__title .ln:nth-child(4) {
     margin-left: calc(45 * var(--u));
-  }
-  .hv__title .ln:nth-child(3) {
-    margin-left: calc(111 * var(--u));
   }
 
   /* the cards drift left forever, very slowly; hovering (or focusing) the row holds them still */
@@ -266,20 +267,18 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
       left: auto;
       top: auto;
       margin-left: 1.5rem;
-      font-size: clamp(3.2rem, 17vw, 5rem);
-      line-height: 0.9;
+      font-size: clamp(2.6rem, 13.5vw, 4.2rem);
+      line-height: 0.92;
     }
-    .hv__title .ln:nth-child(2) {
+    .hv__title .ln:nth-child(2),
+    .hv__title .ln:nth-child(4) {
       margin-left: 0.55em;
-    }
-    .hv__title .ln:nth-child(3) {
-      margin-left: 1.1em;
     }
     .hv__srk {
       position: absolute;
       left: auto;
       right: -34vw;
-      top: 3.5rem;
+      top: 6.5rem; /* a little lower than before: the headline is four lines now and SRK's hand must clear the last one */
       width: 92vw;
       height: auto;
     }

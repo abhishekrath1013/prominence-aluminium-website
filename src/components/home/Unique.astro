@@ -1,16 +1,18 @@
 ---
-// "Unique solutions. Unique homes." — four glass feature cards over the kitchen photograph.
+// "Your home is unique. So should your windows and doors be." — four glass feature cards over the kitchen photograph.
 // One screen tall. Sizes come from the 1326 × 1052 design scaled to fit the screen height (var(--u)); the title and the
 // card grid are pinned to the left and right edges, so on wide screens the cards grow wider instead of leaving margins.
 import { Image } from "astro:assets";
 import bg from "../../assets/home/unique-bg.jpg";
 
 const cards = [
-  { n: "01", title: ["6063 T-6", "Virgin Aluminium"], text: "Provides excellent strength and great corrosion resistance.", cls: "c1" },
-  { n: "02", title: ["1,00,000 Cycles", "Tested"], text: "Hardware are tested upto 1 Lakh Cycles for smooth and reliable operations", cls: "c2" },
-  { n: "03", title: ["25 Years of", "Warranty"], text: "Against surface corrosion with the help of our Super-Durable Powders for Coating", cls: "c3" },
-  { n: "04", title: ["100+ Colours of Shades", "to Choose"], text: "Choose your colours according to your preferences with wide range of colour choise", cls: "c4" },
+  { n: "01", title: ["6063 T-6", "Virgin Aluminium"], text: "Top-grade strength. Zero rust. Your frames will remain rock-solid.", cls: "c1" },
+  { n: "02", title: ["Tested for", "1,00,000 cycles"], text: "This means effortless, gliding performance for decades.", cls: "c2" },
+  { n: "03", title: ["25-year", "warranty"], text: "Protects against surface corrosion – thanks to our super-durable powder coatings that keep your frames looking fresh.", cls: "c3" },
+  { n: "04", title: ["100+ shades", "to choose from"], text: "A spectrum of colours and finishes that blend beautifully with your home’s unique personality.", cls: "c4" },
 ];
+// the headline, one entry per line (the left column is narrow, so the two sentences are broken short)
+const titleLines = ["Your home", "is unique.", "So should your", "windows and", "doors be."];
 ---
 
 <section class="hu uf-panel" data-panel style="z-index:2" aria-labelledby="hu-title">
@@ -18,10 +20,8 @@ const cards = [
   <div class="hu__shade" aria-hidden="true"></div>
 
   <div class="hu__stage">
-    <h2 id="hu-title" class="hu__title" aria-label="Unique solutions. Unique homes.">
-      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">Unique</span></span>
-      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">solutions.</span></span>
-      <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">Unique homes.</span></span>
+    <h2 id="hu-title" class="hu__title" aria-label="Your home is unique. So should your windows and doors be.">
+      {titleLines.map((line) => <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="uq-line">{line}</span></span>)}
     </h2>
     <div class="hu__grid">
       {
@@ -81,9 +81,9 @@ const cards = [
     white-space: nowrap;
     font-family: var(--font-poppins);
     font-weight: 700;
-    font-size: calc(66 * var(--u));
-    line-height: calc(68 * var(--u));
-    letter-spacing: -0.05em;
+    font-size: calc(44 * var(--u)); /* five lines now (was three at 66u) so the headline still fits the empty cell beside card 01 */
+    line-height: calc(47 * var(--u));
+    letter-spacing: -0.04em;
     text-transform: uppercase;
   }
   /* each line carries its own slice of the grey gradient (so lines can animate independently) */
@@ -96,6 +96,8 @@ const cards = [
   .hu__title .ln:nth-child(1) .ln__t { background-image: linear-gradient(180deg, #e2e2e2, #cfcfcf); }
   .hu__title .ln:nth-child(2) .ln__t { background-image: linear-gradient(180deg, #c9c9c9, #b4b4b4); }
   .hu__title .ln:nth-child(3) .ln__t { background-image: linear-gradient(180deg, #b0b0b0, #9b9b9b); }
+  .hu__title .ln:nth-child(4) .ln__t { background-image: linear-gradient(180deg, #a2a2a2, #929292); }
+  .hu__title .ln:nth-child(5) .ln__t { background-image: linear-gradient(180deg, #8c8c8c, #7d7d7d); }
 
   /* two equal columns pinned to the left/right margins; rows are the design's heights */
   .hu__grid {
@@ -198,8 +200,8 @@ const cards = [
       grid-row: auto;
     }
     .hu__title {
-      font-size: clamp(2.2rem, 11vw, 3.4rem);
-      line-height: 1.04;
+      font-size: clamp(1.9rem, 9.4vw, 3rem);
+      line-height: 1.06;
       margin-bottom: 1rem;
     }
     .hu__card,

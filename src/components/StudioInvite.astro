@@ -3,7 +3,11 @@
 import ContactCta from "./ContactCta.astro";
 interface Props {
   tone?: "default";
+  eyebrow?: string;
+  title?: string[];
+  lead?: string;
 }
+const { eyebrow, title, lead } = Astro.props;
 ---
 
-<ContactCta />
+<ContactCta eyebrow={eyebrow} title={title} lead={lead} />
