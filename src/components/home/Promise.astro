@@ -110,8 +110,8 @@ import factory from "../../assets/home/factory.jpg";
     position: absolute;
     left: 0;
     width: 100%;
-    top: calc(50% + (454 - 484) * var(--u));
-    height: calc(515 * var(--u));
+    top: calc(50% + (380 - 484) * var(--u)); /* design: 454u / 515u tall. The statement is two lines now, so the band can start higher and show more of the photo */
+    height: calc(588 * var(--u));
     overflow: hidden;
     background: #26332a;
   }
@@ -120,7 +120,7 @@ import factory from "../../assets/home/factory.jpg";
     height: 100%;
     max-width: none;
     object-fit: cover;
-    object-position: 50% 22%;
+    object-position: 50% 52%; /* frames the buildings' glazed fronts and the car park, not just the roofs */
   }
 
   /* ---------- 2. 21-day delivery ---------- */

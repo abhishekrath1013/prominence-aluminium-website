@@ -139,7 +139,7 @@ const loop = [...cards.map((c) => ({ ...c, dup: false })), ...cards.map((c) => (
   .hv__title {
     position: absolute;
     z-index: 1;
-    left: calc(50% + (138 - 663) * var(--u));
+    left: max(calc(80 * var(--u)), calc(50% - 785 * var(--u))); /* 260u further left than the design (50% - 525u), but never closer to the edge than the hero's 80u margin */
     top: calc(232 * var(--u)); /* four lines now (was three at 125u, from 292u), so it starts higher to clear the card rail at 607u */
     font-family: var(--font-poppins);
     font-weight: 700;

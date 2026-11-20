@@ -104,24 +104,43 @@ import HomeNav from "./HomeNav.astro";
     position: absolute;
     left: calc(78 * var(--u));
     top: calc(458 * var(--u));
-    width: calc(441 * var(--u));
-    height: calc(97 * var(--u));
+    width: calc(370 * var(--u));
+    height: calc(78 * var(--u));
     display: grid;
     place-items: center;
-    border: 1px solid rgb(255 255 255 / 0.1);
+    isolation: isolate;
+    overflow: hidden;
+    /* resting state: outline only, white text */
+    border: 1px solid rgb(255 255 255 / 0.9);
     border-radius: calc(6 * var(--u));
-    background: radial-gradient(ellipse 80% 120% at 50% 0%, #0c4d71 0%, #08334f 48%, #05192d 100%);
+    background: transparent;
     font-family: var(--font-poppins);
     font-weight: 600;
-    font-size: calc(18 * var(--u));
+    font-size: calc(17 * var(--u));
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #49e858;
-    transition: filter 0.3s ease, transform 0.3s var(--ease-lux);
+    color: #fff;
+    transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ease-lux);
   }
-  .hh__btn:hover {
-    filter: brightness(1.25);
+  /* hover / keyboard focus: fills with the blue gradient and the text turns green */
+  .hh__btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(ellipse 80% 120% at 50% 0%, #0c4d71 0%, #08334f 48%, #05192d 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .hh__btn:hover,
+  .hh__btn:focus-visible {
+    color: #49e858;
+    border-color: rgb(255 255 255 / 0.1);
     transform: translateY(-2px);
+  }
+  .hh__btn:hover::before,
+  .hh__btn:focus-visible::before {
+    opacity: 1;
   }
 
   /* phone: flow the copy instead of scaling the stage */
@@ -171,9 +190,9 @@ import HomeNav from "./HomeNav.astro";
     }
     .hh__btn {
       margin-top: 1.5rem;
-      width: min(100%, 17rem);
-      height: 4rem;
-      font-size: 0.95rem;
+      width: min(100%, 14.5rem);
+      height: 3.4rem;
+      font-size: 0.85rem;
       border-radius: 6px;
     }
   }
