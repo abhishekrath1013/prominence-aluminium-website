@@ -21,7 +21,7 @@ import HomeNav from "./HomeNav.astro";
         <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hero-line">Exquisite by design.</span></span>
         <span class="ln" aria-hidden="true"><span class="ln__t" data-hm="hero-line">Enduring by nature.</span></span>
       </h1>
-      <p data-hm="hero-fade">Classy aluminium window and door systems<br />that stay gorgeous for generations.</p>
+      <p data-hm="hero-fade">Classy aluminium window and door systems<br /> that stay gorgeous for generations.</p>
       <a href="/products/" class="hh__btn" data-hm="hero-fade">Explore Products</a>
     </div>
   </div>
@@ -86,14 +86,14 @@ import HomeNav from "./HomeNav.astro";
     font-family: var(--font-poppins);
     font-weight: 700;
     font-size: calc(84 * var(--u));
-    line-height: calc(74 * var(--u));
+    line-height: calc(88 * var(--u)); /* was 74u: the descenders of line 1 touched the capitals of line 2 */
     letter-spacing: -0.03em;
     color: #e8e6e5;
   }
   .hh__copy p {
     position: absolute;
     left: calc(80 * var(--u));
-    top: calc(362 * var(--u)); /* the headline is two lines now, one line (74u) shorter than the design */
+    top: calc(392 * var(--u)); /* below the two-line headline (the design had three lines, so this sits higher than the design's 436u) */
     white-space: nowrap;
     font-size: calc(20 * var(--u));
     line-height: calc(30 * var(--u));
@@ -103,7 +103,7 @@ import HomeNav from "./HomeNav.astro";
   .hh__btn {
     position: absolute;
     left: calc(78 * var(--u));
-    top: calc(458 * var(--u));
+    top: calc(488 * var(--u));
     width: calc(370 * var(--u));
     height: calc(78 * var(--u));
     display: grid;
@@ -177,7 +177,7 @@ import HomeNav from "./HomeNav.astro";
     }
     .hh h1 {
       font-size: clamp(1.5rem, 8vw, 3.4rem); /* "Exquisite by design." is a longer line than the old headline, so it has to be smaller to fit */
-      line-height: 0.96;
+      line-height: 1.08;
     }
     .hh__copy p {
       margin-top: 1.1rem;

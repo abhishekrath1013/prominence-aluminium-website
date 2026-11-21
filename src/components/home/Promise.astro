@@ -23,7 +23,7 @@ import factory from "../../assets/home/factory.jpg";
   <!-- full-bleed band, vertically placed by the stage's scale -->
   <div class="hp__factory" data-hm="hp-factory">
     <Image src={factory} alt="Aerial view of the Prominance manufacturing campus" widths={[1200, 1800, 2400]} sizes="100vw" loading="lazy" />
-    <p class="hp__fcopy" data-hm="hp-fcopy">Spanning an impressive 6&nbsp;lakh sq.&nbsp;ft., our world-class manufacturing facility brings together cutting-edge robotics, sophisticated automation and an unwavering pursuit of excellence.</p>
+    <p class="hp__fcopy" data-hm="hp-fcopy">Our world-class manufacturing facility brings together cutting-edge robotics, sophisticated automation and an unwavering pursuit of excellence.</p>
   </div>
 </section>
 
@@ -156,6 +156,7 @@ import factory from "../../assets/home/factory.jpg";
     bottom: calc(46 * var(--u));
     width: calc(800 * var(--u));
     max-width: calc(100% - 222 * var(--u));
+    text-wrap: balance; /* no single orphaned word on the last line */
     font-size: calc(23 * var(--u));
     line-height: calc(35 * var(--u));
     font-weight: 500;

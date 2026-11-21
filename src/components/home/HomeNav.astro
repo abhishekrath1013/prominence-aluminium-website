@@ -12,7 +12,7 @@ import { images } from "../../assets/images";
     <a href="/insights/">Blog</a>
   </nav>
   <a href="/" class="hn__logo" aria-label="Prominance — home">
-    <Image src={images.prominanceLogo} alt="Prominance Window Systems" width={1060} height={198} widths={[260, 520]} sizes="200px" loading="eager" />
+    <Image src={images.prominanceLogo} alt="Prominance Window Systems" width={1060} height={198} widths={[260, 520]} sizes="250px" loading="eager" />
   </a>
   <a href="/contact-us/" class="hn__quote">Get a Quote</a>
 </header>
@@ -53,8 +53,8 @@ import { images } from "../../assets/images";
   .hn__logo {
     left: 50%;
     translate: -50% 0;
-    top: calc(20 * var(--u));
-    width: calc(199 * var(--u));
+    top: calc(14 * var(--u));
+    width: calc(250 * var(--u)); /* was 199u */
   }
   .hn__logo img {
     width: 100%;
@@ -87,8 +87,8 @@ import { images } from "../../assets/images";
     .hn__logo {
       left: 1.25rem;
       translate: none;
-      top: 22px;
-      width: 150px;
+      top: 20px;
+      width: 176px;
     }
     .hn__quote {
       right: 1.25rem;
